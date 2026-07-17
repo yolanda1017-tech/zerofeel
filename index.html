@@ -1,0 +1,2280 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雲織鞋 Customer Intelligence Report｜完整版</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --paper:#F6F3EE;--paper-2:#EFEAE1;--ink:#1A1815;--ink-soft:#4A463F;
+  --grey:#8C877D;--line:#DAD4C8;--line-soft:#E6E1D7;--accent:#7C6A54;
+  --accent-2:#A9967B;--gold:#B79B6E;--white:#FFFFFF;--hk:#3C4E73;--hk2:#6E7FA0;
+  --shadow:0 1px 2px rgba(26,24,21,.04),0 8px 30px rgba(26,24,21,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:"Helvetica Neue","PingFang TC","Microsoft JhengHei",-apple-system,sans-serif;background:var(--paper);color:var(--ink);line-height:1.75;-webkit-font-smoothing:antialiased;font-size:15.5px;overflow-x:hidden;max-width:100vw;}
+::selection{background:var(--ink);color:var(--paper);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(28px,4vw,56px);}
+section{padding:96px 0;border-top:1px solid var(--line-soft);}
+.eyebrow{font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:18px;}
+h2.sec{font-size:37px;line-height:1.18;font-weight:400;letter-spacing:-.01em;font-family:"Songti TC","STSong",serif;margin-bottom:4px;}
+/* long-form reading column: comfortable measure ~720px */
+.sec-sub{color:var(--ink-soft);font-size:16.5px;line-height:1.78;max-width:720px;margin-top:16px;}
+.readcol{max-width:720px;}
+.readcol p{font-size:15.5px;line-height:1.82;color:var(--ink-soft);margin-bottom:16px;}
+.secnum{font-size:13px;letter-spacing:.2em;color:var(--grey);font-family:"Times New Roman",serif;margin-bottom:10px;}
+/* insight block: Data / Insight / Why / Action structure */
+.iwa{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px;}
+@media(max-width:1000px){.iwa{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.iwa{grid-template-columns:1fr}}
+.iwa .box{background:var(--white);border:1px solid var(--line);border-radius:2px;padding:20px 20px;box-shadow:var(--shadow);}
+.iwa .box .lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin-bottom:10px;}
+.iwa .box.data .lbl{color:#5a7a8c;}
+.iwa .box.insight .lbl{color:var(--accent);}
+.iwa .box.why .lbl{color:#9E7B4F;}
+.iwa .box.action .lbl{color:#5c7a4a;}
+.iwa .box p{font-size:13px;line-height:1.68;color:var(--ink-soft);}
+.iwa .box p b{color:var(--ink);}
+/* segment definition box */
+.segdef{background:var(--paper-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:2px;padding:22px 26px;margin-top:20px;}
+.segdef .sdh{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14px;}
+.segdef table{width:100%;font-size:13.5px;}
+.segdef td{padding:8px 12px 8px 0;vertical-align:top;border-bottom:1px solid var(--line-soft);}
+.segdef td:first-child{width:120px;color:var(--grey);font-weight:600;white-space:nowrap;}
+.segdef tr:last-child td{border-bottom:none;}
+/* executive takeaway box */
+.takeaway{background:var(--white);border:1px solid var(--line);border-top:3px solid var(--ink);border-radius:2px;padding:26px 30px;margin-top:28px;box-shadow:var(--shadow);}
+.takeaway .th{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);font-weight:700;margin-bottom:16px;}
+.takeaway .tg{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+@media(max-width:860px){.takeaway .tg{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.takeaway .tg{grid-template-columns:1fr}}
+.takeaway .tg .ti .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:7px;}
+.takeaway .tg .ti p{font-size:13px;line-height:1.65;color:var(--ink-soft);}
+.takeaway .tg .ti p b{color:var(--ink);}
+
+/* nav */
+nav{position:sticky;top:0;z-index:60;background:rgba(246,243,238,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft);}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:58px;}
+.brand{font-weight:600;letter-spacing:.14em;font-size:14px;white-space:nowrap;}
+.brand span{color:var(--accent);}
+.navlinks{display:flex;gap:20px;overflow-x:auto;}
+.navlinks a{color:var(--ink-soft);text-decoration:none;font-size:12px;letter-spacing:.03em;transition:color .2s;white-space:nowrap;}
+.navlinks a:hover{color:var(--ink);}
+@media(max-width:1024px){.navlinks{display:none}}
+
+/* hero */
+.hero{padding:112px 0 92px;border-top:none;}
+.hero .kicker{font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);margin-bottom:26px;}
+.hero h1{font-size:66px;line-height:1.05;font-weight:400;letter-spacing:-.02em;font-family:"Songti TC","STSong",serif;}
+.hero h1 em{font-style:normal;color:var(--accent);}
+.hero .sub{font-size:18.5px;line-height:1.68;color:var(--ink-soft);margin-top:28px;max-width:680px;}
+.hero .metaline{margin-top:44px;display:flex;gap:40px;flex-wrap:wrap;font-size:13px;color:var(--grey);}
+.hero .metaline b{color:var(--ink);font-weight:600;display:block;font-size:26px;font-family:"Times New Roman",serif;margin-bottom:2px;}
+.hero .toc{margin-top:52px;display:flex;flex-wrap:wrap;gap:10px;}
+.hero .toc a{font-size:12.5px;color:var(--ink-soft);text-decoration:none;border:1px solid var(--line);border-radius:2px;padding:7px 13px;background:var(--white);transition:.2s;}
+.hero .toc a:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+@media(max-width:860px){.hero h1{font-size:46px}}
+
+.grid{display:grid;gap:24px;}
+.g4{grid-template-columns:repeat(4,1fr);}.g3{grid-template-columns:repeat(3,1fr);}.g2{grid-template-columns:repeat(2,1fr);}
+/* CHARTS NEVER SIDE-BY-SIDE: any grid containing a chart forced to single column */
+.charts-stack{grid-template-columns:1fr !important;gap:28px;}
+@media(max-width:960px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:1fr}.g2{grid-template-columns:1fr}}
+@media(max-width:560px){.g4{grid-template-columns:1fr}}
+
+.kpi{background:var(--white);border:1px solid var(--line);border-radius:2px;padding:26px 26px;box-shadow:var(--shadow);position:relative;}
+.kpi .lab{font-size:12px;letter-spacing:.06em;color:var(--grey);text-transform:uppercase;margin-bottom:11px;}
+.kpi .val{font-size:36px;font-weight:500;font-family:"Times New Roman",serif;line-height:1;}
+.kpi .val small{font-size:15px;color:var(--grey);margin-left:2px;}
+.kpi .note{font-size:12px;color:var(--accent);margin-top:9px;}
+.kpi::before{content:"";position:absolute;left:0;top:22px;bottom:22px;width:2px;background:var(--accent);opacity:.55;}
+.kpi.hk::before{background:var(--hk);}
+.kpi .delta{font-size:12px;font-weight:600;margin-top:9px;}
+.up{color:#5c7a4a;}.down{color:#9E3B33;}
+
+.panel{background:var(--white);border:1px solid var(--line);border-radius:2px;padding:28px;box-shadow:var(--shadow);}
+.panel h3{font-size:16.5px;font-weight:600;margin-bottom:4px;}
+.panel .ph{font-size:12.5px;color:var(--grey);margin-bottom:20px;}
+.chartbox{position:relative;height:380px;}.chartbox.tall{height:440px;}
+@media(max-width:600px){.chartbox{height:320px}.chartbox.tall{height:360px}}
+/* chart with finding beside it (not below) */
+.chart-side{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start;}
+.chart-side.wide{grid-template-columns:1.3fr 1fr;}
+@media(max-width:820px){.chart-side,.chart-side.wide{grid-template-columns:1fr;gap:20px}}
+.chart-side .chartbox{height:320px;}
+.chart-side .finding{align-self:center;}
+.chart-side .finding .kf{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px;}
+.chart-side .finding h4{font-size:15px;font-weight:600;line-height:1.5;margin-bottom:12px;color:var(--ink);}
+.chart-side .finding p{font-size:13px;line-height:1.66;color:var(--ink-soft);margin-bottom:10px;}
+.chart-side .finding .mini-legend{list-style:none;margin-top:10px;}
+.chart-side .finding .mini-legend li{font-size:12.5px;color:var(--ink-soft);padding:4px 0;display:flex;align-items:center;gap:8px;}
+.chart-side .finding .mini-legend li .sw{width:11px;height:11px;border-radius:2px;flex-shrink:0;}
+.chart-side .finding .mini-legend li b{color:var(--ink);font-family:"Times New Roman",serif;margin-left:auto;}
+/* "How this segment was created" — sits beside the chart, inside the finding column */
+.howmade{margin-top:16px;border-top:1px solid var(--line-soft);padding-top:12px;}
+.howmade > summary{list-style:none;cursor:pointer;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:6px;user-select:none;}
+.howmade > summary::-webkit-details-marker{display:none;}
+.howmade > summary::before{content:"▸";font-size:10px;transition:transform .2s;}
+.howmade[open] > summary::before{transform:rotate(90deg);}
+.howmade .hm-body{margin-top:10px;}
+.howmade dl{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;margin:0;}
+.howmade dt{font-size:11px;color:var(--grey);font-weight:600;white-space:nowrap;}
+.howmade dd{font-size:12px;color:var(--ink-soft);margin:0;line-height:1.55;}
+.howmade dd b{color:var(--ink);}
+/* insight-titled panel header */
+.panel h3.insight-title{font-size:16px;line-height:1.4;font-weight:600;}
+.panel .kv-inline{display:flex;gap:22px;flex-wrap:wrap;margin-top:4px;}
+.panel .kv-inline .kv{font-size:12.5px;color:var(--ink-soft);}
+.panel .kv-inline .kv b{font-family:"Times New Roman",serif;color:var(--ink);font-size:15px;}
+
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;}
+.chip{background:var(--paper-2);border:1px solid var(--line);border-radius:2px;padding:9px 14px;font-size:13px;color:var(--ink-soft);}
+.chip b{color:var(--ink);}
+
+.feat{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+.feat .cell{background:var(--white);padding:22px 20px;}
+.feat .cell .t{font-size:12px;letter-spacing:.06em;color:var(--grey);text-transform:uppercase;margin-bottom:8px;}
+.feat .cell .v{font-size:17px;font-weight:600;}
+.feat .cell .d{font-size:12.5px;color:var(--accent);margin-top:6px;}
+@media(max-width:860px){.feat{grid-template-columns:repeat(2,1fr)}}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line-soft);}
+th{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--grey);font-weight:600;}
+td.num,th.num{text-align:right;font-family:"Times New Roman",serif;}
+tr:hover td{background:var(--paper);}
+.rank{color:var(--accent);font-family:"Times New Roman",serif;font-weight:600;width:34px;}
+
+.callout{background:var(--ink);color:var(--paper);padding:38px 42px;border-radius:2px;}
+.callout.hk{background:var(--hk);}
+.callout .ct{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-2);margin-bottom:14px;}
+.callout.hk .ct{color:#B9C4DA;}
+.callout p{font-size:16px;line-height:1.78;color:#E9E4D9;max-width:920px;}
+.callout p b{color:var(--white);}
+.callout p+p{margin-top:14px;}
+table{width:100%;border-collapse:collapse;font-size:14px;table-layout:auto;}
+th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line-soft);word-break:break-word;overflow-wrap:anywhere;}
+th{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--grey);font-weight:600;white-space:nowrap;}
+td.num,th.num{text-align:right;font-family:"Times New Roman",serif;white-space:nowrap;}
+td{vertical-align:top;}
+tr:hover td{background:var(--paper);}
+.rank{color:var(--accent);font-family:"Times New Roman",serif;font-weight:600;width:34px;}
+/* tables fill container; only scroll locally inside the panel if a table truly can't shrink */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;}
+.tbl-wrap table{min-width:0;}
+@media(max-width:600px){th,td{padding:10px 10px;font-size:13px}}
+
+/* ---- new chapter components ---- */
+.transition-flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:14px;margin:6px 0;}
+.transition-flow .node{background:var(--paper-2);border:1px solid var(--line);border-radius:2px;padding:8px 14px;font-weight:500;}
+.transition-flow .node.yun{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.transition-flow .arrow{color:var(--accent);font-size:16px;}
+.matrix-table td.diag{background:var(--paper-2);font-weight:600;color:var(--ink);}
+.matrix-table td.hot{background:rgba(124,106,84,.16);}
+.heat{display:inline-block;min-width:36px;text-align:center;}
+.timeline-note{display:flex;gap:20px;flex-wrap:wrap;margin-top:18px;}
+.timeline-note .pk{background:var(--white);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:2px;padding:14px 18px;font-size:13.5px;flex:1;min-width:180px;}
+.timeline-note .pk b{display:block;font-size:19px;font-family:"Times New Roman",serif;color:var(--ink);margin-bottom:3px;}
+.loyalty-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:36px;}
+@media(max-width:1000px){.loyalty-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.loyalty-grid{grid-template-columns:1fr}}
+.lcard{background:var(--white);border:1px solid var(--line);border-radius:2px;box-shadow:var(--shadow);overflow:hidden;}
+.lcard .lh{padding:20px 22px;border-bottom:1px solid var(--line);}
+.lcard .lh .code{font-size:12px;letter-spacing:.14em;color:var(--accent);font-family:"Times New Roman",serif;}
+.lcard .lh .nm{font-size:17px;font-weight:600;margin-top:6px;}
+.lcard .lb{padding:18px 22px;}
+.lcard .lb .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line-soft);font-size:13px;}
+.lcard .lb .row:last-child{border-bottom:none;}
+.lcard .lb .row .k{color:var(--grey);}
+.lcard .lb .row .v{font-weight:600;font-family:"Times New Roman",serif;}
+.lcard.best{border:2px solid var(--accent);}
+.lcard.best .lh{background:var(--ink);}
+.lcard.best .lh .code,.lcard.best .lh .nm{color:var(--paper);}
+.step-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:36px;border:1px solid var(--line);}
+@media(max-width:1000px){.step-flow{grid-template-columns:repeat(2,1fr)}.step-flow .step{border-bottom:1px solid var(--line)}}
+@media(max-width:860px){.step-flow{grid-template-columns:1fr}}
+.step-flow .step{padding:24px;border-right:1px solid var(--line);background:var(--white);}
+.step-flow .step:last-child{border-right:none;}
+.step-flow .step .si{font-size:12px;color:var(--accent);font-family:"Times New Roman",serif;letter-spacing:.1em;}
+.step-flow .step .st{font-size:17px;font-weight:600;margin:8px 0;}
+.step-flow .step .sd{font-size:13px;color:var(--ink-soft);line-height:1.6;}
+.step-flow .step .sg{font-size:12px;color:var(--accent);margin-top:10px;}
+.crm-row{display:grid;grid-template-columns:120px 1fr;border-top:1px solid var(--line);}
+.crm-row:last-child{border-bottom:1px solid var(--line);}
+.crm-row .day{padding:22px 20px 22px 0;font-family:"Times New Roman",serif;font-size:22px;color:var(--accent);font-weight:600;}
+.crm-row .day small{display:block;font-size:11px;color:var(--grey);letter-spacing:.1em;text-transform:uppercase;font-family:inherit;margin-top:4px;}
+.crm-row .cbody{padding:22px 0 22px 28px;border-left:1px solid var(--line);display:grid;grid-template-columns:2fr 1fr;gap:18px;}
+@media(max-width:860px){.crm-row{grid-template-columns:1fr}.crm-row .cbody{grid-template-columns:1fr;border-left:none;padding-left:0}}
+.crm-row .cbody .msg{font-size:14px;color:var(--ink-soft);line-height:1.7;}
+.crm-row .cbody .meta{font-size:12.5px;}
+.crm-row .cbody .meta .tag{display:inline-block;background:var(--paper-2);border:1px solid var(--line);border-radius:2px;padding:2px 9px;margin:0 4px 4px 0;color:var(--ink-soft);}
+.insight-cols{columns:2;column-gap:44px;margin-top:30px;}
+@media(max-width:860px){.insight-cols{columns:1}}
+.insight-cols .ins{break-inside:avoid;margin-bottom:20px;padding-left:34px;position:relative;}
+.insight-cols .ins .no{position:absolute;left:0;top:-2px;font-family:"Times New Roman",serif;font-size:20px;color:var(--accent);font-weight:600;}
+.insight-cols .ins h5{font-size:14.5px;font-weight:600;margin-bottom:4px;}
+.insight-cols .ins p{font-size:13px;color:var(--ink-soft);line-height:1.6;}
+.infer{display:inline-block;font-size:11px;letter-spacing:.05em;color:var(--accent);border:1px solid var(--accent);border-radius:2px;padding:2px 8px;margin-left:6px;vertical-align:middle;opacity:.85;}
+.tag-dominant{display:inline-block;background:var(--accent);color:#fff;font-size:11px;padding:2px 9px;border-radius:2px;margin-left:6px;vertical-align:middle;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:860px){.two{grid-template-columns:1fr}}
+
+/* small persona cards (6-up) */
+.pmini{background:var(--white);border:1px solid var(--line);border-radius:2px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;}
+.pmini .h{padding:22px 24px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--paper-2),var(--white));}
+.pmini .pn{font-size:11px;letter-spacing:.16em;color:var(--accent);font-family:"Times New Roman",serif;}
+.pmini .nm{font-size:20px;font-weight:500;margin-top:7px;font-family:"Songti TC","STSong",serif;}
+.pmini .who{font-size:12.5px;color:var(--grey);margin-top:5px;}
+.pmini .b{padding:20px 24px;flex:1;}
+.pmini .stat{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 14px;margin-bottom:16px;}
+.pmini .stat div .n{font-size:20px;font-family:"Times New Roman",serif;font-weight:500;line-height:1;}
+.pmini .stat div .l{font-size:11px;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;margin-top:5px;}
+.pmini .line{font-size:13px;color:var(--ink-soft);padding:6px 0;border-top:1px solid var(--line-soft);}
+.pmini .line b{color:var(--ink);}
+.pmini .foot{padding:14px 24px;background:var(--paper);border-top:1px solid var(--line);font-size:12.5px;color:var(--accent);}
+
+/* flagship persona */
+.pcard{background:var(--white);border:1px solid var(--line);border-radius:2px;box-shadow:var(--shadow);overflow:hidden;}
+.pcard .top{padding:34px 36px;background:linear-gradient(180deg,var(--paper-2),var(--white));border-bottom:1px solid var(--line);}
+.pcard .pnum{font-size:12px;letter-spacing:.2em;color:var(--accent);font-family:"Times New Roman",serif;}
+.pcard .pname{font-size:30px;font-weight:500;margin-top:8px;font-family:"Songti TC","STSong",serif;}
+.pcard .quote{font-size:15px;color:var(--ink-soft);margin-top:14px;font-style:italic;max-width:640px;border-left:2px solid var(--accent);padding-left:16px;}
+.trait{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-bottom:1px solid var(--line);}
+.trait .t{background:var(--white);padding:20px 22px;}
+.trait .t .k{font-size:11px;letter-spacing:.06em;color:var(--grey);text-transform:uppercase;margin-bottom:7px;}
+.trait .t .v{font-size:15px;font-weight:600;}
+@media(max-width:860px){.trait{grid-template-columns:1fr}}
+.split{display:grid;grid-template-columns:1.1fr .9fr;gap:0;}
+.split .l{padding:32px 36px;border-right:1px solid var(--line);}
+.split .r{padding:32px 36px;}
+@media(max-width:860px){.split{grid-template-columns:1fr}.split .l{border-right:none;border-bottom:1px solid var(--line)}}
+.needlist{list-style:none;}
+.needlist li{padding:10px 0 10px 20px;position:relative;font-size:14px;color:var(--ink-soft);border-bottom:1px solid var(--line-soft);}
+.needlist li:last-child{border-bottom:none}
+.needlist li::before{content:"→";position:absolute;left:0;color:var(--accent);}
+.playbook{background:var(--paper);padding:26px 36px;border-top:1px solid var(--line);}
+.playbook .st{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14px;}
+.pb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 30px;}
+@media(max-width:660px){.pb-grid{grid-template-columns:1fr}}
+.pb-grid .item .h{font-size:13px;font-weight:600;margin-bottom:4px;}
+.pb-grid .item p{font-size:13px;color:var(--ink-soft);}
+
+/* journey */
+.journey{position:relative;}
+.jstep{display:grid;grid-template-columns:200px 1fr;gap:0;border-top:1px solid var(--line);}
+.jstep:last-child{border-bottom:1px solid var(--line);}
+.jstep .stage{padding:26px 24px 26px 0;}
+.jstep .stage .idx{font-size:12px;color:var(--accent);font-family:"Times New Roman",serif;letter-spacing:.15em;}
+.jstep .stage .nm{font-size:20px;font-weight:500;margin-top:6px;font-family:"Songti TC","STSong",serif;}
+.jstep .cols{display:grid;grid-template-columns:repeat(3,1fr);border-left:1px solid var(--line);}
+.jstep .cols .c{padding:22px;border-right:1px solid var(--line-soft);}
+.jstep .cols .c:last-child{border-right:none;}
+.jstep .cols .c .h{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-bottom:9px;}
+.jstep .cols .c p{font-size:13px;color:var(--ink-soft);}
+.jstep .cols .c.opp p{color:var(--accent);}
+@media(max-width:860px){.jstep{grid-template-columns:1fr}.jstep .cols{grid-template-columns:1fr;border-left:none}.jstep .stage{padding-bottom:0}}
+
+.strat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+@media(max-width:860px){.strat-grid{grid-template-columns:1fr}}
+.scard{background:var(--white);border:1px solid var(--line);border-radius:2px;padding:26px;box-shadow:var(--shadow);}
+.scard .num{font-family:"Times New Roman",serif;font-size:14px;color:var(--accent);letter-spacing:.15em;}
+.scard h4{font-size:18px;font-weight:600;margin:8px 0 12px;}
+.scard ul{list-style:none;}
+.scard li{font-size:13.5px;color:var(--ink-soft);padding:7px 0 7px 18px;position:relative;border-bottom:1px solid var(--line-soft);}
+.scard li:last-child{border-bottom:none;}
+.scard li::before{content:"—";position:absolute;left:0;color:var(--accent);}
+
+.note-src{font-size:12px;color:var(--grey);margin-top:26px;line-height:1.6;border-top:1px dashed var(--line);padding-top:18px;}
+.hkband{border-top:3px solid var(--hk);}
+.divider-part{text-align:center;padding:8px 0 0;}
+.divider-part span{font-size:12px;letter-spacing:.3em;color:var(--accent);text-transform:uppercase;}
+footer{padding:56px 0 76px;border-top:1px solid var(--line);color:var(--grey);font-size:12.5px;}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">雲織鞋 <span>· GROWTH STRATEGY</span></div>
+    <div class="navlinks">
+      <a href="#execsum">摘要</a>
+      <a href="#dashboard">數據儀表板</a>
+      <a href="#persona">人物誌</a>
+      <a href="#cohort">新客·Cohort</a>
+      <a href="#firstimpact">首購效益</a>
+      <a href="#churn">流失·升級</a>
+      <a href="#forecast">預測模擬</a>
+      <a href="#exec">成長洞察</a>
+      <a href="#outlook">總結展望</a>
+      <a href="#method">方法論</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">CloudKnit™ · Customer Intelligence &amp; Growth Strategy Report · V2</div>
+    <h1>雲織鞋<br>顧客智慧與<em>成長策略</em></h1>
+    <p class="sub">從「消費者輪廓」升級為「成長策略」——這份報告不只描述顧客是誰，更直接回答商品策略、CRM、會員經營、廣告投放、新品開發與跨品類銷售該怎麼做。每一章以 Data → Insight → Why → Action 的顧問結構收斂，附 Executive Takeaway，可直接進管理層決策。</p>
+    <div class="metaline">
+      <div><b>5,082</b>購買會員數</div>
+      <div><b>NT$25.7M</b>雲織累積銷售</div>
+      <div><b>22,996</b>全通路訂單品項</div>
+      <div><b>2023–2026</b>資料期間</div>
+    </div>
+    <div class="toc">
+      <a href="#execsum">★ 一分鐘摘要</a>
+      <a href="#summary">01 核心指標</a>
+      <a href="#dashboard">02 數據儀表板</a>
+      <a href="#behavior">03 購買行為 · RFM</a>
+      <a href="#segdef">04 分群定義透明度</a>
+      <a href="#product">05 商品偏好</a>
+      <a href="#cross">06 跨品類購買</a>
+      <a href="#persona">07 六大人物誌</a>
+      <a href="#flagship">08 主力Persona</a>
+      <a href="#hk">09 港澳市場</a>
+      <a href="#journey">10 顧客旅程</a>
+      <a href="#strategy">11 行銷策略</a>
+      <a href="#prepath">12 購買路徑</a>
+      <a href="#postpath">13 後續購買</a>
+      <a href="#loyalty">14 忠誠度模型</a>
+      <a href="#repurchase">15 回購分析</a>
+      <a href="#transition">16 同款回購</a>
+      <a href="#color">17 顏色忠誠</a>
+      <a href="#size">18 尺寸忠誠</a>
+      <a href="#attribute">19 商品屬性</a>
+      <a href="#evolution">20 需求演變</a>
+      <a href="#lifecycle">21 商品生命週期</a>
+      <a href="#crm">22 CRM 自動化</a>
+      <a href="#cohort">23 新客湧入 · Cohort</a>
+      <a href="#firstimpact">24 首購效益排名</a>
+      <a href="#basket">25 購物籃分析</a>
+      <a href="#nbp">26 下一雙推薦模型</a>
+      <a href="#rhythm">27 購買節奏 · CLV</a>
+      <a href="#adoption">28 新品接受 · 價格</a>
+      <a href="#churn">29 流失預警 · 升級</a>
+      <a href="#forecast">30 預測與情境模擬</a>
+      <a href="#exec">31 成長洞察總結</a>
+      <a href="#method">32 方法論與限制</a>
+      <a href="#outlook">33 總結與未來展望</a>
+    </div>
+  </div>
+</header>
+
+<!-- 00 EXECUTIVE SUMMARY (1-min read) -->
+<section id="execsum" style="background:linear-gradient(180deg,var(--paper-2),var(--paper));">
+  <div class="wrap">
+    <div class="secnum">EXECUTIVE SUMMARY · 一分鐘閱讀</div>
+    <h2 class="sec">給管理層的摘要</h2>
+    <div class="readcol">
+      <p class="sec-sub">這份報告回答一個核心商業問題：<b>CloudKnit™ 雲織鞋累積了 5,082 位會員、NT$25.7M 營收，但成長從哪裡來？</b>答案不在「拉更多新客」，而在「把已經進來的顧客養成回購與跨品類的高價值會員」。</p>
+    </div>
+
+    <div class="grid g2" style="margin-top:40px">
+      <div class="panel" style="border-left:3px solid var(--accent)">
+        <div class="kf" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px">最大的成長機會</div>
+        <p style="font-size:15px;line-height:1.75;color:var(--ink-soft)">目前 <b style="color:var(--ink)">49.5% 會員只買過一次</b>，而只要顧客走到「雲織與其他鞋型交替購買」的狀態，LTV 會從 4,019 元跳升到 <b style="color:var(--ink)">20,124 元（5 倍）</b>。<b style="color:var(--ink)">把一次客推上這條價值階梯，是未來一年最大的單一成長引擎</b>——它同時牽動回購、跨品類與客單三個槓桿。</p>
+      </div>
+      <div class="panel" style="border-left:3px solid var(--hk)">
+        <div class="kf" style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--hk);font-weight:700;margin-bottom:12px">本報告如何使用</div>
+        <p style="font-size:15px;line-height:1.75;color:var(--ink-soft)">29 章涵蓋輪廓、人物誌、購買路徑、忠誠度、回購節奏到 CRM 自動化。每章依 <b style="color:var(--ink)">Insight → Evidence → Why → Business Impact → Action</b> 結構撰寫，並附 Executive Takeaway。可直接用於商品策略、CRM、會員經營、廣告投放、新品開發與跨品類銷售決策。</p>
+      </div>
+    </div>
+
+    <div style="margin-top:36px">
+      <div class="eyebrow">三個最重要的洞察</div>
+      <div class="grid g3" style="margin-top:16px">
+        <div class="panel"><div style="font-family:'Times New Roman',serif;font-size:26px;color:var(--accent);font-weight:600">01</div>
+          <h4 style="font-size:15.5px;font-weight:600;margin:8px 0 8px">忠於品牌，不只忠於雲織鞋</h4>
+          <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">近 <b>70%</b> 雲織買家跨線購買，<b>63.5%</b> 營收來自非雲織商品。成長來自跨品類經營，而非單推一條產品線。</p></div>
+        <div class="panel"><div style="font-family:'Times New Roman',serif;font-size:26px;color:var(--accent);font-weight:600">02</div>
+          <h4 style="font-size:15.5px;font-weight:600;margin:8px 0 8px">賣最多的鞋，不是養客最強的鞋</h4>
+          <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">雲織英雄款瑪莉珍第二購率僅 <b>13%</b>；莫卡辛／樂福首購者第二購率近 <b>100%</b>、LTV 翻倍。獲客款與養客款要分開操作。</p></div>
+        <div class="panel"><div style="font-family:'Times New Roman',serif;font-size:26px;color:var(--accent);font-weight:600">03</div>
+          <h4 style="font-size:15.5px;font-weight:600;margin:8px 0 8px">低回購有一半是「新客湧入」造成的假象</h4>
+          <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">兩個大促季新客暴增，90 天回購被稀釋到 <b>8–11%</b>；穩定期同指標達 <b>17.4%</b>。不能把低回購全歸咎於商品。</p></div>
+      </div>
+    </div>
+
+    <div style="margin-top:36px">
+      <div class="eyebrow">三個最高優先級策略（P0 立即執行）</div>
+      <div class="grid g3" style="margin-top:16px">
+        <div class="panel" style="background:var(--ink);color:var(--paper)">
+          <div style="font-size:11px;letter-spacing:.1em;color:var(--accent-2);font-weight:700;margin-bottom:10px">P0 · CRM 部門</div>
+          <h4 style="font-size:15.5px;font-weight:600;margin-bottom:8px;color:#fff">30/60/90 天回購自動化</h4>
+          <p style="font-size:13px;color:#E9E4D9;line-height:1.68">建立首購後自動溝通流程，目標把第二購率由 13% 提升至 25%。</p></div>
+        <div class="panel" style="background:var(--ink);color:var(--paper)">
+          <div style="font-size:11px;letter-spacing:.1em;color:var(--accent-2);font-weight:700;margin-bottom:10px">P0 · 商品／廣告部門</div>
+          <h4 style="font-size:15.5px;font-weight:600;margin-bottom:8px;color:#fff">獲客款與養客款雙軌操作</h4>
+          <p style="font-size:13px;color:#E9E4D9;line-height:1.68">瑪莉珍衝量、莫卡辛／樂福養客；首購瑪莉珍者立即 CRM 導流。</p></div>
+        <div class="panel" style="background:var(--ink);color:var(--paper)">
+          <div style="font-size:11px;letter-spacing:.1em;color:var(--accent-2);font-weight:700;margin-bottom:10px">P0 · CRM／數據部門</div>
+          <h4 style="font-size:15.5px;font-weight:600;margin-bottom:8px;color:#fff">喚醒沉睡高價值會員</h4>
+          <p style="font-size:13px;color:#E9E4D9;line-height:1.68">1,783 位沉睡會員握有 30.5% 營收；高風險高消費客身上有近 177 萬可挽回。</p></div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:var(--grey);margin-top:32px;max-width:720px;line-height:1.7">完整優先級（P0–P2）、SMART 行動計畫與各部門分工，見第 31 章與第 33 章「總結與未來展望」；分析方法與資料限制見第 32 章「資料來源與分析限制」。</p>
+  </div>
+</section>
+
+<!-- 01 SUMMARY -->
+<section id="summary">
+  <div class="wrap">
+    <div class="secnum">01 / EXECUTIVE SUMMARY</div>
+    <h2 class="sec">高階摘要</h2>
+    <p class="sec-sub">管理者的一頁閱讀。八個核心指標，勾勒雲織鞋顧客資產的健康度與價值集中度。</p>
+    <div class="grid g4" style="margin-top:40px">
+      <div class="kpi"><div class="lab">購買會員數</div><div class="val">5,082</div><div class="note">官網雲織鞋會員</div></div>
+      <div class="kpi"><div class="lab">總銷售金額</div><div class="val">25.7<small>M</small></div><div class="note">NT$25,749,491</div></div>
+      <div class="kpi"><div class="lab">總銷售雙數</div><div class="val">22,996</div><div class="note">累積商品數</div></div>
+      <div class="kpi"><div class="lab">平均客單價</div><div class="val">2,161<small>元</small></div><div class="note">總金額 ÷ 總訂單</div></div>
+      <div class="kpi"><div class="lab">平均購買頻次</div><div class="val">2.34<small>次</small></div><div class="note">每會員平均訂單數</div></div>
+      <div class="kpi"><div class="lab">平均回購週期</div><div class="val">216<small>天</small></div><div class="note">回購者間隔中位數</div></div>
+      <div class="kpi"><div class="lab">回購會員比例</div><div class="val">50.5<small>%</small></div><div class="note">≥2 筆訂單者</div></div>
+      <div class="kpi"><div class="lab">高價值會員比例</div><div class="val">31.7<small>%</small></div><div class="note">高價值 + VIP 消費者</div></div>
+    </div>
+    <div style="margin-top:56px" class="two">
+      <div>
+        <div class="eyebrow">主要消費者特徵</div>
+        <div class="chips">
+          <span class="chip">年齡集中 <b>26–45 歲</b>（已填齡者 71%）</span>
+          <span class="chip">主力城市 <b>新北・台北・桃園</b></span>
+          <span class="chip">海外主戰場 <b>港澳 1,265 人</b></span>
+          <span class="chip">核心需求 <b>通勤舒適</b></span>
+          <span class="chip">最愛鞋型 <b>瑪莉珍鞋</b></span>
+          <span class="chip">主色系 <b>黑・杏・銀灰</b></span>
+          <span class="chip">熱門鞋碼 <b>37–39</b></span>
+          <span class="chip">鞋款特性 <b>輕量・低跟・軟</b> <span class="infer">依購買行為推論</span></span>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow">一句話結論</div>
+        <div class="callout" style="margin-top:8px">
+          <div class="ct">The Takeaway</div>
+          <p>雲織鞋的顧客是一群 <b>30–45 歲、居住雙北與港澳的都會女性</b>，為「一雙能整天站著走、又能穿去上班」的鞋而來。她們一半以上會回購，<b>31.7% 的高價值會員貢獻了絕大多數營收</b>，而且 <b>近七成會延伸購買雲織鞋以外的商品</b>——她們忠於品牌，不只忠於一條產品線。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 DASHBOARD -->
+<section id="dashboard">
+  <div class="wrap">
+    <div class="secnum">02 / CUSTOMER DASHBOARD</div>
+    <h2 class="sec">顧客數據分析</h2>
+    <p class="sec-sub">年齡、地區與價值分群的全景。年齡欄位有 68% 未填寫，以下年齡圖表僅採用 1,609 位「已填齡」會員，趨勢仍具代表性。</p>
+    <div class="grid g2 charts-stack" style="margin-top:40px">
+      <div class="panel"><h3 class="insight-title">31–45 歲是人數與營收雙核心，撐起主力客群</h3><div class="ph">長條為人數、折線為營收（右軸，萬元）</div><div class="chartbox"><canvas id="ageChart"></canvas></div>
+        <details class="howmade" style="margin-top:16px">
+          <summary>How this segment was created — 年齡分群</summary>
+          <div class="hm-body"><dl>
+            <dt>分群條件</dt><dd>依會員填寫之年齡區間（每 5 歲一段）</dd>
+            <dt>使用欄位</dt><dd>年齡欄位（會員資料）</dd>
+            <dt>判斷邏輯</dt><dd>直接採用原始年齡區間；<b>約 68% 會員未填齡</b>，本圖僅涵蓋 1,609 位已填齡者</dd>
+            <dt>商業目的</dt><dd>辨識核心年齡客群（26–45 歲）以對齊商品風格、色系與投放</dd>
+          </dl></div>
+        </details>
+      </div>
+      <div class="panel"><h3>各年齡層平均客單價</h3><div class="ph">26–30 歲與 46–50 歲客單價最高</div><div class="chartbox"><canvas id="ageAov"></canvas></div></div>
+    </div>
+    <div class="grid g2 charts-stack" style="margin-top:20px">
+      <div class="panel"><h3>Top 10 城市會員數</h3><div class="ph">「非宅配」為門市自取／海外集運等非配送地址</div><div class="chartbox tall"><canvas id="cityChart"></canvas></div></div>
+      <div class="panel"><h3>台灣北中南分布</h3><div class="ph">台灣本島會員 · 北部占絕對多數</div><div class="chartbox tall"><canvas id="regionChart"></canvas></div>
+        <p style="font-size:12.5px;color:var(--grey);margin-top:14px">另有 <b style="color:var(--ink)">港澳會員 1,265 人</b>，是台灣以外最大單一市場，詳見第 08 章。</p>
+        <details class="howmade" style="margin-top:14px">
+          <summary>How this segment was created — 地區分群</summary>
+          <div class="hm-body"><dl>
+            <dt>分群條件</dt><dd>依收件城市歸類為台灣北中南、東部離島，以及港澳</dd>
+            <dt>使用欄位</dt><dd>收件城市 / 地址</dd>
+            <dt>判斷邏輯</dt><dd>城市對應行政區歸入北中南；香港、澳門、「速網香港」集運歸港澳；「非宅配」為門市自取／集運</dd>
+            <dt>商業目的</dt><dd>辨識主力市場（雙北）與海外最大市場（港澳），指導物流與在地化投放</dd>
+          </dl></div>
+        </details>
+      </div>
+    </div>
+    <div class="grid g2 charts-stack" style="margin-top:20px">
+      <div class="panel"><h3 class="insight-title">價值高度集中：三成高價值會員撐起營收基本盤</h3><div class="ph">消費價值分群</div>
+        <div class="chart-side">
+          <div class="chartbox"><canvas id="valueChart"></canvas></div>
+          <div class="finding">
+            <div class="kf">Key Finding</div>
+            <h4>高價值＋VIP 消費者合計 31.7%，是資源投放的重心</h4>
+            <p>營收貢獻極不平均，經營資源應向上層傾斜、避免齊頭式行銷。</p>
+            <ul class="mini-legend" id="valueLegend"></ul>
+            <details class="howmade">
+              <summary>How this segment was created</summary>
+              <div class="hm-body"><dl>
+                <dt>分群條件</dt><dd>依累積消費金額（Monetary）由高到低分為四層</dd>
+                <dt>使用欄位</dt><dd>累積消費金額</dd>
+                <dt>判斷邏輯</dt><dd>高價值＋VIP消費者合計即「高價值會員 <b>31.7%</b>」</dd>
+                <dt>商業目的</dt><dd>辨識營收貢獻集中處，優先投入資源於高價值層</dd>
+              </dl></div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="panel"><h3 class="insight-title">客單價分層清楚：高客單客 LTV 是低客單客的 3.5 倍</h3><div class="ph">客單價分群</div>
+        <div class="chart-side">
+          <div class="chartbox"><canvas id="aovSegChart"></canvas></div>
+          <div class="finding">
+            <div class="kf">Key Finding</div>
+            <h4>高客單客不只單筆貴，回購率也更高（見第 27 章）</h4>
+            <p>價格取向可作為定價與促購分眾依據：對高客單客少用折扣、多用權益。</p>
+            <ul class="mini-legend" id="aovLegend"></ul>
+            <details class="howmade">
+              <summary>How this segment was created</summary>
+              <div class="hm-body"><dl>
+                <dt>分群條件</dt><dd>依平均客單價（總消費 ÷ 訂單數）分三層</dd>
+                <dt>使用欄位</dt><dd>累積消費金額、訂單數</dd>
+                <dt>判斷邏輯</dt><dd>高客單客 LTV <b>7,141</b> 為低客單客 <b>2,042</b> 的 3.5 倍</dd>
+                <dt>商業目的</dt><dd>作為價格取向代理指標，指導定價與促購分眾</dd>
+              </dl></div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid g2 charts-stack" style="margin-top:20px">
+      <div class="panel"><h3 class="insight-title">回購穩定度偏低：近九成會員仍屬低頻回購</h3><div class="ph">購買頻率分群</div>
+        <div class="chart-side">
+          <div class="chartbox"><canvas id="freqChart"></canvas></div>
+          <div class="finding">
+            <div class="kf">Key Finding</div>
+            <h4>高／穩定回購合計僅約 11%，回購習慣尚未普遍建立</h4>
+            <p>把低頻回購者往「穩定回購」推進，是拉升整體 LTV 最大的結構性機會。</p>
+            <ul class="mini-legend" id="freqLegend"></ul>
+            <details class="howmade">
+              <summary>How this segment was created</summary>
+              <div class="hm-body"><dl>
+                <dt>分群條件</dt><dd>依購買頻率與回購穩定度分層</dd>
+                <dt>使用欄位</dt><dd>Frequency（訂單數）、回購間隔</dd>
+                <dt>判斷邏輯</dt><dd>高頻／穩定回購合計僅約 <b>11%</b>，其餘為低頻回購</dd>
+                <dt>商業目的</dt><dd>辨識可往「穩定回購」推進的低頻客，拉升整體 LTV</dd>
+              </dl></div>
+            </details>
+          </div>
+        </div>
+      </div>
+      <div class="panel"><h3 class="insight-title">生命週期分布：沉睡層握有三成營收，是最大喚醒金礦</h3><div class="ph">會員分群人數</div>
+        <div class="chart-side">
+          <div class="chartbox"><canvas id="mSegChart"></canvas></div>
+          <div class="finding">
+            <div class="kf">Key Finding</div>
+            <h4>1,783 位沉睡會員仍持有 30.5% 累積營收</h4>
+            <p>喚醒沉睡層比純拉新更具投報率，應列入 CRM 優先任務（見第 22 章）。</p>
+            <ul class="mini-legend" id="mSegLegend"></ul>
+            <details class="howmade">
+              <summary>How this segment was created</summary>
+              <div class="hm-body"><dl>
+                <dt>分群條件</dt><dd>依購買次數與最近購買時間的組合分層</dd>
+                <dt>使用欄位</dt><dd>Frequency（訂單數）、Recency（距最近購買天數）</dd>
+                <dt>判斷邏輯</dt><dd>VIP＝RFM 最高群；沉睡＝曾購買但超過回購週期未再回購</dd>
+                <dt>商業目的</dt><dd>對應生命週期差異化經營：新客促購、沉睡喚醒、忠誠維繫</dd>
+              </dl></div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 BEHAVIOR -->
+<section id="behavior">
+  <div class="wrap">
+    <div class="secnum">03 / PURCHASE BEHAVIOR &amp; RFM</div>
+    <h2 class="sec">購買行為分析</h2>
+    <p class="sec-sub">從訂單數分布到 RFM 分群，回答一個問題：誰只來一次、誰會回來、誰值得被留住。</p>
+    <div class="grid g2 charts-stack" style="margin-top:40px">
+      <div class="panel"><h3 class="insight-title">近半會員只買一次：最大的可轉化成長池</h3><div class="ph">49.5% 會員僅購買一次，是最大的可轉化池</div><div class="chartbox"><canvas id="orderDist"></canvas></div></div>
+      <div class="panel"><h3>會員生命週期分群</h3><div class="ph">依 RFM 綜合狀態 · 泡泡大小＝營收貢獻</div><div class="chartbox"><canvas id="segBubble"></canvas></div>
+        <details class="howmade" style="margin-top:18px">
+          <summary>How this segment was created — RFM / VIP 定義</summary>
+          <div class="hm-body"><dl>
+            <dt>分群條件</dt><dd>依 R（距最近購買天數）、F（訂單數）、M（累積消費金額）三軸綜合分層；VIP＝三項皆落最高分層</dd>
+            <dt>使用欄位</dt><dd>Recency、Frequency、Monetary</dd>
+            <dt>判斷邏輯</dt><dd>VIP 平均 <b>9.1 次</b>購買、累積消費 <b>20,276 元</b>；忠誠＝高頻穩定、回購＝已 ≥2 次、新＝僅 1 次且近期、沉睡＝超過回購週期未再回購</dd>
+            <dt>商業目的</dt><dd>維護高價值會員、以差異化經營提高年度 LTV 並防止流失</dd>
+          </dl></div>
+        </details>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:20px">
+      <h3>RFM 分群總表</h3>
+      <div class="ph">R = 距最近購買天數 · F = 訂單數 · M = 累積消費金額</div>
+      <table><thead><tr><th>生命週期分群</th><th class="num">會員數</th><th class="num">佔比</th><th class="num">營收貢獻</th><th class="num">營收佔比</th><th class="num">平均消費</th><th>經營意涵</th></tr></thead><tbody id="rfmTable"></tbody></table>
+    </div>
+    <div class="grid g4" style="margin-top:20px">
+      <div class="kpi"><div class="lab">一次購買會員</div><div class="val">2,516</div><div class="note">49.5% · 首購後尚未回頭</div></div>
+      <div class="kpi"><div class="lab">回購會員</div><div class="val">1,117</div><div class="note">已建立回購習慣</div></div>
+      <div class="kpi"><div class="lab">忠誠會員</div><div class="val">382</div><div class="note">高頻穩定貢獻</div></div>
+      <div class="kpi"><div class="lab">VIP 會員</div><div class="val">271</div><div class="note">21.3% 營收來自這群人</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 PRODUCT -->
+
+<!-- ============ SEGMENTATION TRANSPARENCY (consolidated reference) ============ -->
+<section id="segdef">
+  <div class="wrap">
+    <div class="secnum">04 / SEGMENTATION DEFINITIONS</div>
+    <h2 class="sec">分群定義透明度：How This Segment Was Created</h2>
+    <div class="readcol">
+      <p class="sec-sub">本報告每個分群的形成邏輯，已直接標註在對應圖表旁的「How this segment was created」展開區（第 02、03 章）。此處提供一頁彙整的對照表，方便 CRM／商品／行銷團隊以同一套定義對齊行動。所有分群沿用原始資料既有欄位或標準 RFM 定義，未做主觀調整。</p>
+    </div>
+
+    <div class="panel" style="margin-top:32px">
+      <h3 class="insight-title">七大分群一頁對照：條件、欄位、邏輯與商業目的</h3>
+      <div class="ph">詳細定義見各圖表旁的展開區 · 忠誠度 A/B/C/D 詳見第 14 章</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>分群</th><th>分群條件</th><th>使用欄位</th><th>判斷邏輯（重點）</th><th>商業目的</th></tr></thead>
+        <tbody>
+          <tr><td><b>VIP 會員</b></td><td>RFM 綜合最高群組</td><td>R · F · M</td><td>三軸皆最高分層；平均 9.1 次、20,276 元</td><td>提高年度 LTV、防流失</td></tr>
+          <tr><td><b>忠誠／回購／新／沉睡</b></td><td>購買次數 × 最近購買時間</td><td>Frequency · Recency</td><td>沉睡＝超過回購週期未再購</td><td>生命週期差異化經營</td></tr>
+          <tr><td><b>消費價值分群</b></td><td>累積消費金額分層</td><td>Monetary</td><td>高價值＋VIP 合計 31.7%</td><td>資源優先投放高價值層</td></tr>
+          <tr><td><b>客單價分群</b></td><td>平均客單價分層</td><td>累積消費 · 訂單數</td><td>高客單客 LTV 為低客單 3.5 倍</td><td>定價與促購分眾代理指標</td></tr>
+          <tr><td><b>年齡分群</b></td><td>年齡區間（每 5 歲）</td><td>年齡欄位</td><td>約 68% 未填，僅涵蓋已填齡者</td><td>對齊商品風格與投放</td></tr>
+          <tr><td><b>地區分群</b></td><td>收件城市歸類</td><td>收件城市 / 地址</td><td>港澳含集運；非宅配為門市自取</td><td>物流與在地化投放</td></tr>
+          <tr><td><b>忠誠度 A/B/C/D</b></td><td>首購雲織後的行為序列</td><td>訂單時序 · 商品名稱</td><td>D＝雲織與他款交替（LTV 20,124）</td><td>推顧客上價值階梯</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="takeaway">
+      <div class="th">Executive Takeaway</div>
+      <div class="tg">
+        <div class="ti"><div class="k">What happened</div><p>每個分群的定義已就近標註在圖表旁，並在此彙整成一頁對照表。</p></div>
+        <div class="ti"><div class="k">Why</div><p>可驗證、看得到的分群定義，是讓管理層信任並跨團隊複用分析的前提。</p></div>
+        <div class="ti"><div class="k">Business Impact</div><p>行銷、商品、CRM 團隊可依同一套定義對齊行動，避免各自解讀。</p></div>
+        <div class="ti"><div class="k">Action</div><p>將此定義表納入 CRM／CDP 標準，作為自動化分眾的共同語言。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="product">
+  <div class="wrap">
+    <div class="secnum">05 / PRODUCT PREFERENCE</div>
+    <h2 class="sec">商品偏好分析</h2>
+    <p class="sec-sub">款式、顏色、尺寸與鞋款特性——消費者用購買行為投票，投出了一雙非常具體的鞋。</p>
+    <div class="panel" style="margin-top:40px">
+      <h3 class="insight-title">瑪莉珍系列包辦熱銷前段，是營收壓艙石</h3><div class="ph">依銷售雙數排序 · 皆為【3D零感雲織鞋】系列</div>
+      <table><thead><tr><th class="rank">#</th><th>款式</th><th class="num">銷售雙數</th><th class="num">銷售金額</th></tr></thead><tbody id="prodTable"></tbody></table>
+    </div>
+    <div class="grid g2 charts-stack" style="margin-top:20px">
+      <div class="panel"><h3 class="insight-title">瑪莉珍一款獨大，佔銷量近半</h3><div class="ph">瑪莉珍鞋一款獨大，佔銷量近半</div><div class="chartbox"><canvas id="catChart"></canvas></div></div>
+      <div class="panel"><h3>顏色偏好</h3><div class="ph">黑與杏色為絕對主力，銀灰為第三色</div><div class="chartbox"><canvas id="colorChart"></canvas></div></div>
+    </div>
+    <div class="grid g2 charts-stack" style="margin-top:20px">
+      <div class="panel"><h3>尺寸分析</h3><div class="ph">37–39 為熱門鞋碼，呈典型女鞋常態分布</div><div class="chartbox"><canvas id="sizeChart"></canvas></div></div>
+      <div class="panel"><h3>年齡 × 顏色差異</h3><div class="ph">依已填齡銷售紀錄推論</div>
+        <table><thead><tr><th>年齡層</th><th>第一色</th><th>第二色</th><th>第三色</th></tr></thead><tbody>
+          <tr><td>26–30 歲</td><td>黑 <span class="tag-dominant">主</span></td><td>米</td><td>杏色</td></tr>
+          <tr><td>31–35 歲</td><td>黑 <span class="tag-dominant">主</span></td><td>米</td><td>杏色</td></tr>
+          <tr><td>36–40 歲</td><td>黑 <span class="tag-dominant">主</span></td><td>杏色</td><td>星耀銀灰</td></tr>
+          <tr><td>41–45 歲</td><td>黑 <span class="tag-dominant">主</span></td><td>杏色</td><td>星耀銀灰</td></tr>
+          <tr><td>46–50 歲</td><td>黑 <span class="tag-dominant">主</span></td><td>杏色</td><td>星耀銀灰</td></tr>
+        </tbody></table>
+        <p style="font-size:12.5px;color:var(--grey);margin-top:12px"><b style="color:var(--ink)">年輕客群偏「米」等淺色</b>，<b style="color:var(--ink)">成熟客群轉向「星耀銀灰」</b>這類帶質感的中性色。</p>
+      </div>
+    </div>
+    <div style="margin-top:40px">
+      <div class="eyebrow">消費者偏好的鞋款特徵</div>
+      <div class="feat">
+        <div class="cell"><div class="t">鞋型 Style</div><div class="v">瑪莉珍・樂福</div><div class="d">好穿脫、包覆足背</div></div>
+        <div class="cell"><div class="t">鞋面 Upper</div><div class="v">CloudKnit™ 雲織</div><div class="d">彈性編織、透氣</div></div>
+        <div class="cell"><div class="t">鞋底 Sole</div><div class="v">輕量發泡・防滑橡膠</div><div class="d">吸震、耐走</div></div>
+        <div class="cell"><div class="t">跟高 Heel</div><div class="v">平底 ～ 4cm 低跟</div><div class="d">久站不累</div></div>
+      </div>
+      <div class="callout" style="margin-top:24px">
+        <div class="ct">Preference Signature <span class="infer" style="border-color:var(--accent-2);color:var(--accent-2)">依購買行為推論</span></div>
+        <p>綜合鞋型、鞋面材質、鞋底與跟高，雲織鞋消費者一致偏好 <b>輕量、低跟、柔軟、久穿舒適</b> 的鞋款。她們買的不是「時髦」，而是「一雙能整天站著走、又體面到能進辦公室」的解決方案——這正是 CloudKnit™ 雲織科技的核心賣點。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 CROSS CATEGORY -->
+<section id="cross">
+  <div class="wrap">
+    <div class="secnum">06 / BEYOND CLOUDKNIT</div>
+    <h2 class="sec">她們還買了什麼？跨品類購買分析</h2>
+    <p class="sec-sub">雲織鞋是入口，不是全部。這些會員在全通路訂單裡，超過六成金額花在雲織鞋以外的商品——她們忠於「品牌」，而不只忠於「一條產品線」。</p>
+    <div class="grid g4" style="margin-top:40px">
+      <div class="kpi"><div class="lab">跨線購買會員</div><div class="val" id="k_cross">—</div><div class="note">同時買過雲織以外商品</div></div>
+      <div class="kpi"><div class="lab">跨線購買率</div><div class="val" id="k_crate">—</div><div class="note">佔全體雲織買家</div></div>
+      <div class="kpi"><div class="lab">非雲織營收佔比</div><div class="val" id="k_nonshare">—</div><div class="note">全通路訂單金額</div></div>
+      <div class="kpi"><div class="lab">非雲織營收</div><div class="val" id="k_nonrev">—</div><div class="note">NT$ · 品牌延伸價值</div></div>
+    </div>
+    <div class="grid g2 charts-stack" style="margin-top:20px">
+      <div class="panel"><h3>非雲織品類 · 觸及會員數</h3><div class="ph">哪些品類最能把雲織買家接住到第二條線</div><div class="chartbox tall"><canvas id="nonGrp"></canvas></div></div>
+      <div class="panel"><h3>全通路大分類結構</h3><div class="ph">鞋為核心，靴類是明確的第二引擎</div><div class="chartbox tall"><canvas id="bigCat"></canvas></div></div>
+    </div>
+    <div class="grid g2 charts-stack" style="margin-top:20px">
+      <div class="panel"><h3>顧客的購物廣度</h3><div class="ph">每位會員買過幾種「非雲織」品類 · 越右越黏著</div><div class="chartbox"><canvas id="breadth"></canvas></div>
+        <p style="font-size:12.5px;color:var(--grey);margin-top:14px">約 <b style="color:var(--ink)">58% 的跨線買家嘗試了 2 種以上</b>其他品類，代表雲織鞋是把新客帶進整個品牌世界的鉤子商品。</p></div>
+      <div class="panel"><h3>非雲織 · 熱銷商品 TOP 12</h3><div class="ph">樂福鞋、莫卡辛健走鞋、韓風低跟鞋是主要延伸</div>
+        <div style="max-height:340px;overflow:auto"><table><thead><tr><th class="rank">#</th><th>商品</th><th class="num">訂單品項</th></tr></thead><tbody id="nonTop"></tbody></table></div></div>
+    </div>
+    <div class="callout" style="margin-top:28px">
+      <div class="ct">Cross-Sell Signal</div>
+      <p>雲織鞋買家最容易被帶去的下一站是 <b>樂福／莫卡辛（1,829 人）</b> 與 <b>靴類（1,474 人）</b>。前者延續了「舒適通勤」的相同需求、幾乎無教育成本；後者是<b>季節互補</b>——夏天雲織、冬天穿靴，正好把一位顧客的一整年填滿。這兩條線應成為雲織鞋顧客的預設交叉推薦路徑。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 PERSONAS (6-up) -->
+<section id="persona">
+  <div class="wrap">
+    <div class="secnum">07 / CUSTOMER PERSONA</div>
+    <h2 class="sec">六大人物誌</h2>
+    <p class="sec-sub">六個由實際數據長出來的人。每張卡片的人數、客單價、回購與偏好皆來自對應會員群的真實計算；姓名與情境為依數據建立的代表性虛構人物。</p>
+    <div class="grid g3" id="personaGrid" style="margin-top:40px"></div>
+    <p class="note-src">六個 Persona 依不同會員切分（年齡層／價值分群／地區／購買次數）計算，群組間可能部分重疊；姓名、年齡細節與引言為情境示意，用以承載該群的真實統計特徵。標示「依購買行為推論」者為根據銷售與行為數據的合理推測。</p>
+  </div>
+</section>
+
+<!-- 07 FLAGSHIP PERSONA -->
+<section id="flagship">
+  <div class="wrap">
+    <div class="secnum">08 / FLAGSHIP PERSONA</div>
+    <h2 class="sec">主力人物誌單頁：雙北舒適通勤族</h2>
+    <p class="sec-sub">把最具代表性的 Persona 放大一整頁。這是雲織鞋人數與營收的雙料核心，也是所有行銷動作最該對齊的那張臉。</p>
+    <div class="pcard" style="margin-top:40px">
+      <div class="top">
+        <div class="pnum">FLAGSHIP PERSONA · 30–40 歲 · 雙北桃園</div>
+        <div class="pname">怡君｜32 歲・行銷企劃・新北板橋</div>
+        <div class="quote">「我一週有四天要在外面跑，早上進辦公室、下午跑客戶，晚上還要走一段路回家。我需要一雙看起來得體、但走一整天不會腳痛的鞋。」</div>
+      </div>
+      <div class="trait">
+        <div class="t"><div class="k">人物輪廓</div><div class="v">30–40 歲女性 · 雙北／桃園</div></div>
+        <div class="t"><div class="k">職業情境</div><div class="v">內勤＋外勤混合的都會白領</div></div>
+        <div class="t"><div class="k">在群人數</div><div class="v" id="p_n">—</div></div>
+      </div>
+      <div class="split">
+        <div class="l">
+          <div class="eyebrow" style="margin-bottom:16px">購買行為（本群實際數據）</div>
+          <div class="grid g3" style="gap:14px">
+            <div class="kpi"><div class="lab">平均客單價</div><div class="val" id="p_aov">—</div></div>
+            <div class="kpi"><div class="lab">平均訂單數</div><div class="val" id="p_ord">—</div></div>
+            <div class="kpi"><div class="lab">平均累積消費</div><div class="val" id="p_cum">—</div></div>
+          </div>
+          <p style="font-size:13.5px;color:var(--ink-soft);margin-top:20px;line-height:1.7">這群人平均下單近 <b>3 次</b>、累積消費 <b>6,060 元</b>，皆高於全體平均；回購週期中位數 <b id="p_cyc">—</b> 天，比整體再長一些——顯示她們是「認定就長期回購、但節奏偏慢」的穩定型顧客，只要在對的時間出現，回購幾乎是必然。</p>
+          <div class="eyebrow" style="margin:26px 0 12px">價值分群組成</div>
+          <div class="chartbox" style="height:220px"><canvas id="pValue"></canvas></div>
+        </div>
+        <div class="r">
+          <div class="eyebrow" style="margin-bottom:16px">她的鞋櫃：跨品類偏好</div>
+          <div class="chartbox" style="height:250px"><canvas id="pCat"></canvas></div>
+          <div class="eyebrow" style="margin:24px 0 12px">消費需求推測 <span class="infer">依購買行為推論</span></div>
+          <ul class="needlist">
+            <li>通勤舒適：內外勤混合，鞋是每日工作裝備</li>
+            <li>長時間站立與走動：偏好低跟、輕量、吸震</li>
+            <li>日常穿搭一致性：黑／米為主，好搭套裝與便服</li>
+            <li>季節輪替：夏雲織、冬靴類，一年兩次換季購買</li>
+          </ul>
+        </div>
+      </div>
+      <div class="playbook">
+        <div class="st">Marketing Playbook · 對這張臉說話</div>
+        <div class="pb-grid">
+          <div class="item"><div class="h">推薦商品</div><p>方頭／雙帶瑪莉珍主力款 → 交叉推薦樂福鞋與換季短靴，組成「通勤三雙鞋」。</p></div>
+          <div class="item"><div class="h">廣告訊息</div><p>「一雙從會議室走到通勤路，一整天不喊累」——訴求場景，而非折扣。</p></div>
+          <div class="item"><div class="h">CRM 策略</div><p>首購後第 6–7 個月（回購週期前）觸發新色與換季提醒，縮短沉默期。</p></div>
+          <div class="item"><div class="h">活動建議</div><p>「上班族換季鞋櫃」主題組合購，滿額搭贈保養／除臭配件，提升客單。</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 HK MARKET -->
+<section id="hk" class="hkband">
+  <div class="wrap">
+    <div class="secnum" style="color:var(--hk)">09 / CROSS-BORDER MARKET</div>
+    <h2 class="sec">港澳市場專章：海外最大單一戰場</h2>
+    <p class="sec-sub">1,265 位港澳會員貢獻 28.5% 營收，是台灣以外最重要的市場。她們的購買節奏和台灣顧客明顯不同——買得更大筆、更集中，但回得更慢。</p>
+    <div class="grid g4" style="margin-top:40px">
+      <div class="kpi hk"><div class="lab">港澳會員數</div><div class="val" id="h_n">—</div><div class="note">海外最大單一市場</div></div>
+      <div class="kpi hk"><div class="lab">營收佔比</div><div class="val" id="h_share">—</div><div class="note">高於多數本島縣市</div></div>
+      <div class="kpi hk"><div class="lab">平均客單價</div><div class="val" id="h_aov">—</div><div class="delta up" id="h_aov_d">—</div></div>
+      <div class="kpi hk"><div class="lab">平均購買雙數</div><div class="val" id="h_pairs">—</div><div class="delta up" id="h_pairs_d">—</div></div>
+    </div>
+    <div class="grid g2 charts-stack" style="margin-top:20px">
+      <div class="panel"><h3>港澳 vs 台灣 · 購買行為對比</h3><div class="ph">同一群品牌顧客，兩種截然不同的購買節奏</div><div class="chartbox tall"><canvas id="hkCompare"></canvas></div></div>
+      <div class="panel"><h3>港澳品類偏好</h3><div class="ph">與台灣一致以瑪莉珍、樂福為主，靴類佔比亦高</div><div class="chartbox tall"><canvas id="hkCat"></canvas></div></div>
+    </div>
+    <div class="grid g2 charts-stack" style="margin-top:20px">
+      <div class="panel"><h3>港澳會員生命週期分群</h3><div class="ph">新會員與沉睡會員合計偏高，回購培養是最大缺口</div><div class="chartbox"><canvas id="hkSeg"></canvas></div></div>
+      <div class="panel"><h3>港澳熱門顏色</h3><div class="ph">黑與米白系為主，與整體色偏一致</div><div class="chartbox"><canvas id="hkColor"></canvas></div></div>
+    </div>
+    <div class="grid g2" style="margin-top:28px">
+      <div class="callout hk">
+        <div class="ct">Market Diagnosis</div>
+        <p>港澳客的行為是典型的 <b>跨境「買大買少」</b>：一次買近 <b>5 雙</b>、客單價 <b>3,054 元</b>（比台灣高約 58%）來攤平國際運費，但回購率只有 <b>42%</b>，低於台灣的 53%。她們不是不忠誠，而是<b>跨境摩擦讓回購變貴、變慢</b>——這正是可被經營拉起的空間。</p>
+      </div>
+      <div class="panel">
+        <div class="eyebrow" style="color:var(--hk)">港澳經營 Playbook</div>
+        <ul class="needlist">
+          <li><b>滿額免國際運費門檻</b>：順勢放大既有的「一次多雙」行為</li>
+          <li><b>季節組合包</b>：夏雲織＋冬靴一次購足，降低跨境下單次數</li>
+          <li><b>到貨速度承諾＋在地客服時區</b>：降低跨境購物焦慮，提升回購</li>
+          <li><b>喚醒 540 位沉睡港澳客</b>：以專屬回饋＋新色雙鉤重啟</li>
+          <li>在地化訊息：「香港上班族的通勤救星，滿額免運直送」</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 JOURNEY -->
+<section id="journey">
+  <div class="wrap">
+    <div class="secnum">10 / CUSTOMER JOURNEY MAP</div>
+    <h2 class="sec">顧客旅程地圖</h2>
+    <p class="sec-sub">從認識品牌到會員忠誠的五個階段，每一步都有一個痛點，也都有一個品牌可以介入的機會。</p>
+    <div class="journey" style="margin-top:40px">
+      <div class="jstep"><div class="stage"><div class="idx">STAGE 01</div><div class="nm">認識品牌</div></div>
+        <div class="cols"><div class="c"><div class="h">消費者行為</div><p>於社群／廣告看到「雲織科技」訴求，被輕量舒適與通勤場景吸引。</p></div>
+          <div class="c"><div class="h">痛點</div><p>不確定編織鞋是否耐穿、好不好搭、尺寸準不準。</p></div>
+          <div class="c opp"><div class="h">品牌機會</div><p>用真人久站／通勤實測影片與尺寸對照表建立第一層信任。</p></div></div></div>
+      <div class="jstep"><div class="stage"><div class="idx">STAGE 02</div><div class="nm">第一次購買</div></div>
+        <div class="cols"><div class="c"><div class="h">消費者行為</div><p>多在行銷活動下單，從熱銷入門款切入，選黑或杏、37–39 碼。</p></div>
+          <div class="c"><div class="h">痛點</div><p>首購常靠折扣驅動，忠誠度尚未建立，運費敏感。</p></div>
+          <div class="c opp"><div class="h">品牌機會</div><p>首單附「第二雙優惠」與保養卡，把折扣客導向長期關係。</p></div></div></div>
+      <div class="jstep"><div class="stage"><div class="idx">STAGE 03</div><div class="nm">使用</div></div>
+        <div class="cols"><div class="c"><div class="h">消費者行為</div><p>作為通勤／久站主力鞋日日穿著，體驗輕量與吸震。</p></div>
+          <div class="c"><div class="h">痛點</div><p>編織鞋面清潔、除臭與久穿變形疑慮無人解答。</p></div>
+          <div class="c opp"><div class="h">品牌機會</div><p>推播清潔保養內容與延長壽命技巧，強化「值得」的感受。</p></div></div></div>
+      <div class="jstep"><div class="stage"><div class="idx">STAGE 04</div><div class="nm">再次購買</div></div>
+        <div class="cols"><div class="c"><div class="h">消費者行為</div><p>約 7 個月後回購，換季換色或補同款，開始跨鞋型嘗試（樂福、靴）。</p></div>
+          <div class="c"><div class="h">痛點</div><p>半年沉默期易被競品攔截；不知道有新款新色。</p></div>
+          <div class="c opp"><div class="h">品牌機會</div><p>在第 5–6 個月主動觸發新色提醒與跨品類推薦，縮短 216 天回購週期。</p></div></div></div>
+      <div class="jstep"><div class="stage"><div class="idx">STAGE 05</div><div class="nm">會員忠誠</div></div>
+        <div class="cols"><div class="c"><div class="h">消費者行為</div><p>成為高頻／VIP，跨款收藏、追新色，帶來口碑與轉介。</p></div>
+          <div class="c"><div class="h">痛點</div><p>缺乏尊榮感與專屬權益，忠誠無回饋易流失至沉睡。</p></div>
+          <div class="c opp"><div class="h">品牌機會</div><p>建立分級制與新品搶先購，並喚醒 1,783 位沉睡高消費者。</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 STRATEGY -->
+<section id="strategy">
+  <div class="wrap">
+    <div class="secnum">11 / MARKETING RECOMMENDATIONS</div>
+    <h2 class="sec">行銷策略建議</h2>
+    <p class="sec-sub">五個優先級明確的行動方案，全部從本報告的數據缺口與機會點推導而來。</p>
+    <div class="strat-grid" style="margin-top:40px">
+      <div class="scard"><div class="num">01 · 首購轉第二購</div><h4>把 49.5% 的一次客變回頭客</h4>
+        <ul><li>2,516 位一次客是最大成長槓桿，回購一次即可顯著拉升 LTV</li>
+          <li>首購後 30/60/90 天分段 EDM／簡訊再行銷，主打第二雙優惠</li>
+          <li>綁定穿搭建議與保養教學，降低編織鞋的使用疑慮</li>
+          <li>設定「湊組免運」門檻，鼓勵一次買兩雙攤平運費</li></ul></div>
+      <div class="scard"><div class="num">02 · 縮短回購週期</div><h4>把 216 天的空窗提前介入</h4>
+        <ul><li>回購週期中位數 216 天，半年沉默期是流失高風險區</li>
+          <li>於首購後第 5–6 個月主動推播新色與換季新款</li>
+          <li>以熱門色（黑・杏・銀灰）與熱門碼（37–39）優先備貨與推薦</li>
+          <li>用「你的尺碼補貨了」等低打擾訊號喚回觀望者</li></ul></div>
+      <div class="scard"><div class="num">03 · 交叉銷售第二條線</div><h4>用樂福與靴類填滿顧客的一整年</h4>
+        <ul><li>近七成雲織買家跨線購買，非雲織貢獻 63.5% 全通路營收</li>
+          <li>樂福／莫卡辛（同需求）與靴類（季節互補）是最佳交叉路徑</li>
+          <li>雲織訂單完成頁與 EDM 預設帶入這兩條線的推薦</li>
+          <li>推「夏雲織＋冬靴」季節組合，把單次顧客做成全年顧客</li></ul></div>
+      <div class="scard"><div class="num">04 · 經營 VIP 與沉睡池</div><h4>守住 21% 營收，喚醒 30% 沉睡</h4>
+        <ul><li>271 位 VIP 貢獻 21.3% 營收，需分級制與新品搶先購鞏固</li>
+          <li>1,783 位沉睡會員仍握有 30.5% 累積營收，是最大喚醒金礦</li>
+          <li>沉睡喚醒以「限時專屬回饋 + 新色」雙鉤，避免純折扣稀釋品牌</li>
+          <li>VIP 生日禮、免運與快速換貨，強化尊榮體驗</li></ul></div>
+      <div class="scard"><div class="num">05 · 放大港澳市場</div><h4>把 1,265 位港澳客做成第二主場</h4>
+        <ul><li>港澳為海外最大單一市場，客單價高於台灣 58%</li>
+          <li>推出滿額免國際運費與季節組合包，回應運費敏感</li>
+          <li>客服時區對應與到貨速度承諾，降低跨境購物焦慮</li>
+          <li>回購率僅 42%，培養回購是拉升營收的最大單一空間</li></ul></div>
+      <div class="scard" style="background:var(--ink);color:var(--paper);border-color:var(--ink)">
+        <div class="num" style="color:var(--accent-2)">PRIORITY · 若只做一件事</div>
+        <h4 style="color:#fff">先把一次客的第二購率拉起來</h4>
+        <p style="font-size:13.5px;color:#E9E4D9;line-height:1.7">它同時解決成長（2,516 人的池子）、回購週期（提前介入）與 LTV（一次回購即翻倍）三個問題；並可自然接軌交叉銷售——第二購直接推樂福或靴類，是投報率最高的單一動作。</p></div>
+    </div>
+    <div class="note-src">
+      <b>資料與方法說明：</b>本報告整合原始 Excel 三張工作表（雲織鞋顧客 5,082 筆、雲織鞋銷售紀錄 6,559 筆、全通路訂單 22,996 筆，涵蓋 2023–2026 年）。金額單位為新台幣元。年齡欄位約 68% 未填寫，年齡相關圖表僅採用 1,609 位已填齡會員。「非雲織」以商品名稱是否含「雲織／3D零感／CloudKnit」判定，跨品類金額採訂單「收益」欄。城市中的「非宅配」代表門市自取或海外集運等非配送地址；港澳含香港、澳門及「速網香港」集運。RFM 定義：R＝距最近購買天數、F＝訂單數、M＝累積消費金額。六大 Persona 依不同會員切分計算，群組間可能部分重疊；姓名與情境為依實際數據建立的代表性虛構人物。標示「依購買行為推論」者為根據行為數據的合理推測，非欄位直接證明。
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 11 PRE-PURCHASE PATH ============ -->
+<section id="prepath">
+  <div class="wrap">
+    <div class="secnum">12 / PURCHASE PATH — BEFORE CLOUDKNIT</div>
+    <h2 class="sec">購買路徑分析：先買什麼，才買雲織鞋</h2>
+    <div class="readcol">
+      <p class="sec-sub">依每位會員的完整訂單時間軸還原「進入雲織鞋之前」的歷程。5,054 位雲織買家中，<b>2,884 位（57%）在買第一雙雲織鞋之前，已經先買過品牌的其他鞋款</b>——她們不是被雲織鞋拉進品牌，而是已經是品牌顧客後才升級到雲織鞋。這條前導路徑，決定了該用哪些商品當「入口」。</p>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>2,884 人先買他款再買雲織；最常見的前一雙是 <b>樂福／莫卡辛（777 人）</b> 與 <b>靴類（553 人）</b>。前一雙到第一雙雲織的間隔中位數 <b>10 天</b>、平均 194 天（少數長尾拉高平均）。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>間隔中位數僅 10 天，代表<b>大量顧客是在同一波購物週期內、看完他款順勢加購雲織鞋</b>——雲織鞋常是「連帶購買」而非獨立決策。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>樂福與莫卡辛主打的「舒適好走」與雲織鞋訴求高度重疊，顧客在同一需求下自然延伸；靴類則是季節互補的既有顧客回流。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>在樂福／莫卡辛／靴類商品頁與結帳頁，<b>常態掛載雲織鞋推薦位</b>；對買過這三類、尚未買雲織的會員，優先投放雲織鞋廣告。</p></div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel">
+        <h3 class="insight-title">樂福／莫卡辛與靴類是雲織鞋最強前導入口</h3>
+        <div class="ph">長條為前導人數 · 標籤顯示該路徑會員的平均 LTV</div>
+        <div class="chartbox tall"><canvas id="prePathGrp"></canvas></div>
+      </div>
+      <div class="panel">
+        <h3>轉換路徑流程（Sankey）</h3>
+        <div class="ph">前一雙品類 → 第一雙雲織鞋品類 · 僅顯示 ≥15 人路徑</div>
+        <div class="chartbox tall"><canvas id="sankeyChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-top:24px">
+      <div class="panel">
+        <h3>Top 20 導流商品（第一雙雲織前的最後一雙）</h3>
+        <div class="tbl-wrap" style="max-height:420px;overflow:auto"><table><thead><tr><th class="rank">#</th><th>商品</th><th class="num">前導人數</th></tr></thead><tbody id="prePathProd"></tbody></table></div>
+      </div>
+      <div class="panel">
+        <h3>Top 導流品類 · LTV 與入口價值</h3>
+        <div class="ph">哪些入口商品帶來最高價值的雲織鞋顧客</div>
+        <div class="tbl-wrap"><table><thead><tr><th>導流品類</th><th class="num">前導人數</th><th class="num">平均 LTV</th></tr></thead><tbody id="prePathLtv"></tbody></table></div>
+        <p style="font-size:13px;color:var(--grey);margin-top:16px;line-height:1.7"><b style="color:var(--ink)">靴類入口的顧客 LTV 最高（約 8,044 元）</b>，高於樂福／莫卡辛入口（6,490 元）。靴類客單價高、季節性強，是價值最好的雲織鞋入口商品。</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+      <div class="ct">CRM &amp; Ad Recommendation</div>
+      <p><b>入口商品策略：</b>把「樂福／莫卡辛」設為<b>觸及最廣的入口</b>（衝量），把「靴類」設為<b>價值最高的入口</b>（衝 LTV）。廣告投放上，對已購這兩類、30 天內未購雲織的會員，投放雲織鞋動態再行銷；EDM 在他款出貨後 3–7 天內加推雲織鞋，命中「同週期連帶購買」的高峰。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12 POST-PURCHASE PATH ============ -->
+<section id="postpath">
+  <div class="wrap">
+    <div class="secnum">13 / POST-PURCHASE JOURNEY</div>
+    <h2 class="sec">雲織鞋後續購買分析：買完之後買什麼</h2>
+    <div class="readcol">
+      <p class="sec-sub">以「購買事件（occasion）」為單位——同一張訂單或 7 天內視為同一次——追蹤會員買完第一雙雲織鞋後，第二、三、四次買了什麼。答案很清楚：<b>她們並沒有停在雲織鞋，而是持續在雲織鞋與其他鞋型之間流動</b>，愈往後跨品類愈明顯。</p>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>第二次購買中 <b>42.5% 仍是雲織鞋</b>，其餘轉向瑪莉珍、樂福／莫卡辛與靴類；第三次降到 36%、第四次回到 41%。每一步間隔中位數約 <b>60–61 天</b>。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>雲織鞋不是終點也不是一次性商品，而是<b>顧客鞋櫃裡反覆回訪的常青款</b>；跨品類（樂福、靴類）與雲織鞋交替出現，形成穩定的輪替節奏。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>約兩個月的間隔對應「換季／換場景」需求；顧客用雲織鞋解決日常通勤，用靴類與樂福補足季節與造型變化。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>在第一雙雲織後約 <b>60 天</b>推第二波，內容交錯「雲織新色」與「樂福／短靴」；建立自動化的品類輪替推薦，而非一味重推同款。</p></div>
+    </div>
+
+    <div class="step-flow">
+      <div class="step"><div class="si">STEP 1</div><div class="st">第一雙雲織鞋</div><div class="sd">進入點：多為方頭／雙帶瑪莉珍，黑或米，通勤場景。</div><div class="sg">需求：通勤舒適</div></div>
+      <div class="step"><div class="si">STEP 2 · +60天</div><div class="st">42.5% 續購雲織</div><div class="sd">其餘轉瑪莉珍其他款、樂福／莫卡辛、靴類。</div><div class="sg">推薦：雲織新色 × 樂福</div></div>
+      <div class="step"><div class="si">STEP 3 · +60天</div><div class="st">跨品類擴大</div><div class="sd">雲織佔比降至 36%，靴類與樂福比重上升。</div><div class="sg">推薦：換季短靴</div></div>
+      <div class="step"><div class="si">STEP 4 · +60天</div><div class="st">輪替成形</div><div class="sd">雲織回到 41%，與其他鞋型穩定交替。</div><div class="sg">推薦：組合購 · 收藏新色</div></div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel"><h3>第二次購買的品類組成</h3><div class="ph">雲織 vs 其他鞋型</div><div class="chartbox"><canvas id="step2Chart"></canvas></div></div>
+      <div class="panel"><h3>各步驟雲織鞋佔比</h3><div class="ph">後續每一次購買中，雲織鞋的比例</div><div class="chartbox"><canvas id="stepYunChart"></canvas></div></div>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+      <div class="ct">Cross-Selling Strategy</div>
+      <p><b>最佳交叉銷售節奏：</b>雲織鞋顧客的購買週期約 60 天一輪。第 2 輪主打「雲織新色 + 樂福」延續舒適需求；第 3 輪切入「季節靴類」；第 4 輪推「組合購與收藏新色」。用品類輪替取代同款重推，能同時提升回購率與客單價。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13 LOYALTY MODEL ============ -->
+<section id="loyalty">
+  <div class="wrap">
+    <div class="secnum">14 / CLOUDKNIT LOYALTY MODEL</div>
+    <h2 class="sec">雲織鞋忠誠度分析</h2>
+    <div class="readcol">
+      <p class="sec-sub">把雲織買家依「買完雲織鞋之後的行為」分成四群，比較她們的價值。結論非常關鍵：<b>會在雲織鞋與其他鞋型之間交替購買的顧客（D 群），LTV 高達 20,124 元，是「只買一次雲織」顧客的 5 倍</b>。忠誠不是「一直買同一款」，而是「把品牌當成整個鞋櫃的供應商」。</p>
+    </div>
+
+    <div class="loyalty-grid" id="loyaltyCards"></div>
+
+    <div class="iwa" style="margin-top:36px">
+      <div class="box data"><div class="lbl">Data 數據</div><p>A 只買一次雲織 84%、LTV 4,019；B 純回購雲織 6.1%、LTV 8,601；C 買完轉他款 7.8%、LTV 9,380；<b>D 雲織×他款交替 2.1%、LTV 20,124</b>。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>價值階梯非常陡：只要顧客從「單次」進到「交替購買」，LTV 跳升 5 倍。<b>D 群雖僅占 2%，卻是每位顧客最該被推往的終點狀態。</b></p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>交替購買代表顧客把品牌當成解決「全年、全場景」鞋需求的來源，購買頻次與品類廣度同時最大化。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>CRM 目標從「催回購同款」升級為<b>「推動品類擴張」</b>：A→B（先促成第二次雲織）、B→D（引導嘗試靴類／樂福），把顧客一路推上價值階梯。</p></div>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+      <div class="ct">Who Becomes Loyal — 忠誠顧客的養成公式</div>
+      <p>最容易成為高價值忠誠顧客的路徑是：<b>首購雲織 → 60 天內完成第二次購買 → 被引導跨入靴類或樂福 → 進入雲織與他款交替的輪替</b>。跨品類比例是忠誠度的領先指標——A 群跨品類 64%、D 群 100%。誰跨得早、跨得廣，誰就留得久、花得多。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14 REPURCHASE ============ -->
+<section id="repurchase">
+  <div class="wrap">
+    <div class="secnum">15 / REPURCHASE ANALYSIS</div>
+    <h2 class="sec">雲織鞋回購分析</h2>
+    <div class="readcol">
+      <p class="sec-sub">聚焦「再次購買雲織鞋」的會員。以購買事件計，<b>394 位會員回購了雲織鞋（占雲織買家 7.8%）</b>，回購間隔中位數 60 天、平均 87 天。注意：這裡指的是「雲織鞋本身」的重複購買，比第 03 章的「全通路回購率 50.5%」嚴格得多——多數顧客回購的是品牌其他鞋款，而非再買一雙雲織。</p>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>雲織回購者 394 人、回購率 7.8%；間隔中位數 <b>60 天</b>。回購高峰集中在 <b>30 天內（150 人）</b>與 <b>121–180 天（66 人）</b>兩段，第二購買旺季落在 <b>6 月</b>。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>回購呈<b>雙峰</b>：一峰是短期加購（尺碼／顏色補齊），一峰是季節性換季回購。真正的 CRM 空窗在 90–180 天之間。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>30 天內回購多為「一次沒買夠」；120–180 天回購對應換季與鞋子進入替換期。資料截止於 2026 年中，長天期回購被截斷。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>把 CRM 主推波段設在 <b>第 90 與第 150 天</b>，補上兩峰之間的空窗；6 月旺季前 2–4 週加大雲織鞋新色曝光。</p></div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel"><h3 class="insight-title">雲織回購呈雙峰：短期加購與換季需求並存</h3><div class="ph">首次 → 第二次雲織購買間隔 · 分段人數</div><div class="chartbox tall"><canvas id="repDistChart"></canvas></div></div>
+      <div class="panel"><h3>回購累積曲線（Repurchase Timeline）</h3><div class="ph">回購者中，在 N 天內完成第二購的累積比例</div><div class="chartbox tall"><canvas id="repCumChart"></canvas></div></div>
+    </div>
+
+    <div class="panel" style="margin-top:24px">
+      <h3>回購季節性</h3><div class="ph">第二次雲織購買落在各月份的人數 · 6 月為高峰</div>
+      <div class="chartbox"><canvas id="repSeasonChart"></canvas></div>
+    </div>
+
+    <div class="timeline-note">
+      <div class="pk"><b>第 90 天</b>最佳 EDM 波段：填補短期加購與換季回購之間的空窗，主打新色與尺碼補貨。</div>
+      <div class="pk"><b>第 150 天</b>最佳 LINE 推播：命中 121–180 天換季回購峰，訊息聚焦「換季新款 + 舊鞋替換」。</div>
+      <div class="pk"><b>6 月前 2 週</b>最佳 SMS／廣告：搶在年度回購旺季前佈局新色與夏季款曝光。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 15 PRODUCT TRANSITION ============ -->
+<section id="transition">
+  <div class="wrap">
+    <div class="secnum">16 / PRODUCT TRANSITION MATRIX</div>
+    <h2 class="sec">同款／不同款回購分析</h2>
+    <div class="readcol">
+      <p class="sec-sub">比較第一雙與第二雙雲織鞋的鞋型，建立商品轉換矩陣。<b>54% 的顧客第二雙仍選同一種鞋型</b>，其中瑪莉珍鞋的黏著度最高（69% 續選瑪莉珍）。這代表雲織鞋的鞋型偏好一旦形成就相當穩定，但也存在清楚的「升級路徑」。</p>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>同鞋型續購 54%。鞋型黏著度：<b>瑪莉珍 69%</b> &gt; 平底 45% &gt; 樂福 41% &gt; 娃娃鞋 23%。最常見轉換是瑪莉珍→瑪莉珍、平底→瑪莉珍。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>瑪莉珍是<b>「終點鞋型」</b>——各鞋型都傾向流向瑪莉珍；娃娃鞋與平底則是流動性高的「過渡鞋型」，容易被升級替換。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>瑪莉珍兼具包覆性與通勤體面感，滿足核心客群主需求，因此成為多數人的收斂選擇；娃娃鞋偏休閒，較易被更百搭的款式取代。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>把瑪莉珍設為<b>回購主推與新色重心</b>；對首購娃娃鞋／平底的顧客，第二波主動推薦瑪莉珍升級款，順勢提高客單。</p></div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel">
+        <h3>鞋型轉換矩陣（第一雙 → 第二雙）</h3>
+        <div class="ph">列＝第一雙鞋型，欄＝第二雙鞋型 · 對角線＝維持同款</div>
+        <div class="tbl-wrap"><table class="matrix-table" id="transMatrix"></table></div>
+      </div>
+      <div class="panel">
+        <h3>各鞋型「續選同款」忠誠度</h3>
+        <div class="ph">首購該鞋型者，第二雙仍選同鞋型的比例</div>
+        <div class="chartbox"><canvas id="typeLoyalChart"></canvas></div>
+      </div>
+    </div>
+
+    <div style="margin-top:28px">
+      <div class="eyebrow">典型商品升級路徑 <span class="infer">依轉換頻率推論</span></div>
+      <div class="transition-flow" style="margin-top:14px">
+        <span class="node">娃娃鞋 / 平底</span><span class="arrow">→</span>
+        <span class="node yun">方頭瑪莉珍</span><span class="arrow">→</span>
+        <span class="node yun">雙帶瑪莉珍</span><span class="arrow">→</span>
+        <span class="node">樂福鞋</span><span class="arrow">→</span>
+        <span class="node">短靴</span>
+      </div>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-top:16px;max-width:860px;line-height:1.75">顧客傾向從入門的平底／娃娃鞋，收斂到瑪莉珍主力款，再往樂福與季節性靴類擴張。新品開發與推薦引擎可依此路徑設計「下一雙」建議。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 16 COLOR LOYALTY ============ -->
+<section id="color">
+  <div class="wrap">
+    <div class="secnum">17 / COLOR LOYALTY</div>
+    <h2 class="sec">顏色忠誠度分析</h2>
+    <div class="readcol">
+      <p class="sec-sub">比較第一雙與第二雙雲織鞋的顏色家族。相對於鞋型，<b>顏色忠誠度低得多——只有 30% 的顧客第二雙維持同色系</b>。多數人第二雙會「換個顏色試試」，其中黑色系是最穩定的定番，灰色系則最容易被跳出嘗試其他顏色。</p>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>同色系續購僅 30.1%。色系忠誠度：<b>黑色系 40.6%</b> &gt; 米杏色系 35.5% &gt; 白色系 13.6% &gt; 灰色系 7.1%。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>黑與米杏是<b>「安全定番」</b>，顧客重複購買；灰、白等色多是<b>「嘗鮮色」</b>，買過一次後傾向換色。顏色是製造回購動機的最佳槓桿。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>黑／米百搭、通勤耐看，容易複購；帶質感的灰白屬造型點綴，顧客傾向每次換不同色豐富鞋櫃。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>用<b>「新色上市」作為回購鉤子</b>：對已有黑／米的顧客推灰、藍、粉等點綴色；黑與米維持常態供貨，避免缺色流失定番客。</p></div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel"><h3>顏色轉換矩陣（第一雙 → 第二雙）</h3><div class="ph">色系之間的流動 · 對角線＝維持同色系</div><div class="tbl-wrap"><table class="matrix-table" id="colorMatrix"></table></div></div>
+      <div class="panel"><h3>各色系忠誠度</h3><div class="ph">首購該色系者，第二雙仍選同色系的比例</div><div class="chartbox"><canvas id="colorLoyalChart"></canvas></div></div>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+      <div class="ct">Color Strategy</div>
+      <p><b>顏色雙軌策略：</b>黑與米杏是<b>「地基色」</b>——常態備貨、確保尺碼齊全，服務定番回購；灰、藍、粉、綠等是<b>「引擎色」</b>——用限量新色與換季主題，持續給顧客「再買一雙」的理由。地區與年齡差異上，年輕客與淺色系親和度較高，成熟客偏好帶質感的灰，可據此分眾投放。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 17 SIZE LOYALTY ============ -->
+<section id="size">
+  <div class="wrap">
+    <div class="secnum">18 / SIZE LOYALTY</div>
+    <h2 class="sec">尺寸忠誠度分析</h2>
+    <div class="readcol">
+      <p class="sec-sub">尺寸是三種忠誠度裡最穩定的——<b>76% 的顧客第二雙維持相同尺碼</b>。這對「尺寸推薦」與「補貨自動化」有直接價值：一旦知道顧客的碼數，未來推薦幾乎可以鎖定，退換貨風險也最低。</p>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>同尺碼續購 76.3%。各鞋型尺寸穩定度：<b>娃娃鞋 87.5%</b>、平底 81.5%、瑪莉珍 74.8%、樂福 69.3%。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>尺碼是顧客最穩定的個人資料。<b>樂福鞋尺寸最易變動（版型較挑腳）</b>，是退換貨與尺寸客訴的高風險品類。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>同一品牌的楦型一致，顧客一旦找到合腳尺碼便沿用；樂福因包覆與鞋口設計差異，跨款時較常需要調整半號。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>建立<b>「你的雲織鞋碼」個人化推薦</b>，回購時預帶尺碼；樂福等易變動鞋型加強尺寸對照與試穿引導，降低退換。</p></div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel"><h3>各鞋型尺寸穩定度</h3><div class="ph">第二雙維持相同尺碼的比例</div><div class="chartbox"><canvas id="sizeStableChart"></canvas></div></div>
+      <div class="panel">
+        <h3>尺寸推薦策略</h3>
+        <div class="ph">依穩定度分級的推薦與備貨邏輯</div>
+        <ul class="needlist" style="margin-top:6px">
+          <li><b>高穩定（娃娃／平底 &gt;80%）：</b>可直接鎖定歷史尺碼推薦，補貨可依既有碼數比例精準備貨。</li>
+          <li><b>中穩定（瑪莉珍 ~75%）：</b>主力推薦歷史尺碼，並提示「此款版型正常」。</li>
+          <li><b>低穩定（樂福 ~69%）：</b>推薦時附尺寸對照與半號建議，主動降低退換貨。</li>
+          <li><b>熱門碼 37–39：</b>占銷量主體，需優先確保這三碼在各色不缺貨。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 18 PRODUCT ATTRIBUTES ============ -->
+<section id="attribute">
+  <div class="wrap">
+    <div class="secnum">19 / PRODUCT ATTRIBUTE ANALYSIS</div>
+    <h2 class="sec">商品屬性分析</h2>
+    <div class="readcol">
+      <p class="sec-sub">原始資料的鞋型、顏色、尺寸為既有欄位；<b>跟高、鞋頭、材質、功能、穿著情境、適合季節等屬性，則是依商品名稱關鍵字建立的「商品屬性字典」推論而來</b>（例如名稱含「方頭」判為方頭、含「靴」判為秋冬、含「雲織／零感／軟Q」判為舒適機能）。以下所有屬性層級的分析皆基於此字典，屬合理推論而非原始欄位。</p>
+    </div>
+
+    <div class="panel" style="margin-top:8px;background:var(--paper-2)">
+      <h3>商品屬性字典 <span class="infer">依商品名稱推論</span></h3>
+      <div class="ph">關鍵字 → 屬性對應規則（摘要）</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>屬性維度</th><th>推論規則（關鍵字）</th><th>可能值</th></tr></thead>
+        <tbody>
+          <tr><td><b>鞋頭</b></td><td>「方頭 / 尖頭 / 圓頭」出現於名稱</td><td>方頭・尖頭・圓頭・未標示</td></tr>
+          <tr><td><b>跟高</b></td><td>「高跟/跟鞋」→高跟；「平底/娃娃/樂福/莫卡辛」→平底；「靴」→靴跟</td><td>平底・中低跟・高跟・靴跟</td></tr>
+          <tr><td><b>穿著情境</b></td><td>「通勤」→通勤；「健走/運動/德訓」→運動休閒；「雨/晴雨」→機能</td><td>通勤・日常・運動休閒・機能</td></tr>
+          <tr><td><b>適合季節</b></td><td>「靴/雪/鋪棉」→秋冬；「涼鞋/拖鞋」→春夏；其餘→四季</td><td>春夏・四季・秋冬</td></tr>
+          <tr><td><b>功能</b></td><td>「雲織/3D零感/軟Q/柔軟/舒適」→舒適機能</td><td>舒適機能・一般</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>雲織前後購買皆以<b>平底</b>為壓倒性主體（前 7,720／後 4,094 品項）；情境上「日常」最大宗，但<b>「通勤」在雲織之後占比上升</b>（購前 164 → 購後 289）。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>顧客的共同屬性指紋是 <b>平底・舒適機能・四季百搭</b>。買過雲織後，通勤屬性商品的占比提高——雲織鞋強化了顧客的「通勤鞋」心智。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>雲織鞋以舒適機能切入通勤場景，成功後顧客會延伸尋找更多同屬性（平底、通勤、舒適）的商品，形成屬性一致的鞋櫃。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>商品企劃聚焦<b>平底 × 舒適機能 × 通勤</b>屬性擴充產品線；推薦引擎以「屬性相似度」而非單純品類做關聯，更貼近顧客真實偏好。</p></div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel"><h3>跟高屬性：雲織購買前 vs 購買後</h3><div class="ph">依屬性字典推論 · 平底始終為主體</div><div class="chartbox"><canvas id="heelChart"></canvas></div></div>
+      <div class="panel"><h3>穿著情境：雲織購買前 vs 購買後</h3><div class="ph">通勤情境在購後占比上升</div><div class="chartbox"><canvas id="sceneChart"></canvas></div></div>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+      <div class="ct">Attribute Signature — 最容易形成忠誠與跨品類的屬性</div>
+      <p><b>形成忠誠的屬性：</b>平底 × 舒適機能 × 通勤——這組屬性顧客會反覆回購。<b>促成跨品類的屬性：</b>「季節性」（靴類的秋冬屬性）是把顧客帶出雲織鞋、擴張到其他鞋型的關鍵開關。商品開發若想提高忠誠，強化舒適機能；若想促進跨品類，補強季節性商品線。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 19 NEED EVOLUTION ============ -->
+<section id="evolution">
+  <div class="wrap">
+    <div class="secnum">20 / CUSTOMER NEED EVOLUTION</div>
+    <h2 class="sec">消費需求演變</h2>
+    <div class="readcol">
+      <p class="sec-sub">把每位會員的購買序列翻譯成「情境與季節需求」，觀察需求如何演進。多數顧客以「日常四季」需求進場並長期停留，但隨購買次數增加，<b>需求會分岔出兩條主線：一條往「通勤」深化，一條往「季節（秋冬靴類）」擴張</b>。</p>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>情境轉換以「日常→日常」為最大宗（3,463 次）；顯著的分岔是「日常→通勤」（251 次）與「日常→運動休閒」（320 次）。季節上，第一次以「四季款」為主，愈往後「秋冬」占比逐步上升。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>需求演進不是線性升級，而是<b>從「通用日常」向「專門場景」分化</b>：通勤客愈買愈專注通勤，生活型客則被季節性商品帶動擴張。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>顧客先用一雙百搭鞋試水溫，滿意後才依自身真實場景（上班／運動／換季）添購專門款，需求隨對品牌信任加深而細化。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>依顧客已顯現的需求分支<b>分眾溝通</b>：通勤分支推通勤系列與機能，生活分支推季節新品；避免對所有人推同一套商品。</p></div>
+    </div>
+
+    <div style="margin-top:28px">
+      <div class="eyebrow">Customer Need Evolution Model</div>
+      <div class="transition-flow" style="margin-top:14px">
+        <span class="node">日常 · 四季百搭</span><span class="arrow">→</span>
+        <span class="node yun">通勤舒適（雲織）</span><span class="arrow">→</span>
+        <span class="node">通勤專門 / 機能</span>
+      </div>
+      <div class="transition-flow" style="margin-top:10px">
+        <span class="node">日常 · 四季百搭</span><span class="arrow">→</span>
+        <span class="node yun">通勤舒適（雲織）</span><span class="arrow">→</span>
+        <span class="node">季節擴張 · 秋冬靴類</span>
+      </div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel"><h3>各購買步驟的季節需求組成</h3><div class="ph">秋冬款占比隨購買次數上升</div><div class="chartbox tall"><canvas id="seasonStepChart"></canvas></div></div>
+      <div class="panel"><h3>主要情境需求轉換</h3><div class="ph">前一次情境 → 下一次情境（Top 轉換）</div><div class="chartbox tall"><canvas id="sceneTransChart"></canvas></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 20 PRODUCT LIFECYCLE ============ -->
+<section id="lifecycle">
+  <div class="wrap">
+    <div class="secnum">21 / PRODUCT LIFECYCLE STRATEGY</div>
+    <h2 class="sec">商品生命週期分析</h2>
+    <div class="readcol">
+      <p class="sec-sub">不同商品在顧客生命週期裡扮演不同角色。有些天生適合當「首購入口」，有些適合「回購續命」，有些則是「VIP 收藏」的常客。把商品對應到正確的階段，就能用對的商品在對的時間推對的人。</p>
+    </div>
+
+    <div class="grid g2" style="margin-top:8px">
+      <div class="panel">
+        <h3>首購入口商品 TOP 10</h3>
+        <div class="ph">會員生涯第一雙鞋最常是哪些商品</div>
+        <div class="tbl-wrap" style="max-height:380px;overflow:auto"><table><thead><tr><th class="rank">#</th><th>商品</th><th class="num">首購人數</th></tr></thead><tbody id="firstProdTable"></tbody></table></div>
+      </div>
+      <div class="panel">
+        <h3>高價值會員愛買商品 TOP 10</h3>
+        <div class="ph">LTV 前 10%（≥10,380 元）會員的高頻商品</div>
+        <div class="tbl-wrap" style="max-height:380px;overflow:auto"><table><thead><tr><th class="rank">#</th><th>商品</th><th class="num">購買品項數</th></tr></thead><tbody id="vipProdTable"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="step-flow" style="margin-top:28px">
+      <div class="step"><div class="si">首購 · Acquire</div><div class="st">方頭 / 雙帶瑪莉珍</div><div class="sd">最強入口款，撐起會員第一雙。搭配尖頭通勤包鞋擴大觸及。</div><div class="sg">目標：拉新、建立第一印象</div></div>
+      <div class="step"><div class="si">第二購 · Repeat</div><div class="st">瑪莉珍新色 · 樂福</div><div class="sd">同鞋型新色回購率最高，樂福承接舒適延伸需求。</div><div class="sg">目標：促成第二次、拉高回購率</div></div>
+      <div class="step"><div class="si">跨售 · Expand</div><div class="st">短靴 · 莫卡辛</div><div class="sd">季節互補與同需求延伸，把顧客帶進其他鞋型。</div><div class="sg">目標：跨品類、提高 LTV</div></div>
+      <div class="step"><div class="si">VIP · Collect</div><div class="st">跨鞋型收藏 · 限量色</div><div class="sd">高價值會員橫跨多鞋型多色，追新品與限量。</div><div class="sg">目標：尊榮經營、極大化 LTV</div></div>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>首購前二名為雙帶方頭瑪莉珍（515 人）與方頭瑪莉珍（465 人）；高價值會員同樣以瑪莉珍為核心，但購買品項橫跨樂福、靴類等多鞋型。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>瑪莉珍是<b>「全生命週期通吃」的英雄商品</b>——同時是最強入口、最佳回購與 VIP 常買款；靴類與樂福則是提升 LTV 的擴張品。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>瑪莉珍精準命中核心客群主需求，因此在各階段都表現最好；但單靠它無法拉高 LTV，需要靴／樂福把單一顧客的購買品類撐開。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>以瑪莉珍<b>穩住獲客與回購基本盤</b>，同時把行銷資源投入靴類／樂福的<b>跨售與新品</b>，才能把顧客推上高 LTV。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 21 CRM AUTOMATION ============ -->
+<section id="crm">
+  <div class="wrap">
+    <div class="secnum">22 / CRM AUTOMATION</div>
+    <h2 class="sec">CRM 自動化與回購節奏策略</h2>
+    <div class="readcol">
+      <p class="sec-sub">把前面所有時序洞察收斂成一套可直接落地的自動化旅程。核心節奏來自數據：雲織後續購買約 <b>60 天一輪</b>、回購雙峰在 <b>30 天與 120–180 天</b>、全通路回購週期中位數 <b>216 天</b>。以下 CRM Journey 對齊這些真實時點。</p>
+    </div>
+
+    <div style="margin-top:20px">
+      <div class="crm-row"><div class="day">D+7<small>首購後</small></div><div class="cbody">
+        <div class="msg"><b>建立關係與降低疑慮。</b>寄送穿搭與清潔保養教學，確認到貨與試穿滿意度。目標：提升商品體驗、預防退貨、埋下第二購種子。</div>
+        <div class="meta"><span class="tag">EDM</span><span class="tag">LINE</span><br>推薦：保養組・襪類<br>促購：無（先服務）</div></div></div>
+      <div class="crm-row"><div class="day">D+30<small>首購後</small></div><div class="cbody">
+        <div class="msg"><b>命中短期回購峰。</b>推同款新色與尺碼補齊（30 天內有 150 人回購）。目標：把「一次沒買夠」的顧客轉成第二單。</div>
+        <div class="meta"><span class="tag">EDM</span><span class="tag">SMS</span><br>推薦：同款新色・第二雙優惠<br>促購：第二雙折扣</div></div></div>
+      <div class="crm-row"><div class="day">D+60<small>首購後</small></div><div class="cbody">
+        <div class="msg"><b>啟動品類輪替。</b>對應 60 天購買週期，交錯推「雲織新色 + 樂福／莫卡辛」。目標：促成第二次購買、開始跨品類。</div>
+        <div class="meta"><span class="tag">LINE</span><span class="tag">EDM</span><br>推薦：樂福・瑪莉珍新色<br>促購：滿額免運</div></div></div>
+      <div class="crm-row"><div class="day">D+90<small>首購後</small></div><div class="cbody">
+        <div class="msg"><b>填補回購空窗。</b>90–180 天是流失高風險區，主動以新品與會員專屬內容維繫熱度。目標：避免顧客進入沉睡。</div>
+        <div class="meta"><span class="tag">EDM</span><br>推薦：當季新品・跨品類精選<br>促購：會員專屬價</div></div></div>
+      <div class="crm-row"><div class="day">D+150<small>首購後</small></div><div class="cbody">
+        <div class="msg"><b>命中換季回購峰。</b>對應 120–180 天回購峰，推換季款與靴類，並提示舊鞋替換。目標：拉起第二波回購。</div>
+        <div class="meta"><span class="tag">LINE</span><span class="tag">EDM</span><br>推薦：換季靴類・當季主打<br>促購：換季組合購</div></div></div>
+      <div class="crm-row"><div class="day">D+216<small>首購後</small></div><div class="cbody">
+        <div class="msg"><b>全通路回購週期節點。</b>此為整體回購週期中位數，是最後的主動喚回窗口。目標：在自然回購點前完成觸達。</div>
+        <div class="meta"><span class="tag">SMS</span><span class="tag">LINE</span><br>推薦：熱門色補貨・新色<br>促購：限時回饋</div></div></div>
+      <div class="crm-row"><div class="day">D+270<small>首購後</small></div><div class="cbody">
+        <div class="msg"><b>沉睡預警。</b>超過回購週期未回購者進入沉睡風險名單，啟動較強力度的喚醒。目標：挽回、避免流失。</div>
+        <div class="meta"><span class="tag">EDM</span><span class="tag">SMS</span><br>推薦：人氣款・新品<br>促購：專屬回饋券</div></div></div>
+      <div class="crm-row"><div class="day">D+365<small>首購後</small></div><div class="cbody">
+        <div class="msg"><b>週年喚醒與分級。</b>週年回饋，並依累積消費判斷是否升級 VIP 經營或投入沉睡喚醒。目標：長期留存與價值分層。</div>
+        <div class="meta"><span class="tag">EDM</span><span class="tag">LINE</span><br>推薦：週年精選・VIP搶先<br>促購：週年禮／點數</div></div></div>
+    </div>
+
+    <div class="callout" style="margin-top:28px">
+      <div class="ct">Channel &amp; Cadence Logic</div>
+      <p><b>渠道分工：</b>EDM 負責內容與教育（保養、穿搭、新品故事）；LINE 負責即時、高開封的輪替推薦（60/150 天）；SMS 保留給高價值促購與沉睡喚醒等關鍵節點。<b>節奏原則：</b>前 60 天密集服務與促第二購，90–180 天維繫防沉睡，216 天後轉為喚回與分級——把資源集中在數據證實的回購高峰上。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 22 EXECUTIVE INSIGHT ============ -->
+
+<!-- ============ 23 FIRST PURCHASE IMPACT ============ -->
+
+<!-- ============ NEW CUSTOMER INFLUX & COHORT ============ -->
+<section id="cohort">
+  <div class="wrap">
+    <div class="secnum">23 / NEW CUSTOMER INFLUX &amp; COHORT ANALYSIS</div>
+    <h2 class="sec">新客湧入影響：低回購有一半是「稀釋」而非「商品問題」</h2>
+    <div class="readcol">
+      <p class="sec-sub">在把任何低回購商品判定為「商品不好」之前，必須先排除一個干擾因素：<b>大促帶進的新客潮會在短期內壓低整體回購率</b>——因為大量新客還沒進入回購週期。以首購季分群（cohort）追蹤 30/60/90 天回購，就能把「商品本身的回購能力」和「行銷導入造成的回購率下降」分開。</p>
+    </div>
+
+    <div class="panel" style="margin-top:8px">
+      <h3 class="insight-title">兩個大促季新客暴增，同期 90 天回購被稀釋至 8–11%</h3>
+      <div class="ph">各首購季：新客人數（長條）vs 90 天回購率（折線）· 反向關係清楚可見</div>
+      <div class="chartbox tall"><canvas id="influxChart"></canvas></div>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>2025-Q4（1,048 新客）與 2026-Q2（1,163 新客）是最大兩波新客潮，其 90 天回購率僅 <b>11.3% 與 8.3%</b>；穩定期各季平均為 <b>17.4%</b>，落差 7.6 個百分點。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>整體回購率下滑，<b>約一半來自新客結構稀釋、而非商品變差</b>。用「未分群的總回購率」評估商品，會系統性低估大促期商品的真實表現。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>大促吸來的多是價格導向、嘗鮮型顧客，加上大量新客根本還沒到回購時點；兩者共同拉低了「當期」回購率的分母品質。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>商品評估一律改看<b>「同首購季 cohort 的 90 天回購率」</b>，而非總回購率；大促後對新客加碼 CRM 培養，把低品質回購結構修復回來。</p></div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel">
+        <h3 class="insight-title">Cohort 回購曲線：回購主要發生在 60–90 天，30 天內偏少</h3>
+        <div class="ph">各首購季的 30 / 60 / 90 天累積回購率</div>
+        <div class="chartbox tall"><canvas id="cohortChart"></canvas></div>
+      </div>
+      <div class="panel">
+        <h3 class="insight-title">拆開看：英雄款回購低是「商品 × 新客」雙重效果</h3>
+        <div class="ph">同樣具備 90 天觀察窗口下的商品回購對比</div>
+        <div class="chart-side" style="margin-top:20px">
+          <div class="chartbox"><canvas id="heroCohortChart"></canvas></div>
+          <div class="finding">
+            <div class="kf">Key Finding</div>
+            <h4>即使排除觀察窗口差異，英雄款 90 天回購 9.2% 仍低於養客款 16.0%</h4>
+            <p>代表瑪莉珍的低回購<b>同時</b>有兩個原因：它是新客磁鐵（結構稀釋），本身養客力也確實較弱。兩者都要處理。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <div class="th">Executive Takeaway</div>
+      <div class="tg">
+        <div class="ti"><div class="k">What happened</div><p>大促新客潮把當期 90 天回購從 17.4% 稀釋到 8–11%；英雄款回購低是商品與新客雙重效果。</p></div>
+        <div class="ti"><div class="k">Why</div><p>價格導向新客 + 尚未到回購時點，共同拉低分母品質；瑪莉珍本身養客力也較弱。</p></div>
+        <div class="ti"><div class="k">Business Impact</div><p>用總回購率評估商品會誤判，可能錯砍其實健康的大促商品。</p></div>
+        <div class="ti"><div class="k">Action</div><p>改用同 cohort 90 天回購率評估；大促後加碼新客 CRM 培養。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="firstimpact">
+  <div class="wrap">
+    <div class="secnum">24 / FIRST PURCHASE VALUE RANKING</div>
+    <h2 class="sec">首購商品效益分析：哪一雙鞋養出高價值會員</h2>
+    <div class="readcol">
+      <p class="sec-sub">同樣是「第一雙」，不同商品養出的顧客價值天差地別。我們把每位會員的首購商品攤開，比較它帶來的第二購率、VIP 轉換率與平均 LTV。結論顛覆直覺：<b>賣最多的雲織英雄款（雙帶方頭瑪莉珍）雖是最強的「拉新引擎」，卻是最弱的「養客引擎」</b>——首購它的人第二購率只有 13%、LTV 僅 3,003；反而是樂福與莫卡辛系列，首購者第二購率近乎 100%、LTV 高出一倍以上。</p>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>首購雲織瑪莉珍者第二購率 13.1%、LTV 3,003；首購<b>莫卡辛／樂福系列者第二購率 97–100%、LTV 5,300–6,900</b>。首購「素面方頭高跟瘦瘦靴」的 VIP 轉換率最高（25.8%）。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>存在「獲客商品」與「養客商品」兩種角色。<b>瑪莉珍負責衝量、莫卡辛／樂福／靴類負責養出忠誠與高 LTV。</b>兩者不能混為一談。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>瑪莉珍常是折扣活動的引流款，吸來大量嘗鮮型一次客；樂福／莫卡辛的「舒適健走」訴求更貼近長期穿著需求，帶來黏著度高的顧客。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>廣告主推<b>雙軌</b>：用瑪莉珍衝新客規模，但對首購瑪莉珍者立即用 CRM 導向樂福／莫卡辛，把「量」轉成「質」。新品測試優先押注高養客力的莫卡辛／樂福線。</p></div>
+    </div>
+
+    <div class="panel" style="margin-top:24px">
+      <h3>First Purchase Value Ranking</h3>
+      <div class="ph">首購人數 ≥30 的商品 · 依首購者平均 LTV 排序 · 標示第二購率與 VIP 轉換率</div>
+      <div class="tbl-wrap"><table><thead><tr><th class="rank">#</th><th>首購商品</th><th class="num">首購人數</th><th class="num">第二購率</th><th class="num">VIP轉換率</th><th class="num">平均LTV</th></tr></thead><tbody id="firstImpactTable"></tbody></table></div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel"><h3>養客力對比：第二購率 vs 平均 LTV</h3><div class="ph">泡泡越大＝首購人數越多 · 右上角＝理想入口商品</div><div class="chartbox tall"><canvas id="firstImpactBubble"></canvas></div></div>
+      <div class="panel"><h3>雲織英雄款 vs 養客款</h3><div class="ph">同為熱銷入口，養客表現差異懸殊</div><div class="chartbox tall"><canvas id="heroVsLoyalChart"></canvas></div></div>
+    </div>
+
+    <div class="takeaway">
+      <div class="th">Executive Takeaway</div>
+      <div class="tg">
+        <div class="ti"><div class="k">What happened</div><p>賣最多的雲織瑪莉珍首購者第二購率僅 13%、LTV 最低；莫卡辛／樂福首購者近 100% 回購、LTV 翻倍。</p></div>
+        <div class="ti"><div class="k">Why</div><p>瑪莉珍是折扣引流款吸來嘗鮮客；舒適健走款貼近長期需求，養出黏著顧客。</p></div>
+        <div class="ti"><div class="k">Business Impact</div><p>把廣告預算全押在瑪莉珍，等於高成本拉來一群不回購的顧客，LTV 效率被嚴重低估。</p></div>
+        <div class="ti"><div class="k">Action</div><p>瑪莉珍衝量 + CRM 立即導流至樂福／莫卡辛；新品測試押注高養客款。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 24 MARKET BASKET ============ -->
+<section id="basket">
+  <div class="wrap">
+    <div class="secnum">25 / MARKET BASKET ANALYSIS</div>
+    <h2 class="sec">購買組合分析：哪些鞋一起買</h2>
+    <div class="readcol">
+      <p class="sec-sub">分析顧客在同一次購買事件中，哪些鞋型會被一起帶走，建立商品關聯矩陣。這直接回答商品頁、購物車與 EDM 該推薦什麼。最強的組合都圍繞著「舒適通勤」這個共同需求。</p>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>最常一起購買的組合是 <b>樂福／莫卡辛 + 瑪莉珍（753 次）</b>、平底／娃娃 + 樂福（686 次）、樂福 + 靴類（534 次）。瑪莉珍幾乎與所有品類都有高關聯。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>顧客的購物籃圍繞「<b>通勤鞋櫃</b>」組成：瑪莉珍是核心，樂福與靴類是最強搭檔。跨品類不是偶然，而是同一需求下的自然組合。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>這些鞋型都服務同一位都會通勤女性的不同場景與季節，她傾向一次補齊或分批湊齊整套鞋櫃。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>商品頁與購物車固定推「瑪莉珍 × 樂福 × 靴類」關聯位；EDM 設計「通勤鞋櫃組合」；靠關聯推薦提高每次購物的件數與客單。</p></div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel"><h3>Top 商品組合（同次購買）</h3><div class="ph">被一起購買次數最高的鞋型配對</div><div class="chartbox tall"><canvas id="basketChart"></canvas></div></div>
+      <div class="panel">
+        <h3>推薦應用場景</h3><div class="ph">依關聯強度對應的推薦位</div>
+        <div class="tbl-wrap"><table><thead><tr><th>核心商品</th><th>最佳搭配</th><th>應用</th></tr></thead><tbody>
+          <tr><td><b>瑪莉珍鞋</b></td><td>樂福／莫卡辛</td><td>商品頁「一起買」</td></tr>
+          <tr><td><b>樂福／莫卡辛</b></td><td>靴類 · 平底</td><td>購物車加購</td></tr>
+          <tr><td><b>瑪莉珍鞋</b></td><td>靴類</td><td>換季 EDM</td></tr>
+          <tr><td><b>平底／娃娃鞋</b></td><td>樂福／涼鞋</td><td>湊組免運</td></tr>
+        </tbody></table></div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <div class="th">Executive Takeaway</div>
+      <div class="tg">
+        <div class="ti"><div class="k">What happened</div><p>購物籃圍繞瑪莉珍、樂福、靴類三者高度關聯，構成「通勤鞋櫃」。</p></div>
+        <div class="ti"><div class="k">Why</div><p>同一位通勤女性的多場景、多季節需求，讓這些鞋型自然被一起購買。</p></div>
+        <div class="ti"><div class="k">Business Impact</div><p>目前若未做關聯推薦，等於放棄了每筆訂單自然可加購的件數與客單。</p></div>
+        <div class="ti"><div class="k">Action</div><p>三大品類互設關聯推薦位，並包裝「通勤鞋櫃組合」提升客單。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 25 NEXT BEST PRODUCT ============ -->
+<section id="nbp">
+  <div class="wrap">
+    <div class="secnum">26 / NEXT BEST PRODUCT MODEL</div>
+    <h2 class="sec">下一雙推薦模型（Next Best Product）</h2>
+    <div class="readcol">
+      <p class="sec-sub">購物籃看的是「同時買」，這裡看的是「買完 A 之後，下一次最可能買什麼 B」——以商品名稱層級、跨購買事件建立時序推薦。這是 CRM 自動化與推薦引擎可以直接落地的規則表。</p>
+    </div>
+
+    <div class="panel" style="margin-top:8px">
+      <h3>下一雙推薦規則表</h3>
+      <div class="ph">以熱銷雲織款為錨點 · 顯示下一次購買最可能的商品、比例與平均等待天數</div>
+      <div class="tbl-wrap"><table><thead><tr><th>目前購買（錨點）</th><th>下一雙推薦</th><th class="num">推薦比例</th><th class="num">平均等待天數</th><th>推薦原因</th></tr></thead><tbody id="nbpTable"></tbody></table></div>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>買「雙帶方頭瑪莉珍」的顧客，下一雙最可能再買同款（9.4%）或方頭瑪莉珍（8.0%），其次流向樂福與短靴；換款平均等待 39–86 天。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>下一雙推薦有兩種邏輯：<b>短天期＝同鞋型換色補齊</b>（39 天），<b>長天期＝跨品類擴張</b>（樂福、靴）。推薦內容應隨等待天數切換。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>顧客先在同款系內確認偏好（快速回購），滿意後才往其他鞋型探索（較長決策），反映信任累積的節奏。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>把此規則表接進 CRM：購買後 30–45 天推同鞋型新色，60–90 天推樂福／靴類，讓推薦引擎依「等待天數」自動切換內容。</p></div>
+    </div>
+
+    <div style="margin-top:28px">
+      <div class="eyebrow">推薦流程示意 <span class="infer">依實際轉換頻率</span></div>
+      <div class="transition-flow" style="margin-top:14px">
+        <span class="node yun">雙帶方頭瑪莉珍鞋</span><span class="arrow">→</span>
+        <span class="node">同款新色（+39天）</span><span class="arrow">→</span>
+        <span class="node">方頭樂福鞋（+46天）</span><span class="arrow">→</span>
+        <span class="node">切爾西短靴（+24天，換季）</span>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <div class="th">Executive Takeaway</div>
+      <div class="tg">
+        <div class="ti"><div class="k">What happened</div><p>買完雲織瑪莉珍後，下一雙先在同款系換色，再往樂福與靴類擴張。</p></div>
+        <div class="ti"><div class="k">Why</div><p>顧客先確認偏好再探索，決策時間隨品類跨度拉長。</p></div>
+        <div class="ti"><div class="k">Business Impact</div><p>用固定推薦規則取代盲推，可顯著提高 CRM 命中率與轉換。</p></div>
+        <div class="ti"><div class="k">Action</div><p>推薦引擎依等待天數自動切換「同款新色 → 跨品類」內容。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 26 RHYTHM & CLV ============ -->
+<section id="rhythm">
+  <div class="wrap">
+    <div class="secnum">27 / PURCHASE RHYTHM &amp; CLV JOURNEY</div>
+    <h2 class="sec">購買節奏與顧客生命週期價值</h2>
+    <div class="readcol">
+      <p class="sec-sub">高價值會員不是「買比較貴」，而是「買得比較快、比較密」。比較各會員分群的購買間隔，VIP 的節奏明顯快於其他群；再把顧客的累積消費沿時間軸攤開，看價值如何隨天數累積。這決定了「多久內、推幾次」才能把一位新客養成 VIP。</p>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>VIP 首次→第二次購買間隔中位數 <b>95 天</b>，遠短於回購會員的 286 天。顧客平均累積消費從 Day 0 的 2,089 元，到 Day 365 成長至 <b>3,333 元</b>（+60%）。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>購買節奏是價值的領先指標：<b>越早完成第二購的顧客，越快、越可能成為 VIP。</b>第一年的購買密度決定了顧客的終身價值天花板。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>快速回購代表顧客已建立品牌習慣與信任，會持續在品牌內解決鞋需求，形成正向循環。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>把 KPI 從「回購率」升級為「<b>90 天內第二購率</b>」；集中資源在首購後前 90 天密集觸達，加速顧客爬上價值階梯。</p></div>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:24px">
+      <div class="panel"><h3 class="insight-title">VIP 回購間隔僅 95 天，遠快於一般回購客</h3><div class="ph">VIP 的購買間隔明顯短於其他群</div><div class="chartbox tall"><canvas id="rhythmChart"></canvas></div></div>
+      <div class="panel"><h3>CLV 累積曲線（Day 0 → 365）</h3><div class="ph">顧客平均累積消費隨時間成長</div><div class="chartbox tall"><canvas id="clvChart"></canvas></div></div>
+    </div>
+
+    <div class="takeaway">
+      <div class="th">Executive Takeaway</div>
+      <div class="tg">
+        <div class="ti"><div class="k">What happened</div><p>VIP 的回購間隔（95 天）遠短於一般回購客（286 天）；LTV 一年成長 60%。</p></div>
+        <div class="ti"><div class="k">Why</div><p>快速回購反映品牌習慣已建立，帶動持續消費的正向循環。</p></div>
+        <div class="ti"><div class="k">Business Impact</div><p>第一年的購買密度決定終身價值，錯過前 90 天等於壓低了 LTV 上限。</p></div>
+        <div class="ti"><div class="k">Action</div><p>KPI 改為「90 天內第二購率」，資源集中在首購後前 90 天。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 27 ADOPTION & PRICE ============ -->
+<section id="adoption">
+  <div class="wrap">
+    <div class="secnum">28 / NEW PRODUCT ADOPTION &amp; PRICE SENSITIVITY</div>
+    <h2 class="sec">新品接受度與價格敏感度</h2>
+    <div class="readcol">
+      <p class="sec-sub">兩個對商品企劃與定價直接有用的分析：誰願意最早買新品（新品測試名單），以及不同客單價層的顧客價值差異（定價與促購策略）。</p>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:8px">
+      <div class="panel">
+        <h3>新品接受度分群</h3>
+        <div class="ph">依「購買距商品上架天數」中位數分群 · 越早買＝越適合新品測試</div>
+        <div class="chartbox"><canvas id="adoptChart"></canvas></div>
+      </div>
+      <div class="panel">
+        <h3>客單價層的價值對比</h3>
+        <div class="ph">高客單客的 LTV 是低客單客的 3.5 倍</div>
+        <div class="chartbox"><canvas id="priceChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>Early Adopter（上架 30 天內購買）占 7.7%、391 人；高客單客占 42.9%、<b>LTV 7,141</b>，是低客單客（2,042）的 3.5 倍，且回購率更高（53% vs 41%）。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>Early Adopter 是天然的<b>新品測試與口碑名單</b>；高客單顧客不僅單次貴，更忠誠、LTV 更高——<b>價格不是敏感點，價值感才是。</b></p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>願意買新品與願意付較高客單，都反映顧客對品牌的認同度高；她們買的是風格與信任，而非只追折扣。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>建立 Early Adopter 名單做新品首波測試；對高客單客<b>少用折扣、多用新品與尊榮權益</b>，避免折扣稀釋高價值客的品牌感。</p></div>
+    </div>
+
+    <div class="segdef">
+      <div class="sdh">資料限制說明 · Price Sensitivity</div>
+      <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">原始資料的「收益」欄相對「原價」約為固定 0.6 比例，判斷為<b>毛利／拆帳係數而非實際折扣</b>，因此無法直接還原「活動購買 vs 非活動購買」。本章改以資料中既有的<b>「客單價分群」</b>作為價格取向的有效代理指標，比較不同客單層的 LTV 與回購行為，此為合理替代而非原始折扣欄位。</p>
+    </div>
+
+    <div class="takeaway">
+      <div class="th">Executive Takeaway</div>
+      <div class="tg">
+        <div class="ti"><div class="k">What happened</div><p>高客單客 LTV 是低客單客的 3.5 倍且更忠誠；Early Adopter 僅 7.7% 但價值明確。</p></div>
+        <div class="ti"><div class="k">Why</div><p>願付高價與願買新品都源於品牌認同，而非折扣驅動。</p></div>
+        <div class="ti"><div class="k">Business Impact</div><p>對高價值客過度促銷會稀釋品牌感、壓低 LTV。</p></div>
+        <div class="ti"><div class="k">Action</div><p>Early Adopter 做新品測試；高客單客用新品與權益取代折扣。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 28 CHURN & UPGRADE ============ -->
+<section id="churn">
+  <div class="wrap">
+    <div class="secnum">29 / CHURN PREDICTION &amp; UPGRADE PATH</div>
+    <h2 class="sec">流失預警與會員升級路徑</h2>
+    <div class="readcol">
+      <p class="sec-sub">最後兩個直接驅動會員經營行動的分析：誰即將流失（高風險名單，優先挽回），以及一位顧客要花多少次購買、多少消費，才能從新客爬到 VIP（升級路徑，量化每一階的門檻）。</p>
+    </div>
+
+    <div class="grid g2 charts-stack" style="margin-top:8px">
+      <div class="panel">
+        <h3>會員升級路徑（Upgrade Path）</h3>
+        <div class="ph">每一階的平均購買次數與累積消費門檻</div>
+        <div class="chartbox tall"><canvas id="ladderChart"></canvas></div>
+      </div>
+      <div class="panel">
+        <h3>流失風險名單（High Risk）</h3>
+        <div class="ph">最近購買已超過回購週期、且曾有 2 次以上購買者</div>
+        <div style="margin-top:8px">
+          <div class="grid g2" style="gap:14px">
+            <div class="kpi"><div class="lab">高風險會員</div><div class="val" id="churnN">—</div><div class="note">超過回購週期未回購</div></div>
+            <div class="kpi"><div class="lab">其中高消費客</div><div class="val" id="churnHV">—</div><div class="note">累積消費 ≥8,000</div></div>
+          </div>
+          <div class="kpi" style="margin-top:14px"><div class="lab">高風險高消費客的沉睡金額</div><div class="val" id="churnRev">—</div><div class="note">最優先挽回的營收</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iwa">
+      <div class="box data"><div class="lbl">Data 數據</div><p>升級門檻：新客 1 次／2,155 元 → 回購會員 2.3 次／5,291 → 忠誠會員 4.7 次／8,194 → <b>VIP 9.1 次／20,276</b>。約 608 位會員（12%）進入流失風險，其中 138 位為高消費客。</p></div>
+      <div class="box insight"><div class="lbl">Insight 洞察</div><p>從新客到 VIP 的門檻是「<b>約 9 次購買、2 萬消費</b>」；而流失風險中藏著近 <b>177 萬</b>的高價值沉睡營收，是投報率極高的挽回標的。</p></div>
+      <div class="box why"><div class="lbl">Why 原因</div><p>升級是購買次數的累積函數——關鍵不在單筆金額，而在「讓她多買幾次」；高消費客一旦超過回購週期未回，多因缺乏適時觸達而非不滿意。</p></div>
+      <div class="box action"><div class="lbl">Action 行動</div><p>建立自動化 High Risk 名單，對高消費流失客優先投入專屬挽回；升級經營聚焦「推動購買次數」而非拉高單筆客單。</p></div>
+    </div>
+
+    <div style="margin-top:28px">
+      <div class="eyebrow">會員升級路徑 Member Upgrade Path</div>
+      <div class="transition-flow" style="margin-top:14px">
+        <span class="node">新會員<br>1 次 · 2,155元</span><span class="arrow">→</span>
+        <span class="node">回購會員<br>2.3 次 · 5,291元</span><span class="arrow">→</span>
+        <span class="node">忠誠會員<br>4.7 次 · 8,194元</span><span class="arrow">→</span>
+        <span class="node yun">VIP 會員<br>9.1 次 · 20,276元</span>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <div class="th">Executive Takeaway</div>
+      <div class="tg">
+        <div class="ti"><div class="k">What happened</div><p>成為 VIP 需約 9 次購買、2 萬消費；608 人進入流失風險，含 138 位高消費客。</p></div>
+        <div class="ti"><div class="k">Why</div><p>升級是購買次數的累積；高消費客流失多因缺乏適時觸達。</p></div>
+        <div class="ti"><div class="k">Business Impact</div><p>高風險高消費客身上有近 177 萬沉睡營收，挽回投報率極高。</p></div>
+        <div class="ti"><div class="k">Action</div><p>自動化風險名單優先挽回；升級經營聚焦提高購買次數。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ FORECAST & SCENARIO ============ -->
+<section id="forecast">
+  <div class="wrap">
+    <div class="secnum">30 / FORECAST &amp; SCENARIO SIMULATION</div>
+    <h2 class="sec">預測與策略模擬：把回購拉回穩定期水準能帶來多少</h2>
+    <div class="readcol">
+      <p class="sec-sub">以下為<b>情境模擬</b>，非精確預測。所有情境皆以報告中已驗證的數據為基準，並明確標示假設條件；目的是幫管理層在拍板前，先看見不同策略的量級與方向。</p>
+    </div>
+
+    <div class="segdef" style="margin-top:8px">
+      <div class="sdh">模擬基準與假設條件</div>
+      <table>
+        <tr><td>回購基準</td><td>穩定期各首購季 90 天回購率平均 <b>17.4%</b>；大促稀釋期為 9.8%（見第 C 章 cohort 分析）</td></tr>
+        <tr><td>LTV 階梯</td><td>一次客 4,019 → 交替購買者（D 群）20,124（見第 14 章忠誠度模型）</td></tr>
+        <tr><td>一次客基數</td><td>2,516 位（占會員 49.5%）</td></tr>
+        <tr><td>假設限制</td><td>模擬假設顧客行為分布不變、無重大品項或定價變動；<b>實際結果會受季節、供貨、廣告投放影響，數字僅供決策參考</b></td></tr>
+      </table>
+    </div>
+
+    <div class="grid g3" style="margin-top:24px">
+      <div class="panel">
+        <div class="kf" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px">情境 A · 回購修復</div>
+        <h4 style="font-size:15.5px;font-weight:600;margin-bottom:10px">把大促新客的 90 天回購從 9.8% 拉回 17.4%</h4>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.7">兩大促季合計約 2,211 位新客，回購率每提升 7.6 個百分點 ≈ <b>多約 168 位</b>進入第二購。<span class="infer">假設條件</span></p>
+      </div>
+      <div class="panel">
+        <div class="kf" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px">情境 B · 一次客轉化</div>
+        <h4 style="font-size:15.5px;font-weight:600;margin-bottom:10px">一次客第二購率 13% → 25%</h4>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.7">2,516 位一次客中多 <b>約 300 位</b>回購；若其中一部分續往交替購買，LTV 由 4,019 向上位階梯移動，貢獻放大。<span class="infer">假設條件</span></p>
+      </div>
+      <div class="panel">
+        <div class="kf" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px">情境 C · 滿額免運拉客單</div>
+        <h4 style="font-size:15.5px;font-weight:600;margin-bottom:10px">提高客單價的連鎖影響</h4>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.7">正面：AOV↑、訂單件數↑、湊組促成跨品類；風險：<b>毛利率可能被運費補貼稀釋、部分訂單數可能因門檻延後</b>。需 A/B 測試門檻。<span class="infer">假設條件</span></p>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:24px">
+      <h3 class="insight-title">滿額免運情境分析：四項指標的預期方向</h3>
+      <div class="ph">情境模擬 · 方向性判斷，非精確數值 · 建議以 A/B 測試驗證門檻</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>指標</th><th>預期方向</th><th>原因</th><th>風險 / 監控點</th></tr></thead>
+        <tbody>
+          <tr><td><b>AOV 客單價</b></td><td style="color:#5c7a4a">↑ 上升</td><td>顧客湊到免運門檻而加購</td><td>門檻設太高會勸退</td></tr>
+          <tr><td><b>訂單數</b></td><td style="color:#9E7B4F">↔ 持平／略降</td><td>部分小額訂單延後至湊滿</td><td>短期訂單數可能波動</td></tr>
+          <tr><td><b>毛利</b></td><td style="color:#9E3B33">↓ 需監控</td><td>運費補貼吃掉部分毛利</td><td>門檻須高於運費損益平衡點</td></tr>
+          <tr><td><b>回購率</b></td><td style="color:#5c7a4a">↑ 略升</td><td>更好的購物體驗與跨品類黏著</td><td>需長期觀察</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="takeaway">
+      <div class="th">Executive Takeaway</div>
+      <div class="tg">
+        <div class="ti"><div class="k">What happened</div><p>回購修復與一次客轉化兩情境，皆可帶來數百位增量回購客。</p></div>
+        <div class="ti"><div class="k">Why</div><p>現有回購率遠低於穩定期潛力，且一次客基數龐大。</p></div>
+        <div class="ti"><div class="k">Business Impact</div><p>兩情境疊加可實質推升整體 LTV；免運需先測門檻以免傷毛利。</p></div>
+        <div class="ti"><div class="k">Action</div><p>優先做回購修復與一次客轉化；免運以 A/B 測試驗證後再全面推。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="exec">
+  <div class="wrap">
+    <div class="secnum">31 / EXECUTIVE BUSINESS INSIGHT</div>
+    <h2 class="sec">高階管理洞察與商業機會</h2>
+    <div class="readcol">
+      <p class="sec-sub">整份報告的收斂結論，供管理層決策使用。以下為關鍵洞察與最優先的成長機會，皆有前述章節的量化數據支撐。</p>
+    </div>
+
+    <div class="two" style="margin-top:36px">
+      <div>
+        <div class="eyebrow">十大消費者洞察</div>
+        <div class="insight-cols" style="columns:1">
+          <div class="ins"><span class="no">1</span><h5>忠於品牌，非忠於一條線</h5><p>近 70% 雲織買家跨線購買，63.5% 營收來自非雲織商品。</p></div>
+          <div class="ins"><span class="no">2</span><h5>價值高度集中</h5><p>31.7% 高價值會員貢獻絕大多數營收，VIP 271 人占 21.3%。</p></div>
+          <div class="ins"><span class="no">3</span><h5>一半是可轉化的一次客</h5><p>49.5% 僅購買一次，是最大的成長槓桿池。</p></div>
+          <div class="ins"><span class="no">4</span><h5>57% 先買他款才買雲織</h5><p>雲織常是既有顧客的升級，而非首次接觸品牌的入口。</p></div>
+          <div class="ins"><span class="no">5</span><h5>交替購買者價值最高</h5><p>雲織×他款交替的 D 群 LTV 20,124，是單次客的 5 倍。</p></div>
+          <div class="ins"><span class="no">6</span><h5>都會通勤女性為核心</h5><p>30–45 歲、雙北與港澳，為通勤舒適而來。</p></div>
+          <div class="ins"><span class="no">7</span><h5>港澳買大買少</h5><p>客單價高台灣 58%、一次近 5 雙，但回購率僅 42%。</p></div>
+          <div class="ins"><span class="no">8</span><h5>需求從通用走向專門</h5><p>由日常四季百搭，分化為通勤深化與季節擴張兩線。</p></div>
+          <div class="ins"><span class="no">9</span><h5>回購呈雙峰</h5><p>30 天短期加購與 120–180 天換季回購，空窗在中段。</p></div>
+          <div class="ins"><span class="no">10</span><h5>尺碼極穩、顏色善變</h5><p>76% 續用同尺碼，僅 30% 續用同色系。</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow">十大商品與 Cross-Selling 機會</div>
+        <div class="insight-cols" style="columns:1">
+          <div class="ins"><span class="no">1</span><h5>瑪莉珍是全生命週期英雄款</h5><p>首購、回購、VIP 皆以它為核心，鞋型忠誠度 69%。</p></div>
+          <div class="ins"><span class="no">2</span><h5>樂福／莫卡辛：最廣入口</h5><p>導流最多顧客（1,829 人）進入品牌與雲織。</p></div>
+          <div class="ins"><span class="no">3</span><h5>靴類：最高價值入口</h5><p>靴類入口顧客 LTV 8,044，且是季節互補主力。</p></div>
+          <div class="ins"><span class="no">4</span><h5>顏色是回購引擎</h5><p>新色上市是最有效的回購鉤子，尤其對定番黑／米客。</p></div>
+          <div class="ins"><span class="no">5</span><h5>60 天品類輪替</h5><p>雲織與樂福／靴類每約 60 天交替，是跨售黃金節奏。</p></div>
+          <div class="ins"><span class="no">6</span><h5>屬性一致性驅動忠誠</h5><p>平底×舒適機能×通勤是顧客共同屬性指紋。</p></div>
+          <div class="ins"><span class="no">7</span><h5>季節性驅動跨品類</h5><p>秋冬靴類是把顧客帶出雲織、擴張鞋型的開關。</p></div>
+          <div class="ins"><span class="no">8</span><h5>娃娃／平底可升級</h5><p>流動性高，是引導升級瑪莉珍的最佳對象。</p></div>
+          <div class="ins"><span class="no">9</span><h5>熱門碼 37–39 不可缺</h5><p>占銷量主體，各色齊碼直接影響成交與回購。</p></div>
+          <div class="ins"><span class="no">10</span><h5>組合購提升客單</h5><p>「通勤三雙鞋」「換季鞋櫃」主題可有效拉高單次金額。</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="eyebrow" style="margin-top:56px">最值得投資的五個客群</div>
+    <div class="grid g4" style="margin-top:16px">
+      <div class="kpi"><div class="lab">① 一次客轉化池</div><div class="val">2,516<small>人</small></div><div class="note">回購一次即翻倍 LTV</div></div>
+      <div class="kpi"><div class="lab">② 沉睡高消費者</div><div class="val">1,783<small>人</small></div><div class="note">握有 30.5% 累積營收</div></div>
+      <div class="kpi"><div class="lab">③ 港澳跨境客</div><div class="val">1,265<small>人</small></div><div class="note">客單高、回購待拉升</div></div>
+      <div class="kpi"><div class="lab">④ VIP / 交替購買客</div><div class="val">271<small>+</small></div><div class="note">LTV 最高、需鞏固</div></div>
+    </div>
+    <div class="grid g4" style="margin-top:20px">
+      <div class="kpi" style="grid-column:span 1"><div class="lab">⑤ 靴類入口潛力客</div><div class="val">1,474<small>人</small></div><div class="note">最高價值入口路徑</div></div>
+      <div class="callout" style="grid-column:span 3;padding:26px 30px">
+        <div class="ct">未來一年最大的營收成長機會</div>
+        <p><b>把一次客推上「交替購買」的價值階梯。</b>2,516 位一次客只要有相當比例走完「第二購 → 跨入靴／樂福 → 進入輪替」，就能從 LTV 4,019 逼近 D 群的量級。這條路徑同時涵蓋回購、跨品類與客單三個增長引擎，是投報率最高的單一成長主軸。</p>
+      </div>
+    </div>
+
+    <div class="eyebrow" style="margin-top:56px">品牌下一步最優先執行的策略</div>
+    <div class="strat-grid" style="margin-top:16px">
+      <div class="scard"><div class="num">PRIORITY 01</div><h4>建置 60 天品類輪替的 CRM 自動化</h4>
+        <ul><li>對齊 30/60/90/150/216 天的真實回購節點</li><li>EDM 教育 × LINE 輪替推薦 × SMS 關鍵促購</li><li>目標：把一次客轉化率與回購率同步拉升</li></ul></div>
+      <div class="scard"><div class="num">PRIORITY 02</div><h4>以「入口商品」重構獲客與跨售</h4>
+        <ul><li>樂福／莫卡辛衝量、靴類衝 LTV，作為雲織雙入口</li><li>結帳與 EDM 常態掛載雲織鞋與跨品類推薦位</li><li>目標：擴大跨品類比例這個忠誠領先指標</li></ul></div>
+      <div class="scard"><div class="num">PRIORITY 03</div><h4>用「新色」與「季節款」驅動回購</h4>
+        <ul><li>黑／米定番常態備貨，灰藍粉等引擎色做限量新品</li><li>秋冬靴類作為跨品類擴張的季節開關</li><li>目標：以商品節奏創造回購理由</li></ul></div>
+      <div class="scard" style="background:var(--ink);color:var(--paper);border-color:var(--ink)">
+        <div class="num" style="color:var(--accent-2)">PRIORITY 04 · 客群經營</div>
+        <h4 style="color:#fff">分眾經營五大客群</h4>
+        <p style="font-size:13.5px;color:#E9E4D9;line-height:1.7">一次客催轉化、沉睡客做喚醒、港澳客降跨境摩擦、VIP 做尊榮鞏固、靴類潛力客導入雲織。每群一套對應的溝通、商品與渠道，取代齊頭式行銷。</p></div>
+    </div>
+
+    <div class="note-src">
+      <b>資料與方法補充（詳見第 32 章方法論）：</b>所有時序分析依會員完整訂單日期（2023-01 至 2026-07）排序計算，以「購買事件」為單位（同一母訂單或 7 天內合併為一次），因此雲織鞋本身的回購率（7.8%）較第 03 章的全通路訂單回購率（50.5%）嚴格，兩者定義不同、並不衝突。跟高、鞋頭、材質、功能、穿著情境、適合季節等屬性為<b>依商品名稱關鍵字建立的商品屬性字典推論</b>，非原始資料欄位，已於第 19 章列出規則。部分「第二雙」計數會受同一訂單多雙影響而略為偏高，趨勢方向仍具參考價值。資料截止於 2026 年年中，180 天以上的長天期回購因觀察窗口不足而被截斷，實際長期回購率應高於此處數字。所有推論性結論均標示「推論」，未標示者為原始欄位可直接佐證之數據。
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ METHODOLOGY & LIMITATIONS ============ -->
+<section id="method">
+  <div class="wrap">
+    <div class="secnum">32 / METHODOLOGY &amp; DATA LIMITATIONS</div>
+    <h2 class="sec">資料來源與分析限制</h2>
+    <div class="readcol">
+      <p class="sec-sub">為確保這份報告可被信任並跨團隊複用，以下透明說明資料來源、分析期間、KPI 定義、商品屬性的推論方式，以及缺失資料可能造成的偏差。</p>
+    </div>
+
+    <div class="segdef" style="margin-top:8px">
+      <div class="sdh">資料來源與分析期間</div>
+      <table>
+        <tr><td>資料來源</td><td>品牌提供之三張工作表：雲織鞋顧客（5,082 筆）、雲織鞋銷售紀錄（6,559 筆）、全通路訂單紀錄（22,996 筆）</td></tr>
+        <tr><td>分析期間</td><td>2023-01 至 2026-07（訂單資料涵蓋期間）</td></tr>
+        <tr><td>金額單位</td><td>新台幣元；跨品類金額採訂單「收益」欄</td></tr>
+        <tr><td>購買事件定義</td><td>同一母訂單、或 7 天內之訂單，合併計為一次「購買事件（occasion）」，避免把一次購物的多雙拆算成多次回購</td></tr>
+      </table>
+    </div>
+
+    <div class="segdef">
+      <div class="sdh">KPI 定義</div>
+      <table>
+        <tr><td>回購率（全通路）</td><td>會員訂單數 ≥2 的比例（第 03 章，50.5%）</td></tr>
+        <tr><td>雲織回購率</td><td>以購買事件計，再次購買「雲織鞋本身」的比例（第 15 章，7.8%）；較全通路嚴格，兩者定義不同、並不衝突</td></tr>
+        <tr><td>N 天回購率</td><td>首購後 N 天內完成第二次購買事件的比例；cohort 分析僅納入觀察窗口足夠的會員</td></tr>
+        <tr><td>LTV</td><td>會員在資料期間內的累積消費金額（非預測值）</td></tr>
+        <tr><td>RFM</td><td>R＝距最近購買天數、F＝訂單數、M＝累積消費金額</td></tr>
+      </table>
+    </div>
+
+    <div class="segdef">
+      <div class="sdh">商品屬性推論方式</div>
+      <table>
+        <tr><td>推論來源</td><td>原始資料無跟高、鞋頭、材質、功能、情境、季節等欄位；本報告依<b>商品名稱與描述關鍵字</b>建立「商品屬性字典」推論（規則見第 19 章）</td></tr>
+        <tr><td>標示原則</td><td>凡屬性層級分析皆標示「推論」；<b>此為依商品名稱與描述之推論，不代表品牌官方分類</b></td></tr>
+      </table>
+    </div>
+
+    <div class="segdef" style="border-left-color:#9E3B33">
+      <div class="sdh" style="color:#9E3B33">缺失資料與可能偏差</div>
+      <table>
+        <tr><td>年齡缺失</td><td>約 <b>68%</b> 會員未填年齡，年齡相關分析僅涵蓋 1,609 位已填齡者，可能不完全代表全體</td></tr>
+        <tr><td>觀察窗口截斷</td><td>資料截止 2026 年中，180 天以上長天期回購被截斷，<b>實際長期回購率應高於報告數字</b>；最新兩季 cohort 的 90 天回購尚未完全成熟</td></tr>
+        <tr><td>折扣資料缺失</td><td>「收益」欄約為原價 0.6 的固定比例，判定為拆帳／毛利係數而非折扣，<b>無法還原活動 vs 非活動購買</b>；價格敏感度改以客單價分群代理（第 27 章）</td></tr>
+        <tr><td>多雙訂單影響</td><td>部分「第二雙」計數可能受同一訂單多雙略微偏高，趨勢方向仍具參考價值</td></tr>
+        <tr><td>群組重疊</td><td>六大 Persona 與部分分群依不同維度切分，群組間可能部分重疊，比例不應直接相加</td></tr>
+      </table>
+    </div>
+
+    <p style="font-size:13px;color:var(--grey);margin-top:24px;max-width:720px;line-height:1.7">所有情境模擬（第 D 章）均為方向性推估並標示「假設條件」，非精確預測；所有推論性結論均已標示，未標示者為原始欄位可直接佐證之數據。本報告不自行編造任何數據。</p>
+  </div>
+</section>
+
+<!-- ============ CONCLUSION & OUTLOOK ============ -->
+<section id="outlook" style="background:linear-gradient(180deg,var(--paper),var(--paper-2));">
+  <div class="wrap">
+    <div class="secnum">33 / CONCLUSION &amp; FUTURE OUTLOOK</div>
+    <h2 class="sec">總結與未來展望</h2>
+    <div class="readcol">
+      <p class="sec-sub">把整份報告收斂成一頁決策視角：核心發現、策略優先順序、未來 3–6 個月的成長方向，以及應持續追蹤的 KPI。</p>
+    </div>
+
+    <div style="margin-top:36px">
+      <div class="eyebrow">核心發現總結</div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="panel"><h4 style="font-size:15px;font-weight:600;margin-bottom:8px">① 成長引擎在「養客」而非「拉新」</h4><p style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">近 70% 跨品類、63.5% 營收來自非雲織；一次客轉為交替購買者，LTV 可達 5 倍。</p></div>
+        <div class="panel"><h4 style="font-size:15px;font-weight:600;margin-bottom:8px">② 獲客款 ≠ 養客款</h4><p style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">瑪莉珍衝量但回購弱（13%），莫卡辛／樂福養出高 LTV 顧客（第二購近 100%）。</p></div>
+        <div class="panel"><h4 style="font-size:15px;font-weight:600;margin-bottom:8px">③ 低回購含新客稀釋假象</h4><p style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">大促季 90 天回購 8–11% vs 穩定期 17.4%；評估商品須用 cohort，不用總回購率。</p></div>
+        <div class="panel"><h4 style="font-size:15px;font-weight:600;margin-bottom:8px">④ 沉睡與港澳是兩座待開採金礦</h4><p style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">沉睡層握 30.5% 營收；港澳客單高台灣 58%、回購率待拉升。</p></div>
+      </div>
+    </div>
+
+    <div style="margin-top:36px">
+      <div class="eyebrow">策略優先順序</div>
+      <div class="tbl-wrap" style="margin-top:16px"><table>
+        <thead><tr><th>優先級</th><th>策略</th><th>負責部門</th><th>時程</th></tr></thead>
+        <tbody>
+          <tr><td><b style="color:#9E3B33">P0 立即</b></td><td>30/60/90 天回購 CRM 自動化（第二購率 13%→25%）</td><td>CRM</td><td>0–1 月</td></tr>
+          <tr><td><b style="color:#9E3B33">P0 立即</b></td><td>獲客款／養客款雙軌 + 首購瑪莉珍者導流樂福／莫卡辛</td><td>商品 · 廣告</td><td>0–1 月</td></tr>
+          <tr><td><b style="color:#9E3B33">P0 立即</b></td><td>沉睡高價值會員喚醒（近 177 萬可挽回）</td><td>CRM · 數據</td><td>0–2 月</td></tr>
+          <tr><td><b style="color:#9E7B4F">P1 短期</b></td><td>下一雙推薦模型上線（商品頁／購物車／EDM）</td><td>商品 · IT/數據</td><td>1–3 月</td></tr>
+          <tr><td><b style="color:#9E7B4F">P1 短期</b></td><td>港澳跨境經營（滿額免運、季節組合、到貨承諾）</td><td>會員 · CRM</td><td>1–3 月</td></tr>
+          <tr><td><b style="color:#9E7B4F">P1 短期</b></td><td>滿額免運門檻 A/B 測試（監控毛利）</td><td>商品 · 數據</td><td>1–3 月</td></tr>
+          <tr><td><b style="color:#5c7a4a">P2 長期</b></td><td>Early Adopter 新品測試名單制度化</td><td>商品</td><td>3–6 月</td></tr>
+          <tr><td><b style="color:#5c7a4a">P2 長期</b></td><td>會員分級與升級路徑自動化（新客→VIP）</td><td>CRM · IT/數據</td><td>3–6 月</td></tr>
+          <tr><td><b style="color:#5c7a4a">P2 長期</b></td><td>流失預警名單導入 CDP、自動觸發挽回</td><td>IT/數據 · CRM</td><td>3–6 月</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div style="margin-top:36px">
+      <div class="eyebrow">未來 3–6 個月成長方向</div>
+      <div class="grid g3" style="margin-top:16px">
+        <div class="panel"><div class="kf" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px">商品策略</div><p style="font-size:13px;color:var(--ink-soft);line-height:1.68">瑪莉珍穩住獲客基本盤；擴充莫卡辛／樂福養客線與季節性靴類跨品類商品。</p></div>
+        <div class="panel"><div class="kf" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px">CRM 策略</div><p style="font-size:13px;color:var(--ink-soft);line-height:1.68">以 60 天品類輪替節奏自動化溝通，KPI 從「回購率」升級為「90 天內第二購率」。</p></div>
+        <div class="panel"><div class="kf" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px">廣告策略</div><p style="font-size:13px;color:var(--ink-soft);line-height:1.68">對已購樂福／靴類未購雲織者做再行銷；大促後加碼新客培養，降低回購稀釋。</p></div>
+        <div class="panel"><div class="kf" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px">會員策略</div><p style="font-size:13px;color:var(--ink-soft);line-height:1.68">沉睡喚醒 + 港澳跨境經營 + 升級路徑自動化，三線並進拉升整體 LTV。</p></div>
+        <div class="panel"><div class="kf" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px">新品策略</div><p style="font-size:13px;color:var(--ink-soft);line-height:1.68">用 Early Adopter 名單做新色與新款首波測試，以顏色新品驅動定番客回購。</p></div>
+        <div class="panel"><div class="kf" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px">數據基建</div><p style="font-size:13px;color:var(--ink-soft);line-height:1.68">補齊會員年齡欄位（現缺 68%）、建立 cohort 儀表板與流失預警，支撐上述所有決策。</p></div>
+      </div>
+    </div>
+
+    <div style="margin-top:36px">
+      <div class="eyebrow">建議持續追蹤 KPI</div>
+      <div class="grid g4" style="margin-top:16px">
+        <div class="kpi"><div class="lab">首要北極星</div><div class="val" style="font-size:22px">90天第二購率</div><div class="note">取代總回購率</div></div>
+        <div class="kpi"><div class="lab">價值階梯</div><div class="val" style="font-size:22px">交替購買者占比</div><div class="note">忠誠度 D 群成長</div></div>
+        <div class="kpi"><div class="lab">健康度</div><div class="val" style="font-size:22px">跨品類滲透率</div><div class="note">忠誠領先指標</div></div>
+        <div class="kpi"><div class="lab">風險控管</div><div class="val" style="font-size:22px">沉睡／流失金額</div><div class="note">可挽回營收</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>雲織鞋 · Customer Intelligence &amp; Growth Strategy Report V2　｜　33 章 · 摘要 · 輪廓 · 忠誠度 · Cohort · 首購效益 · 預測模擬 · CRM · 未來展望</div>
+    <div>Data 2023–2026　·　5,082 Members　·　NT$25.7M　·　22,996 全通路品項</div>
+  </div>
+</footer>
+
+<script>
+const ALL = {"base": {"summary": {"members": 5082, "total_sales": 25749491, "total_items": 22996, "total_orders": 11914, "avg_aov": 2161.0, "avg_cumulative": 5067.0, "avg_freq": 2.34, "repurchase_ratio": 50.5, "repurchase_cycle": 216.0, "high_value_ratio": 31.7}, "age": [{"label": "15歲以下", "members": 16, "rev": 227424, "aov": 2274}, {"label": "16~20歲", "members": 7, "rev": 37780, "aov": 2519}, {"label": "21~25歲", "members": 60, "rev": 383768, "aov": 2414}, {"label": "26~30歲", "members": 214, "rev": 1790276, "aov": 2784}, {"label": "31~35歲", "members": 355, "rev": 2500850, "aov": 2221}, {"label": "36~40歲", "members": 333, "rev": 2136913, "aov": 2101}, {"label": "41~45歲", "members": 296, "rev": 2134359, "aov": 2050}, {"label": "46~50歲", "members": 180, "rev": 1684089, "aov": 2506}, {"label": "51~55歲", "members": 90, "rev": 634291, "aov": 1982}, {"label": "56~60歲", "members": 42, "rev": 290173, "aov": 1738}, {"label": "61歲以上", "members": 16, "rev": 59788, "aov": 2062}], "age_unfilled": 3473, "cities": [{"city": "非宅配", "members": 1055, "rev": 4538992}, {"city": "香港", "members": 1055, "rev": 6326822}, {"city": "新北市", "members": 696, "rev": 3348364}, {"city": "台北市", "members": 419, "rev": 2064418}, {"city": "桃園市", "members": 332, "rev": 1572763}, {"city": "台中市", "members": 299, "rev": 1761614}, {"city": "高雄市", "members": 259, "rev": 1277073}, {"city": "台南市", "members": 138, "rev": 648869}, {"city": "新竹縣", "members": 135, "rev": 659427}, {"city": "澳門", "members": 107, "rev": 633446}, {"city": "速網香港", "members": 103, "rev": 366856}, {"city": "新竹市", "members": 86, "rev": 447748}], "region": {"南部": 472, "北部": 1742, "中部": 444, "東部離島": 44}, "overseas_hk_mo": 1265, "member_seg": [{"seg": "VIP會員", "n": 271, "rev": 5494829, "share": 21.3}, {"seg": "忠誠會員", "n": 382, "rev": 3129937, "share": 12.2}, {"seg": "回購會員", "n": 1117, "rev": 5910426, "share": 23.0}, {"seg": "新會員", "n": 1520, "rev": 3275509, "share": 12.7}, {"seg": "沉睡會員", "n": 1783, "rev": 7844145, "share": 30.5}, {"seg": "流失會員", "n": 9, "rev": 94645, "share": 0.4}], "value_seg": {"一般會員": 1521, "成長會員": 1949, "高價值會員": 1074, "VIP消費者": 538}, "aov_seg": {"中客單": 2724, "高客單": 2181, "低客單": 177}, "freq_seg": {"低頻回購": 4505, "高頻回購": 291, "穩定回購": 286}, "order_dist": [{"bucket": "1次", "n": 2516}, {"bucket": "2次", "n": 1163}, {"bucket": "3-4次", "n": 849}, {"bucket": "5-9次", "n": 459}, {"bucket": "10次以上", "n": 95}], "top_products": [{"name": "雙帶方頭瑪莉珍鞋", "qty": 1398, "rev": 2204018}, {"name": "方頭瑪莉珍鞋", "qty": 1194, "rev": 1879253}, {"name": "小V口尖頭通勤包鞋", "qty": 748, "rev": 1049440}, {"name": "尖頭瑪莉珍鞋", "qty": 628, "rev": 668353}, {"name": "通勤款樂福豆豆鞋", "qty": 467, "rev": 433179}, {"name": "雙色拼接扭結方頭樂福鞋", "qty": 400, "rev": 451606}, {"name": "素面方頭樂福鞋", "qty": 338, "rev": 352932}, {"name": "蝴蝶結圓頭芭蕾娃娃鞋", "qty": 337, "rev": 342135}, {"name": "綁帶方頭瑪莉珍鞋", "qty": 297, "rev": 410835}, {"name": "尖頭可拆卸蝴蝶結平底鞋", "qty": 293, "rev": 288462}], "category": [{"cat": "瑪莉珍鞋", "qty": 3409, "rev": 5055057}, {"cat": "平底鞋", "qty": 1608, "rev": 2067248}, {"cat": "樂福鞋", "qty": 1205, "rev": 1237717}, {"cat": "芭蕾鞋、娃娃鞋", "qty": 337, "rev": 342135}], "colors": [{"code": "BK", "name": "黑", "qty": 1565}, {"code": "AP", "name": "杏色", "qty": 913}, {"code": "GY", "name": "星耀銀灰", "qty": 696}, {"code": "BG", "name": "米", "qty": 673}, {"code": "BKWE", "name": "點點黑", "qty": 479}, {"code": "BKAP", "name": "黑x米白", "qty": 474}, {"code": "PK", "name": "裸膚粉", "qty": 386}, {"code": "NY", "name": "皇家藍", "qty": 351}, {"code": "RD", "name": "熱戀紅", "qty": 300}, {"code": "BW", "name": "黑x白", "qty": 230}], "sizes": [{"size": "38", "qty": 1396}, {"size": "37", "qty": 1233}, {"size": "39", "qty": 1141}, {"size": "40", "qty": 747}, {"size": "36", "qty": 600}, {"size": "41", "qty": 424}, {"size": "42", "qty": 375}, {"size": "35", "qty": 347}, {"size": "43", "qty": 296}], "new_old": {"舊客": 2490, "新客": 4069}}, "deep": {"cross": {"total_members": 5054, "crossbuy_members": 3519, "crossbuy_rate": 69.6, "yun_rev": 9400121, "non_rev": 16349370, "non_share": 63.5}, "big_cat": [{"cat": "鞋", "lines": 18532, "rev": 20767360}, {"cat": "靴", "lines": 3220, "rev": 4410000}, {"cat": "配件", "lines": 872, "rev": 272376}, {"cat": "包", "lines": 250, "rev": 272732}, {"cat": "其他", "lines": 122, "rev": 27023}], "nonyun_groups": [{"g": "樂福／莫卡辛", "members": 1829, "rev": 4356728}, {"g": "靴類", "members": 1474, "rev": 4292351}, {"g": "涼鞋／穆勒", "members": 1251, "rev": 2549111}, {"g": "平底／娃娃鞋", "members": 768, "rev": 1164984}, {"g": "休閒／運動", "members": 750, "rev": 1418151}, {"g": "瑪莉珍鞋", "members": 660, "rev": 1075640}, {"g": "跟鞋", "members": 484, "rev": 772108}, {"g": "其他", "members": 384, "rev": 525604}, {"g": "襪類配件", "members": 234, "rev": 194693}], "nonyun_top": [{"name": "學院風範．超軟Q馬銜釦樂福鞋", "lines": 507}, {"name": "百搭首選．MIT小蝴蝶結莫卡辛健走鞋", "lines": 402}, {"name": "輕甜女孩．MIT小蝴蝶結莫卡辛健走鞋", "lines": 278}, {"name": "典雅氛圍．韓風素面低跟尖頭鞋", "lines": 253}, {"name": "舒適加倍．MIT素面莫卡辛健走鞋", "lines": 224}, {"name": "浪漫花釦．小蝴蝶結平底芭蕾娃娃鞋", "lines": 220}, {"name": "柔軟升級．MIT經典款莫卡辛健走鞋", "lines": 214}, {"name": "復刻經典．鬆糕底馬銜釦樂福鞋", "lines": 209}, {"name": "美麗零死角．素面方頭高跟瘦瘦靴", "lines": 184}, {"name": "晴雨二穿．側鬆緊切爾西短雨靴", "lines": 173}, {"name": "自在首選綁帶休閒德訓鞋", "lines": 158}, {"name": "舒適首選．MIT素面莫卡辛豆豆鞋", "lines": 151}], "breadth": [{"k": "1", "n": 1482}, {"k": "2", "n": 915}, {"k": "3", "n": 557}, {"k": "4", "n": 298}, {"k": "5", "n": 171}, {"k": "6", "n": 82}, {"k": "7", "n": 29}, {"k": "8", "n": 8}, {"k": "9", "n": 5}], "hk": {"hk": {"n": 1265, "sales": 7327124, "share": 28.5, "cum": 5792, "aov": 3054, "orders": 1.9, "pairs": 4.93, "rep": 42.1}, "rest": {"n": 3817, "sales": 18422367, "share": 71.5, "cum": 4826, "aov": 1936, "orders": 2.49, "pairs": 4.39, "rep": 53.3}, "all": {"aov": 2161, "cum": 5067, "orders": 2.34}, "value_seg": {"成長會員": 657, "高價值會員": 335, "VIP消費者": 142, "一般會員": 131}, "member_seg": {"新會員": 386, "沉睡會員": 540, "回購會員": 249, "VIP會員": 48, "忠誠會員": 42}, "cat": [{"cat": "瑪莉珍鞋", "lines": 1352, "rev": 1925550}, {"cat": "樂福鞋", "lines": 1238, "rev": 1303050}, {"cat": "短靴、中筒靴", "lines": 559, "rev": 751165}, {"cat": "涼鞋、拖鞋", "lines": 493, "rev": 481070}, {"cat": "平底鞋", "lines": 489, "rev": 626019}, {"cat": "莫卡辛鞋", "lines": 431, "rev": 337550}, {"cat": "芭蕾鞋、娃娃鞋", "lines": 285, "rev": 296557}, {"cat": "長靴、膝下靴", "lines": 243, "rev": 389154}], "colors": [{"name": "時尚黑", "n": 819}, {"name": "香草米", "n": 794}, {"name": "象牙灰", "n": 356}, {"name": "午夜黑", "n": 336}, {"name": "米白", "n": 245}, {"name": "人氣白", "n": 236}]}, "p1": {"n": 181, "aov": 2024, "orders": 2.99, "cum": 6060, "cycle": 238, "value_seg": {"一般會員": 52, "成長會員": 46, "VIP消費者": 31, "高價值會員": 52}, "member_seg": {"新會員": 39, "沉睡會員": 68, "VIP會員": 13, "忠誠會員": 27, "回購會員": 34}, "cat": [{"g": "樂福／莫卡辛", "n": 210}, {"g": "靴類", "n": 191}, {"g": "涼鞋／穆勒", "n": 166}, {"g": "瑪莉珍鞋", "n": 165}, {"g": "平底／娃娃鞋", "n": 111}, {"g": "休閒／運動", "n": 57}, {"g": "跟鞋", "n": 32}, {"g": "其他", "n": 23}]}}, "personas": {"A": {"label": "30-40雙北桃通勤族", "n": 181, "aov": 2024, "orders": 2.99, "cum": 6060, "pairs": 5.36, "rep": 64.1, "cycle": 238, "share": 4.3, "value_seg": {"一般會員": 52, "成長會員": 46, "VIP消費者": 31, "高價值會員": 52}, "cat": [{"g": "樂福／莫卡辛", "n": 210}, {"g": "靴類", "n": 191}, {"g": "涼鞋／穆勒", "n": 166}, {"g": "瑪莉珍鞋", "n": 165}, {"g": "平底／娃娃鞋", "n": 111}, {"g": "休閒／運動", "n": 57}], "prefs": {"colors": ["時尚黑", "香草米", "午夜黑"], "sizes": ["38", "37", "39"], "cities": ["新北市", "台北市", "桃園市"]}}, "B": {"label": "VIP高頻收藏家", "n": 428, "aov": 2361, "orders": 7.81, "cum": 18430, "pairs": 17.57, "rep": 100.0, "cycle": 135, "share": 30.6, "value_seg": {"VIP消費者": 428}, "cat": [{"g": "樂福／莫卡辛", "n": 1932}, {"g": "靴類", "n": 1382}, {"g": "涼鞋／穆勒", "n": 1171}, {"g": "瑪莉珍鞋", "n": 922}, {"g": "平底／娃娃鞋", "n": 734}, {"g": "其他", "n": 452}], "prefs": {"colors": ["時尚黑", "香草米", "黑"], "sizes": ["38", "37", "39"], "cities": ["非宅配", "香港", "新北市"]}}, "C": {"label": "首購待喚醒一次客", "n": 2516, "aov": 2269, "orders": 1.0, "cum": 2269, "pairs": 1.8, "rep": 0.0, "cycle": null, "share": 22.2, "value_seg": {"一般會員": 1495, "成長會員": 958, "高價值會員": 61, "VIP消費者": 2}, "cat": [{"g": "瑪莉珍鞋", "n": 1719}, {"g": "平底／娃娃鞋", "n": 959}, {"g": "樂福／莫卡辛", "n": 899}, {"g": "靴類", "n": 338}, {"g": "涼鞋／穆勒", "n": 246}, {"g": "休閒／運動", "n": 200}], "prefs": {"colors": ["午夜黑", "香草米", "密茶杏"], "sizes": ["38", "37", "39"], "cities": ["香港", "非宅配", "新北市"]}}, "D": {"label": "港澳都會白領", "n": 1265, "aov": 3054, "orders": 1.9, "cum": 5792, "pairs": 4.93, "rep": 42.1, "cycle": 255, "share": 28.5, "value_seg": {"成長會員": 657, "高價值會員": 335, "VIP消費者": 142, "一般會員": 131}, "cat": [{"g": "樂福／莫卡辛", "n": 1790}, {"g": "瑪莉珍鞋", "n": 1352}, {"g": "靴類", "n": 956}, {"g": "平底／娃娃鞋", "n": 774}, {"g": "涼鞋／穆勒", "n": 588}, {"g": "休閒／運動", "n": 301}], "prefs": {"colors": ["時尚黑", "香草米", "象牙灰"], "sizes": ["38", "37", "39"], "cities": ["香港", "澳門", "速網香港"]}}, "E": {"label": "26-30輕熟齡新鮮人", "n": 274, "aov": 2711, "orders": 2.93, "cum": 7934, "pairs": 7.51, "rep": 67.5, "cycle": 240, "share": 8.4, "value_seg": {"一般會員": 45, "高價值會員": 83, "成長會員": 77, "VIP消費者": 69}, "cat": [{"g": "樂福／莫卡辛", "n": 434}, {"g": "瑪莉珍鞋", "n": 389}, {"g": "靴類", "n": 312}, {"g": "涼鞋／穆勒", "n": 232}, {"g": "其他", "n": 196}, {"g": "平底／娃娃鞋", "n": 167}], "prefs": {"colors": ["時尚黑", "香草米", "午夜黑"], "sizes": ["38", "37", "39"], "cities": ["香港", "非宅配", "新北市"]}}, "F": {"label": "46+成熟舒適客", "n": 328, "aov": 2246, "orders": 3.62, "cum": 8135, "pairs": 8.08, "rep": 68.0, "cycle": 157, "share": 10.4, "value_seg": {"一般會員": 85, "VIP消費者": 70, "高價值會員": 74, "成長會員": 99}, "cat": [{"g": "樂福／莫卡辛", "n": 751}, {"g": "靴類", "n": 383}, {"g": "平底／娃娃鞋", "n": 370}, {"g": "瑪莉珍鞋", "n": 346}, {"g": "涼鞋／穆勒", "n": 276}, {"g": "其他", "n": 238}], "prefs": {"colors": ["時尚黑", "香草米", "象牙灰"], "sizes": ["38", "37", "39"], "cities": ["非宅配", "新北市", "台北市"]}}}};
+const NC = {"CH11": {"n_with_prior": 2884, "avg_gap": 194, "median_gap": 10, "top_prior_names": [{"name": "學院風範．超軟Q馬銜釦樂福鞋", "count": 90}, {"name": "百搭首選．MIT小蝴蝶結莫卡辛健走鞋", "count": 70}, {"name": "自在首選綁帶休閒德訓鞋", "count": 57}, {"name": "典雅氛圍．韓風素面低跟尖頭鞋", "count": 54}, {"name": "輕甜女孩．MIT小蝴蝶結莫卡辛健走鞋", "count": 47}, {"name": "美麗零死角．素面方頭高跟瘦瘦靴", "count": 46}, {"name": "舒適加倍．MIT素面莫卡辛健走鞋", "count": 44}, {"name": "浪漫花釦．小蝴蝶結平底芭蕾娃娃鞋", "count": 42}, {"name": "復刻經典．鬆糕底馬銜釦樂福鞋", "count": 33}, {"name": "粉彩系列OK繃貼真皮休閒鞋", "count": 32}, {"name": "柔軟升級．MIT經典款莫卡辛健走鞋", "count": 31}, {"name": "假期專屬．交叉帶加厚底羅馬涼鞋", "count": 31}, {"name": "蝴蝶結活動夾", "count": 31}, {"name": "帥氣攻略．側V剪裁綁帶馬汀短靴", "count": 29}, {"name": "海島渡假．草編麻花設計平底涼拖鞋", "count": 28}, {"name": "彩虹泡泡糖．泡芙軟墊細帶高跟涼鞋", "count": 27}, {"name": "懶人福音軟Q彈德訓穆勒鞋", "count": 27}, {"name": "典雅少女V口低跟瑪莉珍鞋", "count": 27}, {"name": "優質品味．馬銜釦方頭低跟穆勒鞋", "count": 27}, {"name": "舒服漫步．可後踩2way皮質餅乾鞋", "count": 26}], "top_prior_grps": [{"grp": "樂福／莫卡辛", "count": 777, "members": 777, "avg_ltv": 6490}, {"grp": "靴類", "count": 553, "members": 553, "avg_ltv": 8044}, {"grp": "涼鞋／穆勒", "count": 497, "members": 497, "avg_ltv": 6591}, {"grp": "休閒／運動", "count": 306, "members": 306, "avg_ltv": 6255}, {"grp": "平底／娃娃鞋", "count": 264, "members": 264, "avg_ltv": 7469}, {"grp": "瑪莉珍鞋", "count": 189, "members": 189, "avg_ltv": 7934}, {"grp": "跟鞋", "count": 124, "members": 124, "avg_ltv": 6563}, {"grp": "其他", "count": 115, "members": 115, "avg_ltv": 7862}, {"grp": "襪類配件", "count": 59, "members": 59, "avg_ltv": 7833}], "top_prior_mids": [{"mid": "樂福鞋", "count": 468}, {"mid": "涼鞋、拖鞋", "count": 418}, {"mid": "短靴、中筒靴", "count": 373}, {"mid": "莫卡辛鞋", "count": 251}, {"mid": "瑪莉珍鞋", "count": 189}, {"mid": "芭蕾鞋、娃娃鞋", "count": 181}, {"mid": "休閒鞋、懶人鞋", "count": 146}, {"mid": "德訓鞋", "count": 126}, {"mid": "跟鞋", "count": 124}, {"mid": "長靴、膝下靴", "count": 106}, {"mid": "平底鞋", "count": 83}, {"mid": "穆勒鞋", "count": 79}, {"mid": "德比鞋、牛津鞋", "count": 58}, {"mid": "光腿神器裸膚絲襪", "count": 50}, {"mid": "流行女包", "count": 40}, {"mid": "雨靴", "count": 39}, {"mid": "雪靴", "count": 35}, {"mid": "運動鞋", "count": 34}, {"mid": "飾釦配件", "count": 32}, {"mid": "", "count": 24}], "sankey": [{"src": "靴類", "dst": "雲織：瑪莉珍鞋", "v": 329}, {"src": "樂福／莫卡辛", "dst": "雲織：瑪莉珍鞋", "v": 317}, {"src": "涼鞋／穆勒", "dst": "雲織：瑪莉珍鞋", "v": 283}, {"src": "樂福／莫卡辛", "dst": "雲織：樂福／莫卡辛", "v": 239}, {"src": "樂福／莫卡辛", "dst": "雲織：平底／娃娃鞋", "v": 221}, {"src": "休閒／運動", "dst": "雲織：瑪莉珍鞋", "v": 166}, {"src": "涼鞋／穆勒", "dst": "雲織：平底／娃娃鞋", "v": 152}, {"src": "靴類", "dst": "雲織：平底／娃娃鞋", "v": 139}, {"src": "平底／娃娃鞋", "dst": "雲織：瑪莉珍鞋", "v": 126}, {"src": "瑪莉珍鞋", "dst": "雲織：瑪莉珍鞋", "v": 126}, {"src": "平底／娃娃鞋", "dst": "雲織：平底／娃娃鞋", "v": 97}, {"src": "靴類", "dst": "雲織：樂福／莫卡辛", "v": 85}, {"src": "其他", "dst": "雲織：瑪莉珍鞋", "v": 74}, {"src": "休閒／運動", "dst": "雲織：樂福／莫卡辛", "v": 70}, {"src": "休閒／運動", "dst": "雲織：平底／娃娃鞋", "v": 70}, {"src": "涼鞋／穆勒", "dst": "雲織：樂福／莫卡辛", "v": 62}, {"src": "跟鞋", "dst": "雲織：瑪莉珍鞋", "v": 58}, {"src": "跟鞋", "dst": "雲織：平底／娃娃鞋", "v": 44}, {"src": "平底／娃娃鞋", "dst": "雲織：樂福／莫卡辛", "v": 41}, {"src": "瑪莉珍鞋", "dst": "雲織：平底／娃娃鞋", "v": 39}, {"src": "襪類配件", "dst": "雲織：瑪莉珍鞋", "v": 35}, {"src": "其他", "dst": "雲織：平底／娃娃鞋", "v": 31}, {"src": "瑪莉珍鞋", "dst": "雲織：樂福／莫卡辛", "v": 24}, {"src": "跟鞋", "dst": "雲織：樂福／莫卡辛", "v": 22}, {"src": "襪類配件", "dst": "雲織：平底／娃娃鞋", "v": 19}]}, "CH14": {"yun_buyers": 5054, "repurchasers": 394, "rate": 7.8, "median_gap": 60, "mean_gap": 87, "dist": [{"label": "1-30天", "n": 150}, {"label": "31-60天", "n": 75}, {"label": "61-90天", "n": 51}, {"label": "91-120天", "n": 36}, {"label": "121-180天", "n": 66}, {"label": "181-216天", "n": 37}, {"label": "217-270天", "n": 27}, {"label": "271-365天", "n": 5}, {"label": "366-540天", "n": 0}, {"label": "541-730天", "n": 0}, {"label": "730天+", "n": 0}], "cum": [{"day": 0, "pct": 0.0}, {"day": 30, "pct": 33.6}, {"day": 60, "pct": 50.3}, {"day": 90, "pct": 61.7}, {"day": 120, "pct": 69.8}, {"day": 150, "pct": 77.0}, {"day": 180, "pct": 84.6}, {"day": 210, "pct": 91.5}, {"day": 240, "pct": 95.5}, {"day": 270, "pct": 98.9}, {"day": 300, "pct": 100.0}, {"day": 330, "pct": 100.0}, {"day": 360, "pct": 100.0}], "season": [{"month": 1, "n": 24}, {"month": 2, "n": 19}, {"month": 3, "n": 31}, {"month": 4, "n": 52}, {"month": 5, "n": 65}, {"month": 6, "n": 66}, {"month": 7, "n": 50}, {"month": 8, "n": 0}, {"month": 9, "n": 0}, {"month": 10, "n": 23}, {"month": 11, "n": 40}, {"month": 12, "n": 24}]}, "CH12": {"step2": {"n": 810, "yun_pct": 42.5, "top_grps": [{"grp": "瑪莉珍鞋", "c": 162}, {"grp": "樂福／莫卡辛", "c": 155}, {"grp": "靴類", "c": 136}, {"grp": "平底／娃娃鞋", "c": 132}, {"grp": "涼鞋／穆勒", "c": 92}, {"grp": "休閒／運動", "c": 84}], "median_gap": 61}, "step3": {"n": 204, "yun_pct": 36.3, "top_grps": [{"grp": "樂福／莫卡辛", "c": 46}, {"grp": "瑪莉珍鞋", "c": 40}, {"grp": "靴類", "c": 40}, {"grp": "平底／娃娃鞋", "c": 33}, {"grp": "涼鞋／穆勒", "c": 21}, {"grp": "休閒／運動", "c": 15}], "median_gap": 76}, "step4": {"n": 69, "yun_pct": 40.6, "top_grps": [{"grp": "瑪莉珍鞋", "c": 14}, {"grp": "休閒／運動", "c": 12}, {"grp": "樂福／莫卡辛", "c": 11}, {"grp": "靴類", "c": 10}, {"grp": "平底／娃娃鞋", "c": 9}, {"grp": "涼鞋／穆勒", "c": 9}], "median_gap": 51}}, "CH13": {"A": {"n": 4244, "pct": 84.0, "ltv": 4019, "avg_occ": 1.8, "rep_rate": 38.1, "cross_pct": 63.6}, "B": {"n": 307, "pct": 6.1, "ltv": 8601, "avg_occ": 3.09, "rep_rate": 100.0, "cross_pct": 88.6}, "C": {"n": 396, "pct": 7.8, "ltv": 9380, "avg_occ": 4.57, "rep_rate": 100.0, "cross_pct": 98.2}, "D": {"n": 107, "pct": 2.1, "ltv": 20124, "avg_occ": 6.4, "rep_rate": 100.0, "cross_pct": 100.0}}, "CH15": {"same": 637, "diff": 542, "same_pct": 54.0, "matrix": [{"from": "瑪莉珍鞋", "to": "瑪莉珍鞋", "v": 376}, {"from": "平底鞋", "to": "平底鞋", "v": 152}, {"from": "平底鞋", "to": "瑪莉珍鞋", "v": 129}, {"from": "樂福鞋", "to": "樂福鞋", "v": 94}, {"from": "瑪莉珍鞋", "to": "平底鞋", "v": 80}, {"from": "瑪莉珍鞋", "to": "樂福鞋", "v": 70}, {"from": "樂福鞋", "to": "瑪莉珍鞋", "v": 58}, {"from": "樂福鞋", "to": "平底鞋", "v": 51}, {"from": "平底鞋", "to": "樂福鞋", "v": 38}, {"from": "樂福鞋", "to": "娃娃鞋", "v": 28}, {"from": "娃娃鞋", "to": "平底鞋", "v": 28}, {"from": "平底鞋", "to": "娃娃鞋", "v": 21}, {"from": "瑪莉珍鞋", "to": "娃娃鞋", "v": 18}, {"from": "娃娃鞋", "to": "娃娃鞋", "v": 15}, {"from": "娃娃鞋", "to": "瑪莉珍鞋", "v": 13}, {"from": "娃娃鞋", "to": "樂福鞋", "v": 8}], "type_loyalty": [{"type": "瑪莉珍鞋", "n": 544, "stay_pct": 69.1}, {"type": "樂福鞋", "n": 231, "stay_pct": 40.7}, {"type": "平底鞋", "n": 340, "stay_pct": 44.7}, {"type": "娃娃鞋", "n": 64, "stay_pct": 23.4}]}, "CH16": {"same": 355, "diff": 824, "same_pct": 30.1, "matrix": [{"from": "黑色系", "to": "黑色系", "v": 201}, {"from": "黑色系", "to": "米杏色系", "v": 148}, {"from": "米杏色系", "to": "米杏色系", "v": 123}, {"from": "米杏色系", "to": "黑色系", "v": 111}, {"from": "米杏色系", "to": "灰色系", "v": 63}, {"from": "灰色系", "to": "米杏色系", "v": 61}, {"from": "黑色系", "to": "灰色系", "v": 48}, {"from": "黑色系", "to": "藍色系", "v": 36}, {"from": "灰色系", "to": "黑色系", "v": 30}, {"from": "黑色系", "to": "粉紅色系", "v": 27}, {"from": "粉紅色系", "to": "黑色系", "v": 23}, {"from": "綠色系", "to": "黑色系", "v": 23}, {"from": "藍色系", "to": "米杏色系", "v": 23}, {"from": "粉紅色系", "to": "米杏色系", "v": 18}, {"from": "米杏色系", "to": "粉紅色系", "v": 17}, {"from": "黑色系", "to": "白色系", "v": 16}, {"from": "藍色系", "to": "黑色系", "v": 16}, {"from": "米杏色系", "to": "藍色系", "v": 15}, {"from": "黑色系", "to": "綠色系", "v": 12}, {"from": "灰色系", "to": "藍色系", "v": 12}, {"from": "藍色系", "to": "灰色系", "v": 10}, {"from": "灰色系", "to": "灰色系", "v": 9}, {"from": "白色系", "to": "黑色系", "v": 9}, {"from": "米杏色系", "to": "綠色系", "v": 9}, {"from": "粉紅色系", "to": "灰色系", "v": 9}, {"from": "綠色系", "to": "米杏色系", "v": 8}, {"from": "粉紅色系", "to": "粉紅色系", "v": 7}, {"from": "黑色系", "to": "其他色", "v": 7}, {"from": "灰色系", "to": "粉紅色系", "v": 7}, {"from": "綠色系", "to": "綠色系", "v": 6}, {"from": "藍色系", "to": "綠色系", "v": 6}, {"from": "粉紅色系", "to": "綠色系", "v": 5}, {"from": "白色系", "to": "米杏色系", "v": 5}, {"from": "灰色系", "to": "綠色系", "v": 5}, {"from": "粉紅色系", "to": "藍色系", "v": 5}, {"from": "米杏色系", "to": "其他色", "v": 4}, {"from": "米杏色系", "to": "白色系", "v": 4}, {"from": "藍色系", "to": "藍色系", "v": 4}, {"from": "藍色系", "to": "粉紅色系", "v": 4}, {"from": "其他色", "to": "黑色系", "v": 4}, {"from": "綠色系", "to": "粉紅色系", "v": 4}, {"from": "綠色系", "to": "藍色系", "v": 3}, {"from": "白色系", "to": "白色系", "v": 3}], "color_loyalty": [{"color": "黑色系", "n": 495, "stay_pct": 40.6}, {"color": "米杏色系", "n": 346, "stay_pct": 35.5}, {"color": "白色系", "n": 22, "stay_pct": 13.6}, {"color": "灰色系", "n": 126, "stay_pct": 7.1}]}, "CH17": {"same": 900, "diff": 279, "same_pct": 76.3, "by_type": [{"type": "瑪莉珍鞋", "stable_pct": 74.8, "n": 544}, {"type": "平底鞋", "stable_pct": 81.5, "n": 340}, {"type": "樂福鞋", "stable_pct": 69.3, "n": 231}, {"type": "娃娃鞋", "stable_pct": 87.5, "n": 64}]}, "CH18": {"before_scene": [{"k": "通勤", "n": 164}, {"k": "日常", "n": 10258}, {"k": "運動休閒", "n": 1805}, {"k": "機能", "n": 180}], "after_scene": [{"k": "通勤", "n": 289}, {"k": "日常", "n": 4553}, {"k": "運動休閒", "n": 438}, {"k": "機能", "n": 68}], "dict_note": true, "heel_before": [{"k": "平底", "n": 7720}, {"k": "中低跟", "n": 1988}, {"k": "高跟", "n": 1128}, {"k": "靴跟", "n": 1571}], "heel_after": [{"k": "平底", "n": 4094}, {"k": "中低跟", "n": 322}, {"k": "高跟", "n": 235}, {"k": "靴跟", "n": 697}]}, "CH19": {"scene_trans": [{"from": "日常", "to": "日常", "v": 3463}, {"from": "運動休閒", "to": "日常", "v": 384}, {"from": "日常", "to": "運動休閒", "v": 320}, {"from": "日常", "to": "通勤", "v": 251}, {"from": "運動休閒", "to": "運動休閒", "v": 150}, {"from": "通勤", "to": "日常", "v": 117}, {"from": "運動休閒", "to": "通勤", "v": 42}, {"from": "通勤", "to": "通勤", "v": 34}], "season_by_step": {"1": [{"k": "四季", "n": 4095}, {"k": "秋冬", "n": 671}, {"k": "春夏", "n": 316}], "2": [{"k": "四季", "n": 1966}, {"k": "秋冬", "n": 401}, {"k": "春夏", "n": 199}], "3": [{"k": "四季", "n": 1063}, {"k": "秋冬", "n": 207}, {"k": "春夏", "n": 133}], "4": [{"k": "四季", "n": 657}, {"k": "秋冬", "n": 141}, {"k": "春夏", "n": 78}]}}, "CH20": {"first_prod": [{"name": "雙帶方頭瑪莉珍鞋", "c": 515}, {"name": "方頭瑪莉珍鞋", "c": 465}, {"name": "小V口尖頭通勤包鞋", "c": 273}, {"name": "尖頭瑪莉珍鞋", "c": 194}, {"name": "學院風範．超軟Q馬銜釦樂福鞋", "c": 131}, {"name": "通勤款樂福豆豆鞋", "c": 131}, {"name": "綁帶方頭瑪莉珍鞋", "c": 108}, {"name": "素面方頭樂福鞋", "c": 101}, {"name": "蝴蝶結圓頭芭蕾娃娃鞋", "c": 93}, {"name": "雙色拼接扭結方頭樂福鞋", "c": 92}], "vip_prod": [{"name": "雙帶方頭瑪莉珍鞋", "c": 254}, {"name": "學院風範．超軟Q馬銜釦樂福鞋", "c": 222}, {"name": "方頭瑪莉珍鞋", "c": 173}, {"name": "百搭首選．MIT小蝴蝶結莫卡辛健走鞋", "c": 166}, {"name": "輕甜女孩．MIT小蝴蝶結莫卡辛健走鞋", "c": 141}, {"name": "小V口尖頭通勤包鞋", "c": 129}, {"name": "典雅氛圍．韓風素面低跟尖頭鞋", "c": 105}, {"name": "尖頭瑪莉珍鞋", "c": 101}, {"name": "浪漫花釦．小蝴蝶結平底芭蕾娃娃鞋", "c": 88}, {"name": "舒適加倍．MIT素面莫卡辛健走鞋", "c": 84}], "vip_thresh": 10380}};
+const G = {"first_impact": [{"name": "典雅氛圍．韓風素面低跟尖頭鞋", "n": 33, "ltv": 15904, "p2": 100.0, "p3": 51.5, "vip": 6.1, "gap": 213}, {"name": "美麗零死角．素面方頭高跟瘦瘦靴", "n": 31, "ltv": 9338, "p2": 100.0, "p3": 51.6, "vip": 25.8, "gap": 298}, {"name": "好感專屬．中車線設計方頭低跟長靴", "n": 38, "ltv": 8792, "p2": 89.5, "p3": 47.4, "vip": 15.8, "gap": 286}, {"name": "輕甜女孩．MIT小蝴蝶結莫卡辛健走鞋", "n": 34, "ltv": 6959, "p2": 97.1, "p3": 64.7, "vip": 20.6, "gap": 267}, {"name": "學院風範．超軟Q馬銜釦樂福鞋", "n": 62, "ltv": 6697, "p2": 98.4, "p3": 56.5, "vip": 14.5, "gap": 326}, {"name": "百搭首選．MIT小蝴蝶結莫卡辛健走鞋", "n": 42, "ltv": 6658, "p2": 100.0, "p3": 61.9, "vip": 14.3, "gap": 266}, {"name": "復刻經典．鬆糕底馬銜釦樂福鞋", "n": 34, "ltv": 6577, "p2": 100.0, "p3": 64.7, "vip": 14.7, "gap": 499}, {"name": "柔軟升級．MIT經典款莫卡辛健走鞋", "n": 39, "ltv": 6309, "p2": 97.4, "p3": 66.7, "vip": 7.7, "gap": 383}, {"name": "自在首選綁帶休閒德訓鞋", "n": 51, "ltv": 5981, "p2": 47.1, "p3": 21.6, "vip": 9.8, "gap": 197}, {"name": "舒適加倍．MIT素面莫卡辛健走鞋", "n": 31, "ltv": 5378, "p2": 100.0, "p3": 74.2, "vip": 6.5, "gap": 304}, {"name": "舒適首選．MIT素面莫卡辛豆豆鞋", "n": 30, "ltv": 5323, "p2": 96.7, "p3": 63.3, "vip": 10.0, "gap": 521}, {"name": "雙帶方頭瑪莉珍鞋", "n": 685, "ltv": 3003, "p2": 13.1, "p3": 2.9, "vip": 2.0, "gap": 60}, {"name": "方頭瑪莉珍鞋", "n": 619, "ltv": 2968, "p2": 15.7, "p3": 2.6, "vip": 1.9, "gap": 68}, {"name": "雙色拼接扭結方頭樂福鞋", "n": 114, "ltv": 2803, "p2": 10.5, "p3": 1.8, "vip": 0.0, "gap": 88}, {"name": "小V口尖頭通勤包鞋", "n": 305, "ltv": 2615, "p2": 15.4, "p3": 1.6, "vip": 0.7, "gap": 51}, {"name": "涼感鏤空方頭瑪莉珍鞋", "n": 74, "ltv": 2564, "p2": 4.1, "p3": 0.0, "vip": 1.4, "gap": 27}, {"name": "蝴蝶結方頭芭蕾鞋", "n": 54, "ltv": 2428, "p2": 3.7, "p3": 0.0, "vip": 0.0, "gap": 22}, {"name": "尖頭瑪莉珍鞋", "n": 194, "ltv": 2148, "p2": 6.7, "p3": 2.1, "vip": 0.5, "gap": 50}, {"name": "蝴蝶結圓頭芭蕾娃娃鞋", "n": 93, "ltv": 2139, "p2": 8.6, "p3": 1.1, "vip": 0.0, "gap": 22}, {"name": "素面方頭樂福鞋", "n": 113, "ltv": 2072, "p2": 8.0, "p3": 0.0, "vip": 1.8, "gap": 28}, {"name": "綁帶方頭瑪莉珍鞋", "n": 113, "ltv": 2049, "p2": 8.8, "p3": 0.9, "vip": 0.0, "gap": 16}, {"name": "尖頭可拆卸蝴蝶結平底鞋", "n": 69, "ltv": 1829, "p2": 5.8, "p3": 1.4, "vip": 0.0, "gap": 20}, {"name": "通勤款樂福豆豆鞋", "n": 107, "ltv": 1681, "p2": 10.3, "p3": 1.9, "vip": 0.0, "gap": 105}], "vip_thresh": 10380, "nbp": {"雙帶方頭瑪莉珍鞋": {"total": 212, "recs": [{"to": "雙帶方頭瑪莉珍鞋", "pct": 9.4, "n": 20, "gap": 86}, {"to": "方頭瑪莉珍鞋", "pct": 8.0, "n": 17, "gap": 39}, {"to": "雙色拼接扭結方頭樂福鞋", "pct": 3.3, "n": 7, "gap": 46}, {"to": "晴雨二穿．側鬆緊切爾西短雨靴", "pct": 2.8, "n": 6, "gap": 24}, {"to": "小V口尖頭通勤包鞋", "pct": 2.8, "n": 6, "gap": 70}]}, "方頭瑪莉珍鞋": {"total": 216, "recs": [{"to": "方頭瑪莉珍鞋", "pct": 11.1, "n": 24, "gap": 30}, {"to": "雙帶方頭瑪莉珍鞋", "pct": 9.3, "n": 20, "gap": 52}, {"to": "素面方頭樂福鞋", "pct": 3.2, "n": 7, "gap": 98}, {"to": "尖頭瑪莉珍鞋", "pct": 3.2, "n": 7, "gap": 87}, {"to": "綁帶方頭瑪莉珍鞋", "pct": 2.3, "n": 5, "gap": 168}]}, "小V口尖頭通勤包鞋": {"total": 108, "recs": [{"to": "小V口尖頭通勤包鞋", "pct": 12.0, "n": 13, "gap": 25}, {"to": "雙帶方頭瑪莉珍鞋", "pct": 5.6, "n": 6, "gap": 37}, {"to": "方頭瑪莉珍鞋", "pct": 5.6, "n": 6, "gap": 22}, {"to": "尖頭可拆卸蝴蝶結平底鞋", "pct": 4.6, "n": 5, "gap": 24}, {"to": "尖頭瑪莉珍鞋", "pct": 2.8, "n": 3, "gap": 60}]}, "尖頭瑪莉珍鞋": {"total": 36, "recs": [{"to": "尖頭瑪莉珍鞋", "pct": 16.7, "n": 6, "gap": 50}, {"to": "小V口尖頭通勤包鞋", "pct": 5.6, "n": 2, "gap": 132}, {"to": "好搭風格．方頭低跟切爾西短靴", "pct": 5.6, "n": 2, "gap": 73}, {"to": "方頭瑪莉珍鞋", "pct": 5.6, "n": 2, "gap": 36}, {"to": "美麗零死角．素面方頭高跟瘦瘦靴", "pct": 5.6, "n": 2, "gap": 40}]}, "通勤款樂福豆豆鞋": {"total": 40, "recs": [{"to": "通勤款樂福豆豆鞋", "pct": 17.5, "n": 7, "gap": 120}, {"to": "蝴蝶結圓頭芭蕾娃娃鞋", "pct": 7.5, "n": 3, "gap": 121}, {"to": "【真皮系列】親膚空氣棉平底樂福鞋", "pct": 5.0, "n": 2, "gap": 120}, {"to": "舒適首選．MIT素面莫卡辛豆豆鞋", "pct": 5.0, "n": 2, "gap": 74}, {"to": "渡假日記軟Q雲感夾腳涼鞋", "pct": 5.0, "n": 2, "gap": 64}]}}, "basket": [{"a": "樂福／莫卡辛", "b": "瑪莉珍鞋", "n": 753}, {"a": "平底／娃娃鞋", "b": "樂福／莫卡辛", "n": 686}, {"a": "樂福／莫卡辛", "b": "靴類", "n": 534}, {"a": "瑪莉珍鞋", "b": "靴類", "n": 508}, {"a": "平底／娃娃鞋", "b": "瑪莉珍鞋", "n": 500}, {"a": "樂福／莫卡辛", "b": "涼鞋／穆勒", "n": 488}, {"a": "涼鞋／穆勒", "b": "瑪莉珍鞋", "n": 430}, {"a": "平底／娃娃鞋", "b": "涼鞋／穆勒", "n": 343}, {"a": "休閒／運動", "b": "瑪莉珍鞋", "n": 288}, {"a": "休閒／運動", "b": "樂福／莫卡辛", "n": 285}, {"a": "平底／娃娃鞋", "b": "靴類", "n": 266}, {"a": "休閒／運動", "b": "平底／娃娃鞋", "n": 216}], "rhythm": {"VIP會員": {"1": 95, "2": 128, "3": 104, "n": 271}, "忠誠會員": {"1": 198, "2": 182, "3": 167, "n": 381}, "回購會員": {"1": 286, "2": 217, "3": null, "n": 1032}, "新會員": {"1": null, "2": null, "3": null, "n": 0}}, "clv": [{"day": 0, "avg": 2089}, {"day": 90, "avg": 2581}, {"day": 180, "avg": 2823}, {"day": 365, "avg": 3333}], "price": {"高客單": {"n": 2181, "pct": 42.9, "ltv": 7141, "avg_orders": 2.25, "rep_rate": 53.2}, "中客單": {"n": 2724, "pct": 53.6, "ltv": 3603, "avg_orders": 2.43, "rep_rate": 48.9}, "低客單": {"n": 177, "pct": 3.5, "ltv": 2042, "avg_orders": 2.28, "rep_rate": 41.2}}, "churn": {"strict_n": 292, "strict_hv": 186, "broad_n": 608, "broad_pct": 12.0, "broad_hv": 138, "broad_hv_rev": 1766077}, "ladder": {"新會員": {"n": 1520, "avg_orders": 1, "avg_cum": 2155}, "回購會員": {"n": 1117, "avg_orders": 2.32, "avg_cum": 5291}, "忠誠會員": {"n": 382, "avg_orders": 4.71, "avg_cum": 8194}, "VIP會員": {"n": 271, "avg_orders": 9.06, "avg_cum": 20276}}, "adopt": {"early": {"n": 391, "pct": 7.7, "ltv": 2950, "cities": ["非宅配", "香港", "新北市"]}, "follower": {"n": 1143, "pct": 22.5, "ltv": 4337, "cities": ["非宅配", "香港", "新北市"]}, "late": {"n": 3548, "pct": 69.8, "ltv": 5535, "cities": ["香港", "非宅配", "新北市"]}}};
+const V2 = {"cohort": {"cohort_rows": [{"cohort": "2023-Q1", "n": 255, "r30": 6.3, "r60": 15.3, "r90": 21.6, "elig90": 255}, {"cohort": "2023-Q2", "n": 311, "r30": 6.1, "r60": 11.6, "r90": 16.4, "elig90": 311}, {"cohort": "2023-Q3", "n": 190, "r30": 3.7, "r60": 11.6, "r90": 17.9, "elig90": 190}, {"cohort": "2023-Q4", "n": 217, "r30": 6.5, "r60": 9.7, "r90": 14.7, "elig90": 217}, {"cohort": "2024-Q1", "n": 132, "r30": 3.0, "r60": 6.1, "r90": 9.1, "elig90": 132}, {"cohort": "2024-Q2", "n": 188, "r30": 13.3, "r60": 17.6, "r90": 26.6, "elig90": 188}, {"cohort": "2024-Q3", "n": 111, "r30": 6.3, "r60": 13.5, "r90": 18.0, "elig90": 111}, {"cohort": "2024-Q4", "n": 202, "r30": 5.9, "r60": 8.4, "r90": 10.4, "elig90": 202}, {"cohort": "2025-Q1", "n": 97, "r30": 11.3, "r60": 17.5, "r90": 19.6, "elig90": 97}, {"cohort": "2025-Q2", "n": 122, "r30": 9.0, "r60": 11.5, "r90": 16.4, "elig90": 122}, {"cohort": "2025-Q3", "n": 315, "r30": 3.8, "r60": 14.3, "r90": 21.9, "elig90": 315}, {"cohort": "2025-Q4", "n": 1048, "r30": 5.6, "r60": 9.2, "r90": 11.3, "elig90": 1048}, {"cohort": "2026-Q1", "n": 460, "r30": 6.7, "r60": 10.7, "r90": 15.7, "elig90": 460}, {"cohort": "2026-Q2", "n": 1163, "r30": 5.3, "r60": 10.6, "r90": 8.3, "elig90": 145}, {"cohort": "2026-Q3", "n": 271, "r30": null, "r60": null, "r90": null, "elig90": 0}], "influx": [{"cohort": "2023-Q1", "new": 255, "r90": 21.6}, {"cohort": "2023-Q2", "new": 311, "r90": 16.4}, {"cohort": "2023-Q3", "new": 190, "r90": 17.9}, {"cohort": "2023-Q4", "new": 217, "r90": 14.7}, {"cohort": "2024-Q1", "new": 132, "r90": 9.1}, {"cohort": "2024-Q2", "new": 188, "r90": 26.6}, {"cohort": "2024-Q3", "new": 111, "r90": 18.0}, {"cohort": "2024-Q4", "new": 202, "r90": 10.4}, {"cohort": "2025-Q1", "new": 97, "r90": 19.6}, {"cohort": "2025-Q2", "new": 122, "r90": 16.4}, {"cohort": "2025-Q3", "new": 315, "r90": 21.9}, {"cohort": "2025-Q4", "new": 1048, "r90": 11.3}, {"cohort": "2026-Q1", "new": 460, "r90": 15.7}, {"cohort": "2026-Q2", "new": 1163, "r90": 8.3}, {"cohort": "2026-Q3", "new": 271, "r90": null}], "hero_n": 487, "hero_r90": 9.2, "loyal_n": 800, "loyal_r90": 16.0}, "forecast": {"baseline_normal": 17.4, "mega_avg": 9.8, "weighted": 13.9, "normal_range": [9.1, 26.6], "gap": 7.6}};
+const D = ALL.base, X = ALL.deep, P = ALL.personas;
+
+const INK='#1A1815',ACCENT='#7C6A54',SAND='#A9967B',GOLD='#B79B6E',GREY='#8C877D',
+      LINE='#DAD4C8',PAPER='#F6F3EE',HK='#3C4E73',HK2='#6E7FA0';
+const SERIES=['#7C6A54','#A9967B','#C4B79E','#8C877D','#5A5248','#B79B6E','#D8CDB8','#6E6357'];
+Chart.defaults.font.family="'Helvetica Neue','PingFang TC','Microsoft JhengHei',sans-serif";
+Chart.defaults.font.size=12; Chart.defaults.color='#6E6357';
+Chart.defaults.plugins.legend.labels.usePointStyle=true;
+Chart.defaults.plugins.legend.labels.boxWidth=8;
+Chart.defaults.plugins.legend.labels.padding=14;
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const nt=n=>'NT$'+Math.round(n).toLocaleString('en-US');
+const gO={grid:{color:'#EDE8DE',drawTicks:false},border:{display:false}};
+const gN={grid:{display:false},border:{display:false}};
+function sideLegend(id,labels,colors,values){
+  const el=document.getElementById(id);if(!el)return;
+  const tot=values.reduce((a,b)=>a+b,0)||1;
+  el.innerHTML=labels.map((l,i)=>`<li><span class="sw" style="background:${colors[i]}"></span>${l}<b>${Math.round(100*values[i]/tot)}%</b></li>`).join('');
+}
+
+// ===== persona narrative meta (names/quotes are illustrative wrappers over real stats) =====
+const PMETA={
+  A:{code:'PERSONA 01 · 營收核心',name:'怡君｜32歲・行銷企劃',who:'30–40歲 · 雙北桃園通勤白領',
+     love:'方頭瑪莉珍・樂福鞋',need:'通勤舒適、久站、日常穿搭',
+     play:'首購後 6–7 個月觸發換季新色，交叉推薦樂福與短靴'},
+  B:{code:'PERSONA 02 · 價值天花板',name:'Vivian｜38歲・品牌收藏家',who:'VIP高頻 · 多為雙北與港澳',
+     love:'跨鞋型收藏、多色多款',need:'追新色、尊榮感、快速換貨',
+     play:'新品搶先購 48 小時、生日禮、專屬分級與免運'},
+  C:{code:'PERSONA 03 · 成長引擎',name:'子晴｜29歲・首購觀望者',who:'僅購買一次 · 全台分布',
+     love:'熱銷入門款（尖頭／娃娃鞋）',need:'嘗鮮、觀望，體驗決定去留',
+     play:'首購後 30/60/90 天分段再行銷，主打第二雙優惠與教學'},
+  D:{code:'PERSONA 04 · 海外市場',name:'嘉欣｜35歲・香港上班族',who:'港澳都會白領 · 跨境購買',
+     love:'瑪莉珍、樂福，一次多雙',need:'在地少見的舒適通勤鞋，願為跨境買單',
+     play:'滿額免國際運費、季節組合包、到貨速度承諾'},
+  E:{code:'PERSONA 05 · 潛力新星',name:'思妤｜27歲・輕熟齡新鮮人',who:'26–30歲 · 高客單早期採用者',
+     love:'追質感新款、偏淺色系',need:'風格與舒適兼具，樂於嘗試新品',
+     play:'新品體驗官、社群開箱誘因、風格穿搭內容'},
+  F:{code:'PERSONA 06 · 忠實根基',name:'淑芬｜52歲・成熟舒適客',who:'46歲以上 · 高頻穩定回購',
+     love:'樂福／莫卡辛、好穿脫平底',need:'足部舒適、耐走、易穿脫',
+     play:'寬楦／足弓舒適溝通、回購週期短可高頻喚回（157天）'},
+};
+const ORDER=['A','B','C','D','E','F'];
+
+function personaCard(k){
+  const d=P[k], m=PMETA[k], pf=d.prefs||{};
+  const cyc = d.cycle!=null ? d.cycle+' 天' : '單次未回購';
+  const col = (pf.colors||[]).slice(0,2).join('、')||'—';
+  const cat = (d.cat||[]).slice(0,3).map(c=>c.g).join('、')||'—';
+  return `<div class="pmini">
+    <div class="h"><div class="pn">${m.code}</div><div class="nm">${m.name}</div><div class="who">${m.who}</div></div>
+    <div class="b">
+      <div class="stat">
+        <div><div class="n">${fmt(d.n)}</div><div class="l">在群人數</div></div>
+        <div><div class="n">${fmt(d.aov)}</div><div class="l">平均客單價</div></div>
+        <div><div class="n">${d.orders}</div><div class="l">平均訂單數</div></div>
+        <div><div class="n">${d.rep}%</div><div class="l">回購率</div></div>
+      </div>
+      <div class="line"><b>累積消費</b>　${nt(d.cum)}　·　回購週期 ${cyc}</div>
+      <div class="line"><b>偏好品類</b>　${cat}</div>
+      <div class="line"><b>偏好色系</b>　${col}　·　鞋碼 ${(pf.sizes||[]).slice(0,2).join('/')||'37/38'}</div>
+      <div class="line"><b>消費需求</b>　${m.need} <span class="infer">推論</span></div>
+    </div>
+    <div class="foot"><b style="color:var(--ink)">行銷動作：</b>${m.play}</div>
+  </div>`;
+}
+
+function build(){
+  // ---- Dashboard ----
+  new Chart(ageChart,{data:{labels:D.age.map(a=>a.label),datasets:[
+    {type:'bar',label:'會員數',data:D.age.map(a=>a.members),backgroundColor:ACCENT,borderRadius:2,yAxisID:'y',maxBarThickness:34},
+    {type:'line',label:'營收(萬)',data:D.age.map(a=>Math.round(a.rev/10000)),borderColor:INK,backgroundColor:INK,tension:.35,yAxisID:'y1',pointRadius:3,borderWidth:2}]},
+    options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      scales:{x:{...gN,ticks:{maxRotation:45,minRotation:45}},y:{...gO,position:'left'},y1:{...gN,position:'right'}},
+      plugins:{legend:{position:'bottom'}}}});
+  new Chart(ageAov,{type:'bar',data:{labels:D.age.map(a=>a.label),datasets:[{label:'平均客單價',data:D.age.map(a=>a.aov),backgroundColor:SAND,borderRadius:2,maxBarThickness:34}]},
+    options:{maintainAspectRatio:false,scales:{x:{...gN,ticks:{maxRotation:45,minRotation:45}},y:{...gO,ticks:{callback:v=>fmt(v)}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>nt(c.parsed.y)}}}}});
+  const cy=[...D.cities].sort((a,b)=>b.members-a.members).slice(0,10);
+  new Chart(cityChart,{type:'bar',data:{labels:cy.map(c=>c.city),datasets:[{label:'會員數',data:cy.map(c=>c.members),backgroundColor:cy.map((c,i)=>i<3?ACCENT:SAND),borderRadius:2}]},
+    options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:gO,y:gN},plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:c=>nt(cy[c.dataIndex].rev)+' 營收'}}}}});
+  const rk=Object.keys(D.region),rv=Object.values(D.region);
+  new Chart(regionChart,{type:'doughnut',data:{labels:rk,datasets:[{data:rv,backgroundColor:[ACCENT,SAND,GOLD,'#C4B79E'],borderColor:PAPER,borderWidth:3}]},options:{maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'bottom'}}}});
+  const vO=['VIP消費者','高價值會員','成長會員','一般會員'];
+  const vC=[INK,ACCENT,SAND,'#C4B79E'];
+  new Chart(valueChart,{type:'doughnut',data:{labels:vO,datasets:[{data:vO.map(k=>D.value_seg[k]),backgroundColor:vC,borderColor:PAPER,borderWidth:3}]},options:{maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}});
+  sideLegend('valueLegend',vO,vC,vO.map(k=>D.value_seg[k]));
+  const aO=['高客單','中客單','低客單'];const aC=[ACCENT,SAND,'#C4B79E'];
+  new Chart(aovSegChart,{type:'doughnut',data:{labels:aO,datasets:[{data:aO.map(k=>D.aov_seg[k]),backgroundColor:aC,borderColor:PAPER,borderWidth:3}]},options:{maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}});
+  sideLegend('aovLegend',aO,aC,aO.map(k=>D.aov_seg[k]));
+  const fO=['低頻回購','穩定回購','高頻回購'];const fC=['#C4B79E',SAND,ACCENT];
+  new Chart(freqChart,{type:'doughnut',data:{labels:fO,datasets:[{data:fO.map(k=>D.freq_seg[k]),backgroundColor:fC,borderColor:PAPER,borderWidth:3}]},options:{maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}});
+  sideLegend('freqLegend',fO,fC,fO.map(k=>D.freq_seg[k]));
+  const mO=['VIP會員','忠誠會員','回購會員','新會員','沉睡會員'];const mC=[INK,ACCENT,'#B79B6E',SAND,'#C4B79E'];
+  const mSegData=mO.map(s=>{const f=D.member_seg.find(x=>x.seg===s);return f?f.n:0;});
+  new Chart(mSegChart,{type:'doughnut',data:{labels:mO,datasets:[{data:mSegData,backgroundColor:mC,borderColor:PAPER,borderWidth:3}]},options:{maintainAspectRatio:false,cutout:'60%',plugins:{legend:{display:false}}}});
+  sideLegend('mSegLegend',mO,mC,mSegData);
+
+  // ---- Behavior ----
+  new Chart(orderDist,{type:'bar',data:{labels:D.order_dist.map(o=>o.bucket),datasets:[{label:'會員數',data:D.order_dist.map(o=>o.n),backgroundColor:D.order_dist.map((o,i)=>i===0?ACCENT:SAND),borderRadius:2,maxBarThickness:60}]},options:{maintainAspectRatio:false,scales:{x:gN,y:gO},plugins:{legend:{display:false}}}});
+  const segMeta={'VIP會員':{f:6,m:20276},'忠誠會員':{f:4,m:8194},'回購會員':{f:2.5,m:5291},'新會員':{f:1,m:2155},'沉睡會員':{f:2,m:4399}};
+  const bub=D.member_seg.filter(s=>segMeta[s.seg]).map((s,i)=>({label:s.seg,data:[{x:segMeta[s.seg].f,y:segMeta[s.seg].m,r:Math.sqrt(s.rev)/260}],backgroundColor:SERIES[i]+'CC',borderColor:SERIES[i]}));
+  new Chart(segBubble,{type:'bubble',data:{datasets:bub},options:{maintainAspectRatio:false,scales:{x:{...gO,title:{display:true,text:'頻率 F'},min:0,max:7},y:{...gO,title:{display:true,text:'金額 M'},ticks:{callback:v=>fmt(v)}}},plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+' · M '+nt(c.raw.y)}}}}});
+  const meaning={'VIP會員':'最高價值，需尊榮鞏固','忠誠會員':'穩定貢獻，維繫為主','回購會員':'已建立習慣，推升客單','新會員':'待培養回購','沉睡會員':'高營收沉睡，優先喚醒','流失會員':'極少數，選擇性挽回'};
+  rfmTable.innerHTML=D.member_seg.map(s=>`<tr><td><b>${s.seg}</b></td><td class="num">${fmt(s.n)}</td><td class="num">${(100*s.n/D.summary.members).toFixed(1)}%</td><td class="num">${nt(s.rev)}</td><td class="num">${s.share}%</td><td class="num">${nt(Math.round(s.rev/s.n))}</td><td>${meaning[s.seg]||''}</td></tr>`).join('');
+
+  // ---- Product ----
+  prodTable.innerHTML=D.top_products.map((p,i)=>`<tr><td class="rank">${String(i+1).padStart(2,'0')}</td><td>${p.name}</td><td class="num">${fmt(p.qty)}</td><td class="num">${nt(p.rev)}</td></tr>`).join('');
+  new Chart(catChart,{type:'bar',data:{labels:D.category.map(c=>c.cat),datasets:[{label:'銷售雙數',data:D.category.map(c=>c.qty),backgroundColor:[ACCENT,SAND,GOLD,'#C4B79E'],borderRadius:2,maxBarThickness:50}]},options:{maintainAspectRatio:false,scales:{x:gN,y:gO},plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:c=>nt(D.category[c.dataIndex].rev)}}}}});
+  const colorHex={'黑':'#2B2A28','杏色':'#C9A87C','星耀銀灰':'#9B9691','米':'#DBCFB6','點點黑':'#3D3A34','黑x米白':'#6E655A','裸膚粉':'#D8B3A6','皇家藍':'#3C4E73','熱戀紅':'#9E3B33','黑x白':'#565049'};
+  new Chart(colorChart,{type:'bar',data:{labels:D.colors.map(c=>c.name),datasets:[{label:'銷售雙數',data:D.colors.map(c=>c.qty),backgroundColor:D.colors.map(c=>colorHex[c.name]||SAND),borderRadius:2,borderColor:LINE,borderWidth:1}]},options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:gO,y:gN},plugins:{legend:{display:false}}}});
+  const sz=[...D.sizes].sort((a,b)=>Number(a.size)-Number(b.size));
+  new Chart(sizeChart,{type:'bar',data:{labels:sz.map(s=>s.size+'號'),datasets:[{label:'銷售雙數',data:sz.map(s=>s.qty),backgroundColor:sz.map(s=>['37','38','39'].includes(s.size)?ACCENT:SAND),borderRadius:2,maxBarThickness:44}]},options:{maintainAspectRatio:false,scales:{x:gN,y:gO},plugins:{legend:{display:false}}}});
+
+  // ---- Cross category ----
+  k_cross.textContent=fmt(X.cross.crossbuy_members);
+  k_crate.innerHTML=X.cross.crossbuy_rate+'<small>%</small>';
+  k_nonshare.innerHTML=X.cross.non_share+'<small>%</small>';
+  k_nonrev.innerHTML=(X.cross.non_rev/1e6).toFixed(1)+'<small>M</small>';
+  const ng=X.nonyun_groups;
+  new Chart(nonGrp,{type:'bar',data:{labels:ng.map(g=>g.g),datasets:[{label:'觸及會員數',data:ng.map(g=>g.members),backgroundColor:ng.map((g,i)=>i<2?ACCENT:SAND),borderRadius:2}]},options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:gO,y:gN},plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:c=>nt(ng[c.dataIndex].rev)+' 營收'}}}}});
+  const bc=X.big_cat;
+  new Chart(bigCat,{type:'doughnut',data:{labels:bc.map(b=>b.cat),datasets:[{data:bc.map(b=>b.rev),backgroundColor:[ACCENT,HK,SAND,GOLD,'#C4B79E'],borderColor:PAPER,borderWidth:3}]},options:{maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.label+' · '+nt(c.parsed)}}}}});
+  const bd=X.breadth;
+  new Chart(breadth,{type:'bar',data:{labels:bd.map(b=>b.k+' 種'),datasets:[{label:'會員數',data:bd.map(b=>b.n),backgroundColor:bd.map((b,i)=>i===0?SAND:ACCENT),borderRadius:2,maxBarThickness:42}]},options:{maintainAspectRatio:false,scales:{x:gN,y:gO},plugins:{legend:{display:false}}}});
+  nonTop.innerHTML=X.nonyun_top.map((p,i)=>`<tr><td class="rank">${String(i+1).padStart(2,'0')}</td><td>${p.name}</td><td class="num">${fmt(p.lines)}</td></tr>`).join('');
+
+  // ---- Personas (6-up) ----
+  personaGrid.innerHTML=ORDER.map(personaCard).join('');
+
+  // ---- Flagship (A) ----
+  p_n.innerHTML=P.A.n+'<small> 人</small>';
+  p_aov.innerHTML=fmt(P.A.aov)+'<small>元</small>';
+  p_ord.innerHTML=P.A.orders+'<small>次</small>';
+  p_cum.innerHTML=fmt(P.A.cum)+'<small>元</small>';
+  p_cyc.textContent=P.A.cycle;
+  const pv=P.A.value_seg,pvk=['VIP消費者','高價值會員','成長會員','一般會員'];
+  new Chart(pValue,{type:'doughnut',data:{labels:pvk,datasets:[{data:pvk.map(k=>pv[k]||0),backgroundColor:[INK,ACCENT,SAND,'#C4B79E'],borderColor:PAPER,borderWidth:3}]},options:{maintainAspectRatio:false,cutout:'56%',plugins:{legend:{position:'bottom'}}}});
+  const pc=P.A.cat;
+  new Chart(pCat,{type:'bar',data:{labels:pc.map(c=>c.g),datasets:[{label:'訂單品項',data:pc.map(c=>c.n),backgroundColor:pc.map((c,i)=>i<2?ACCENT:SAND),borderRadius:2}]},options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:gO,y:gN},plugins:{legend:{display:false}}}});
+
+  // ---- HK ----
+  const H=X.hk;
+  h_n.textContent=fmt(H.hk.n);
+  h_share.innerHTML=H.hk.share+'<small>%</small>';
+  h_aov.innerHTML=fmt(H.hk.aov)+'<small>元</small>';
+  h_pairs.innerHTML=H.hk.pairs+'<small>雙</small>';
+  h_aov_d.textContent='▲ 較台灣高 '+Math.round(100*(H.hk.aov-H.rest.aov)/H.rest.aov)+'%';
+  h_pairs_d.textContent='▲ 較台灣高 '+Math.round(100*(H.hk.pairs-H.rest.pairs)/H.rest.pairs)+'%';
+  new Chart(hkCompare,{type:'bar',data:{labels:['平均客單價(元)','平均累積(元)','平均訂單數×1000','平均雙數×1000','回購率%×100'],datasets:[
+    {label:'港澳',data:[H.hk.aov,H.hk.cum,H.hk.orders*1000,H.hk.pairs*1000,H.hk.rep*100],backgroundColor:HK,borderRadius:2},
+    {label:'台灣',data:[H.rest.aov,H.rest.cum,H.rest.orders*1000,H.rest.pairs*1000,H.rest.rep*100],backgroundColor:SAND,borderRadius:2}]},
+    options:{maintainAspectRatio:false,scales:{x:{...gN,ticks:{maxRotation:30,minRotation:30,font:{size:10}}},y:gO},plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>{const lab=c.label,raw=c.raw;let v=raw;if(lab.includes('×1000'))v=(raw/1000).toFixed(2);else if(lab.includes('×100'))v=(raw/100).toFixed(1)+'%';else if(lab.includes('元'))v=nt(raw);return c.dataset.label+'：'+v;}}}}}});
+  const hc=H.cat;
+  new Chart(hkCat,{type:'bar',data:{labels:hc.map(c=>c.cat),datasets:[{label:'訂單品項',data:hc.map(c=>c.lines),backgroundColor:hc.map((c,i)=>i<2?HK:HK2),borderRadius:2}]},options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:gO,y:gN},plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:c=>nt(hc[c.dataIndex].rev)}}}}});
+  const hs=H.member_seg,hsk=['VIP會員','忠誠會員','回購會員','新會員','沉睡會員'];
+  new Chart(hkSeg,{type:'doughnut',data:{labels:hsk,datasets:[{data:hsk.map(k=>hs[k]||0),backgroundColor:[INK,ACCENT,HK,HK2,'#C4B79E'],borderColor:PAPER,borderWidth:3}]},options:{maintainAspectRatio:false,cutout:'56%',plugins:{legend:{position:'bottom'}}}});
+  const hcol=H.colors,colH={'時尚黑':'#2B2A28','香草米':'#DBCFB6','象牙灰':'#9B9691','午夜黑':'#1F1E1C','米白':'#E6DCC7','人氣白':'#EFEAE0'};
+  new Chart(hkColor,{type:'bar',data:{labels:hcol.map(c=>c.name),datasets:[{label:'訂單品項',data:hcol.map(c=>c.n),backgroundColor:hcol.map(c=>colH[c.name]||HK2),borderRadius:2,borderColor:LINE,borderWidth:1}]},options:{maintainAspectRatio:false,scales:{x:gN,y:gO},plugins:{legend:{display:false}}}});
+
+  buildNewChapters();
+  buildGrowth();
+  buildV2();
+}
+
+function buildNewChapters(){
+  const el=id=>document.getElementById(id);
+  // ===== CH11 =====
+  const pg=NC.CH11.top_prior_grps;
+  new Chart(prePathGrp,{type:'bar',data:{labels:pg.map(g=>g.grp),datasets:[{label:'前導人數',data:pg.map(g=>g.count),backgroundColor:pg.map((g,i)=>i<2?ACCENT:SAND),borderRadius:2}]},
+    options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:gO,y:gN},plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:c=>'平均LTV '+nt(pg[c.dataIndex].avg_ltv)}}}}});
+  // Sankey as horizontal stacked flow (approx via grouped bar of src->dst counts)
+  const sk=NC.CH11.sankey.slice(0,10);
+  new Chart(sankeyChart,{type:'bar',data:{labels:sk.map(s=>s.src+' → '+s.dst.replace('雲織：','雲織')),datasets:[{label:'轉換人數',data:sk.map(s=>s.v),backgroundColor:ACCENT,borderRadius:2}]},
+    options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:gO,y:{...gN,ticks:{font:{size:10}}}},plugins:{legend:{display:false}}}});
+  el('prePathProd').innerHTML=NC.CH11.top_prior_names.map((p,i)=>`<tr><td class="rank">${String(i+1).padStart(2,'0')}</td><td>${p.name||'—'}</td><td class="num">${fmt(p.count)}</td></tr>`).join('');
+  el('prePathLtv').innerHTML=pg.map(g=>`<tr><td><b>${g.grp}</b></td><td class="num">${fmt(g.members)}</td><td class="num">${nt(g.avg_ltv)}</td></tr>`).join('');
+
+  // ===== CH12 =====
+  const s2=NC.CH12.step2;
+  new Chart(step2Chart,{type:'doughnut',data:{labels:['雲織鞋'].concat(s2.top_grps.filter(g=>g.grp!=='瑪莉珍鞋'||true).map(g=>g.grp)),
+    datasets:[{data:[Math.round(s2.n*s2.yun_pct/100)].concat(s2.top_grps.map(g=>g.c)),backgroundColor:[INK,ACCENT,SAND,GOLD,'#C4B79E','#8C877D','#6E6357'],borderColor:PAPER,borderWidth:3}]},
+    options:{maintainAspectRatio:false,cutout:'56%',plugins:{legend:{position:'bottom'}}}});
+  const steps=['step2','step3','step4'].map(k=>NC.CH12[k]);
+  new Chart(stepYunChart,{type:'bar',data:{labels:['第2次','第3次','第4次'],datasets:[{label:'雲織鞋佔比 %',data:steps.map(s=>s.yun_pct),backgroundColor:ACCENT,borderRadius:2,maxBarThickness:70}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:{...gO,max:100,ticks:{callback:v=>v+'%'}}},plugins:{legend:{display:false}}}});
+
+  // ===== CH13 loyalty cards =====
+  const L=NC.CH13;const lmeta={A:{c:'GROUP A',n:'只買一次雲織'},B:{c:'GROUP B',n:'回購雲織鞋'},C:{c:'GROUP C',n:'買完轉買他款'},D:{c:'GROUP D',n:'雲織×他款交替'}};
+  el('loyaltyCards').innerHTML=['A','B','C','D'].map(k=>{const d=L[k];const best=k==='D'?' best':'';
+    return `<div class="lcard${best}"><div class="lh"><div class="code">${lmeta[k].c}</div><div class="nm">${lmeta[k].n}</div></div>
+    <div class="lb">
+      <div class="row"><span class="k">人數</span><span class="v">${fmt(d.n)}</span></div>
+      <div class="row"><span class="k">會員比例</span><span class="v">${d.pct}%</span></div>
+      <div class="row"><span class="k">平均 LTV</span><span class="v">${nt(d.ltv)}</span></div>
+      <div class="row"><span class="k">平均購買次數</span><span class="v">${d.avg_occ}</span></div>
+      <div class="row"><span class="k">回購率</span><span class="v">${d.rep_rate}%</span></div>
+      <div class="row"><span class="k">跨品類比例</span><span class="v">${d.cross_pct}%</span></div>
+    </div></div>`;}).join('');
+
+  // ===== CH14 =====
+  const rd=NC.CH14.dist;
+  new Chart(repDistChart,{type:'bar',data:{labels:rd.map(d=>d.label),datasets:[{label:'回購人數',data:rd.map(d=>d.n),backgroundColor:rd.map((d,i)=>d.n>=60?ACCENT:SAND),borderRadius:2}]},
+    options:{maintainAspectRatio:false,scales:{x:{...gN,ticks:{maxRotation:45,minRotation:45,font:{size:10}}},y:gO},plugins:{legend:{display:false}}}});
+  const rc=NC.CH14.cum;
+  new Chart(repCumChart,{type:'line',data:{labels:rc.map(c=>c.day+'天'),datasets:[{label:'累積回購比例 %',data:rc.map(c=>c.pct),borderColor:ACCENT,backgroundColor:'rgba(124,106,84,.12)',fill:true,tension:.3,pointRadius:3,borderWidth:2}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:{...gO,max:100,ticks:{callback:v=>v+'%'}}},plugins:{legend:{display:false}}}});
+  const rs=NC.CH14.season,mn=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  new Chart(repSeasonChart,{type:'bar',data:{labels:mn,datasets:[{label:'第二次雲織購買人數',data:rs.map(s=>s.n),backgroundColor:rs.map(s=>s.month===6?ACCENT:SAND),borderRadius:2}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:gO},plugins:{legend:{display:false}}}});
+
+  // ===== CH15 transition matrix =====
+  const types=['瑪莉珍鞋','平底鞋','樂福鞋','娃娃鞋'];
+  const tmap={};NC.CH15.matrix.forEach(m=>{tmap[m.from+'>'+m.to]=m.v;});
+  let th='<thead><tr><th>第1雙＼第2雙</th>'+types.map(t=>`<th class="num">${t}</th>`).join('')+'</tr></thead><tbody>';
+  types.forEach(f=>{th+=`<tr><td><b>${f}</b></td>`+types.map(t=>{const v=tmap[f+'>'+t]||0;const cls=f===t?'diag':(v>=60?'hot':'');return `<td class="num ${cls}">${v||'·'}</td>`;}).join('')+'</tr>';});
+  th+='</tbody>';el('transMatrix').innerHTML=th;
+  const tl=NC.CH15.type_loyalty;
+  new Chart(typeLoyalChart,{type:'bar',data:{labels:tl.map(t=>t.type),datasets:[{label:'續選同款 %',data:tl.map(t=>t.stay_pct),backgroundColor:tl.map(t=>t.stay_pct>=60?ACCENT:SAND),borderRadius:2,maxBarThickness:60}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:{...gO,max:100,ticks:{callback:v=>v+'%'}}},plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:c=>'n='+tl[c.dataIndex].n}}}}});
+
+  // ===== CH16 color matrix =====
+  const cols=['黑色系','米杏色系','灰色系','白色系'];
+  const cmap={};NC.CH16.matrix.forEach(m=>{cmap[m.from+'>'+m.to]=m.v;});
+  let ch='<thead><tr><th>第1雙＼第2雙</th>'+cols.map(c=>`<th class="num">${c}</th>`).join('')+'</tr></thead><tbody>';
+  cols.forEach(f=>{ch+=`<tr><td><b>${f}</b></td>`+cols.map(t=>{const v=cmap[f+'>'+t]||0;const cls=f===t?'diag':(v>=50?'hot':'');return `<td class="num ${cls}">${v||'·'}</td>`;}).join('')+'</tr>';});
+  ch+='</tbody>';el('colorMatrix').innerHTML=ch;
+  const cl=NC.CH16.color_loyalty;
+  new Chart(colorLoyalChart,{type:'bar',data:{labels:cl.map(c=>c.color),datasets:[{label:'同色系續購 %',data:cl.map(c=>c.stay_pct),backgroundColor:['#2B2A28','#DBCFB6','#9B9691','#E6DCC7'].slice(0,cl.length),borderRadius:2,borderColor:LINE,borderWidth:1,maxBarThickness:60}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:{...gO,ticks:{callback:v=>v+'%'}}},plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:c=>'n='+cl[c.dataIndex].n}}}}});
+
+  // ===== CH17 size =====
+  const sz=NC.CH17.by_type;
+  new Chart(sizeStableChart,{type:'bar',data:{labels:sz.map(s=>s.type),datasets:[{label:'尺寸穩定度 %',data:sz.map(s=>s.stable_pct),backgroundColor:sz.map(s=>s.stable_pct>=80?ACCENT:SAND),borderRadius:2,maxBarThickness:60}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:{...gO,max:100,ticks:{callback:v=>v+'%'}}},plugins:{legend:{display:false},tooltip:{callbacks:{afterLabel:c=>'n='+sz[c.dataIndex].n}}}}});
+
+  // ===== CH18 =====
+  const hb=NC.CH18.heel_before,ha=NC.CH18.heel_after;
+  new Chart(heelChart,{type:'bar',data:{labels:hb.map(h=>h.k),datasets:[
+    {label:'雲織購買前',data:hb.map(h=>h.n),backgroundColor:SAND,borderRadius:2},
+    {label:'雲織購買後',data:ha.map(h=>h.n),backgroundColor:ACCENT,borderRadius:2}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:gO},plugins:{legend:{position:'bottom'}}}});
+  const sb=NC.CH18.before_scene,sa=NC.CH18.after_scene;
+  const scLabels=['通勤','日常','運動休閒','機能'];
+  const sbMap=Object.fromEntries(sb.map(x=>[x.k,x.n])),saMap=Object.fromEntries(sa.map(x=>[x.k,x.n]));
+  // normalize to % for comparability
+  const sbT=sb.reduce((a,b)=>a+b.n,0),saT=sa.reduce((a,b)=>a+b.n,0);
+  new Chart(sceneChart,{type:'bar',data:{labels:scLabels,datasets:[
+    {label:'購買前 %',data:scLabels.map(k=>Math.round(100*(sbMap[k]||0)/sbT)),backgroundColor:SAND,borderRadius:2},
+    {label:'購買後 %',data:scLabels.map(k=>Math.round(100*(saMap[k]||0)/saT)),backgroundColor:ACCENT,borderRadius:2}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:{...gO,ticks:{callback:v=>v+'%'}}},plugins:{legend:{position:'bottom'}}}});
+
+  // ===== CH19 =====
+  const ss=NC.CH19.season_by_step;
+  const seasons=['四季','秋冬','春夏'];
+  const stepLabels=['第1次','第2次','第3次','第4次'];
+  const dsets=seasons.map((se,i)=>({label:se,data:['1','2','3','4'].map(st=>{const arr=ss[st]||[];const f=arr.find(x=>x.k===se);const tot=arr.reduce((a,b)=>a+b.n,0);return f&&tot?Math.round(100*f.n/tot):0;}),backgroundColor:[SAND,'#5A5248','#C4B79E'][i],borderRadius:2}));
+  new Chart(seasonStepChart,{type:'bar',data:{labels:stepLabels,datasets:dsets},
+    options:{maintainAspectRatio:false,scales:{x:{...gN,stacked:true},y:{...gO,stacked:true,ticks:{callback:v=>v+'%'}}},plugins:{legend:{position:'bottom'}}}});
+  const st=NC.CH19.scene_trans.slice(0,6);
+  new Chart(sceneTransChart,{type:'bar',data:{labels:st.map(s=>s.from+'→'+s.to),datasets:[{label:'轉換次數',data:st.map(s=>s.v),backgroundColor:st.map((s,i)=>i===0?SAND:ACCENT),borderRadius:2}]},
+    options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:gO,y:{...gN,ticks:{font:{size:11}}}},plugins:{legend:{display:false}}}});
+
+  // ===== CH20 =====
+  el('firstProdTable').innerHTML=NC.CH20.first_prod.map((p,i)=>`<tr><td class="rank">${String(i+1).padStart(2,'0')}</td><td>${p.name}</td><td class="num">${fmt(p.c)}</td></tr>`).join('');
+  el('vipProdTable').innerHTML=NC.CH20.vip_prod.map((p,i)=>`<tr><td class="rank">${String(i+1).padStart(2,'0')}</td><td>${p.name}</td><td class="num">${fmt(p.c)}</td></tr>`).join('');
+}
+
+function buildGrowth(){
+  const el=id=>document.getElementById(id);
+  const clip=s=>s.replace('【3D零感雲織鞋】','').replace(/^.{0,4}．/,'');
+
+  // ===== 23 First purchase impact =====
+  const fi=G.first_impact;
+  const top=fi.slice(0,10);
+  // include the hero product (瑪莉珍) even if outside top10
+  const hero=fi.find(x=>x.name.includes('雙帶方頭瑪莉珍'));
+  const tableRows=top.slice();
+  if(hero && !tableRows.includes(hero)) tableRows.push(hero);
+  el('firstImpactTable').innerHTML=tableRows.map((r,i)=>{
+    const isHero=r.name.includes('雙帶方頭瑪莉珍');
+    return `<tr${isHero?' style="background:rgba(124,106,84,.10)"':''}><td class="rank">${String(i+1).padStart(2,'0')}</td><td>${clip(r.name)}${isHero?' <span class="infer">雲織英雄款</span>':''}</td><td class="num">${fmt(r.n)}</td><td class="num">${r.p2}%</td><td class="num">${r.vip}%</td><td class="num">${nt(r.ltv)}</td></tr>`;
+  }).join('');
+
+  // bubble: x=2nd purchase rate, y=LTV, r=first buyers
+  const bub=fi.slice(0,14).map((r,i)=>({label:clip(r.name).slice(0,10),
+    data:[{x:r.p2,y:r.ltv,r:Math.max(5,Math.sqrt(r.n)*1.6)}],
+    backgroundColor:(r.name.includes('雙帶方頭瑪莉珍')?INK:ACCENT)+'BB',borderColor:r.name.includes('雙帶方頭瑪莉珍')?INK:ACCENT}));
+  new Chart(firstImpactBubble,{type:'bubble',data:{datasets:bub},
+    options:{maintainAspectRatio:false,scales:{x:{...gO,title:{display:true,text:'第二購率 %'},ticks:{callback:v=>v+'%'}},y:{...gO,title:{display:true,text:'平均 LTV'},ticks:{callback:v=>fmt(v)}}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+' · LTV '+nt(c.raw.y)+' · 2nd '+c.raw.x+'%'}}}}});
+
+  // hero vs loyal grouped bar
+  const heroName='雙帶方頭瑪莉珍鞋';
+  const loyalPick=fi.filter(x=>x.name.includes('莫卡辛')||x.name.includes('樂福')).slice(0,3);
+  const cmp=[hero].concat(loyalPick);
+  new Chart(heroVsLoyalChart,{type:'bar',data:{labels:cmp.map(c=>clip(c.name).slice(0,9)),datasets:[
+    {label:'第二購率 %',data:cmp.map(c=>c.p2),backgroundColor:ACCENT,borderRadius:2,yAxisID:'y'},
+    {label:'平均 LTV',data:cmp.map(c=>c.ltv),backgroundColor:SAND,borderRadius:2,yAxisID:'y1'}]},
+    options:{maintainAspectRatio:false,scales:{x:{...gN,ticks:{font:{size:10}}},y:{...gO,position:'left',max:100,ticks:{callback:v=>v+'%'}},y1:{...gN,position:'right',ticks:{callback:v=>fmt(v)}}},plugins:{legend:{position:'bottom'}}}});
+
+  // ===== 24 Basket =====
+  const bk=G.basket.slice(0,10);
+  new Chart(basketChart,{type:'bar',data:{labels:bk.map(b=>b.a+' + '+b.b),datasets:[{label:'同次購買次數',data:bk.map(b=>b.n),backgroundColor:bk.map((b,i)=>i<3?ACCENT:SAND),borderRadius:2}]},
+    options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:gO,y:{...gN,ticks:{font:{size:10}}}},plugins:{legend:{display:false}}}});
+
+  // ===== 25 NBP table =====
+  const reasons={'雙帶方頭瑪莉珍鞋':'同款換色補齊 → 樂福／靴類跨品類擴張'};
+  let nbpRows='';
+  Object.keys(G.nbp).forEach(anchor=>{
+    const recs=G.nbp[anchor].recs.slice(0,3);
+    recs.forEach((r,i)=>{
+      nbpRows+=`<tr>${i===0?`<td rowspan="${recs.length}"><b>${clip(anchor)}</b></td>`:''}<td>${clip(r.to)}</td><td class="num">${r.pct}%</td><td class="num">${r.gap!=null?r.gap+' 天':'—'}</td>${i===0?`<td rowspan="${recs.length}">${clip(anchor).includes('瑪莉珍')?'先同款換色，後跨樂福／靴類':'延續舒適需求、季節互補'}</td>`:''}</tr>`;
+    });
+  });
+  el('nbpTable').innerHTML=nbpRows;
+
+  // ===== 26 Rhythm & CLV =====
+  const rh=G.rhythm;const segs=['VIP會員','忠誠會員','回購會員'];
+  new Chart(rhythmChart,{type:'bar',data:{labels:['1→2次','2→3次','3→4次'],datasets:segs.map((s,i)=>({
+    label:s,data:['1','2','3'].map(k=>rh[s]&&rh[s][k]!=null?rh[s][k]:null),backgroundColor:[ACCENT,SAND,'#C4B79E'][i],borderRadius:2}))},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:{...gO,title:{display:true,text:'間隔天數（中位數）'}}},plugins:{legend:{position:'bottom'}}}});
+  const clv=G.clv;
+  new Chart(clvChart,{type:'line',data:{labels:clv.map(c=>'Day '+c.day),datasets:[{label:'平均累積消費',data:clv.map(c=>c.avg),borderColor:ACCENT,backgroundColor:'rgba(124,106,84,.12)',fill:true,tension:.3,pointRadius:4,borderWidth:2}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:{...gO,ticks:{callback:v=>fmt(v)}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>nt(c.parsed.y)}}}}});
+
+  // ===== 27 Adoption & Price =====
+  const ad=G.adopt;const adk=[['early','Early Adopter\n(上架30天內)'],['follower','Follower\n(31–120天)'],['late','Late Buyer\n(120天以上)']];
+  new Chart(adoptChart,{type:'bar',data:{labels:adk.map(a=>a[1].split('\n')),datasets:[
+    {label:'人數',data:adk.map(a=>ad[a[0]].n),backgroundColor:ACCENT,borderRadius:2,yAxisID:'y'},
+    {label:'平均 LTV',data:adk.map(a=>ad[a[0]].ltv),backgroundColor:SAND,borderRadius:2,yAxisID:'y1'}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:{...gO,position:'left'},y1:{...gN,position:'right',ticks:{callback:v=>fmt(v)}}},plugins:{legend:{position:'bottom'}}}});
+  const pr=G.price;const prk=['高客單','中客單','低客單'];
+  new Chart(priceChart,{type:'bar',data:{labels:prk,datasets:[
+    {label:'平均 LTV',data:prk.map(k=>pr[k]?pr[k].ltv:0),backgroundColor:ACCENT,borderRadius:2,yAxisID:'y'},
+    {label:'回購率 %',data:prk.map(k=>pr[k]?pr[k].rep_rate:0),backgroundColor:SAND,borderRadius:2,yAxisID:'y1'}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:{...gO,position:'left',ticks:{callback:v=>fmt(v)}},y1:{...gN,position:'right',max:100,ticks:{callback:v=>v+'%'}}},plugins:{legend:{position:'bottom'}}}});
+
+  // ===== 28 Churn & upgrade =====
+  const L=G.ladder;const lk=['新會員','回購會員','忠誠會員','VIP會員'];
+  new Chart(ladderChart,{type:'bar',data:{labels:lk,datasets:[
+    {label:'平均購買次數',data:lk.map(k=>L[k]?L[k].avg_orders:0),backgroundColor:ACCENT,borderRadius:2,yAxisID:'y'},
+    {label:'平均累積消費',data:lk.map(k=>L[k]?L[k].avg_cum:0),backgroundColor:SAND,borderRadius:2,yAxisID:'y1'}]},
+    options:{maintainAspectRatio:false,scales:{x:gN,y:{...gO,position:'left',title:{display:true,text:'購買次數'}},y1:{...gN,position:'right',ticks:{callback:v=>fmt(v)}}},plugins:{legend:{position:'bottom'}}}});
+  const ch=G.churn;
+  el('churnN').innerHTML=fmt(ch.broad_n)+'<small> 人</small>';
+  el('churnHV').innerHTML=fmt(ch.broad_hv)+'<small> 人</small>';
+  el('churnRev').innerHTML=(ch.broad_hv_rev/1e6).toFixed(2)+'<small>M</small>';
+}
+
+function buildV2(){
+  const co=V2.cohort;
+  // influx: new count (bar) vs 90d repurchase (line)
+  const inf=co.influx.filter(r=>r.r90!==null);
+  new Chart(influxChart,{data:{labels:inf.map(r=>r.cohort),datasets:[
+    {type:'bar',label:'新客人數',data:inf.map(r=>r.new),backgroundColor:inf.map(r=>r.new>=1000?INK:SAND),borderRadius:2,yAxisID:'y',order:2},
+    {type:'line',label:'90天回購率 %',data:inf.map(r=>r.r90),borderColor:ACCENT,backgroundColor:ACCENT,tension:.3,pointRadius:4,borderWidth:2.5,yAxisID:'y1',order:1}]},
+    options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      scales:{x:{...gN,ticks:{maxRotation:45,minRotation:45,font:{size:10}}},
+        y:{...gO,position:'left',title:{display:true,text:'新客人數'}},
+        y1:{...gN,position:'right',max:30,title:{display:true,text:'90天回購 %'},ticks:{callback:v=>v+'%'}}},
+      plugins:{legend:{position:'bottom'}}}});
+
+  // cohort 30/60/90 lines per cohort
+  const cr=co.cohort_rows.filter(r=>r.r90!==null);
+  new Chart(cohortChart,{data:{labels:cr.map(r=>r.cohort),datasets:[
+    {type:'line',label:'30天',data:cr.map(r=>r.r30),borderColor:'#C4B79E',backgroundColor:'#C4B79E',tension:.3,pointRadius:3,borderWidth:2},
+    {type:'line',label:'60天',data:cr.map(r=>r.r60),borderColor:SAND,backgroundColor:SAND,tension:.3,pointRadius:3,borderWidth:2},
+    {type:'line',label:'90天',data:cr.map(r=>r.r90),borderColor:ACCENT,backgroundColor:ACCENT,tension:.3,pointRadius:3,borderWidth:2.5}]},
+    options:{maintainAspectRatio:false,scales:{x:{...gN,ticks:{maxRotation:45,minRotation:45,font:{size:10}}},y:{...gO,ticks:{callback:v=>v+'%'}}},plugins:{legend:{position:'bottom'}}}});
+
+  // hero vs loyal 90d
+  new Chart(heroCohortChart,{type:'bar',data:{labels:['雲織英雄款\n雙帶方頭瑪莉珍','養客款\n莫卡辛/樂福'],datasets:[{label:'90天回購率 %',data:[co.hero_r90,co.loyal_r90],backgroundColor:[INK,ACCENT],borderRadius:2,maxBarThickness:70}]},
+    options:{maintainAspectRatio:false,scales:{x:{...gN,ticks:{font:{size:10}}},y:{...gO,max:20,ticks:{callback:v=>v+'%'}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+'% (90天回購)'}}}}});
+}
+if(document.readyState!=='loading') build();
+else document.addEventListener('DOMContentLoaded',build);
+</script>
+</body>
+</html>
